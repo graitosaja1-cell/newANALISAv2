@@ -1872,8 +1872,13 @@ const workerCode="\n      importScripts('https://cdn.jsdelivr.net/npm/xlsx@0.18.
     if(pjlDate)score+=0.5;
     score+=paymentEvidenceScore(lap,dth);
     const strongIdentity=(cust>=0.75&&addr>=0.55)||(cust>=0.75&&sales>=0.95)||(addr>=0.75&&sales>=0.95);
+    const overpayDth=toFloat(lap.total_bayar)>toFloat(dth.tagihan_dth)+Math.max(1000,.02*Math.max(toFloat(lap.total_bayar),toFloat(dth.tagihan_dth)));
     const strongPayment=totalOk||lapTagOk||pjlTotal;
-    const strong=(score>=8.5&&strongIdentity)||(score>=7.5&&strongIdentity&&strongPayment);
+    // Bila pembayaran melebihi tagihan, identitas saja tidak cukup. Harus ada
+    // bukti nominal dari DTH/Laporan/Penjualan agar tidak salah tempel ke faktur.
+    const strong=overpayDth
+      ? (score>=7.5&&strongIdentity&&strongPayment)
+      : ((score>=8.5&&strongIdentity)||(score>=7.5&&strongIdentity&&strongPayment));
     return {score,strong};
   }
   function tokensOf(name, addr){
@@ -1994,7 +1999,7 @@ function matchWithWorker(unmatchedLap,unmatchedDth,pjlByInvoice){
     matchWorker.postMessage({unmatchedLap,unmatchedDth,pjlByInvoice,id});
   });
 }
-function setupFile(t,e,a,n,l){const r=document.getElementById(t),s=document.getElementById(e),o=document.getElementById(a);r.addEventListener("change",async()=>{if(!r.files[0])return;if(o.textContent=r.files[0].name,s.classList.add("has-file"),l){const t=document.getElementById(l),e=t?t.querySelector(".fn"):null;t&&t.classList.add("ready"),e&&e.id!=="triggerLabelPjl"&&e.id!=="triggerLabelLap"&&e.id!=="triggerLabelDth"&&(e.textContent=r.files[0].name)}const t=document.getElementById("loadingOverlay");t.style.display="flex",setLoadingProgress(0,"Memproses data...",r.files[0].name);try{await n(r.files[0])}catch(t){console.error(t),showToast(t.message||"Gagal baca file.","danger",7e3)}finally{t.style.display="none",setLoadingProgress(null,"Memproses data...","")}updateReadyState()})}function updateReadyState(){const t=allDth.length>0&&allLap.length>0;document.getElementById("btnProcess").disabled=!t,document.getElementById("statAnalisaReady").innerHTML=t?`Siap analisa · Data Tagihan <strong>${new Set(allDth.map(t=>t.no_faktur)).size}</strong> faktur · Data Uang Masuk <strong>${new Set(allLap.map(t=>t.no_faktur)).size}</strong> faktur`:"Upload file di tab <strong>Data Tagihan</strong> dan <strong>Data Uang Masuk</strong> terlebih dahulu"}function categorize(t){const e=null!=t.tagihan_dth?t.tagihan_dth:null!=t.tagihan_laporan?t.tagihan_laporan:0,a=null!=t.total_bayar?t.total_bayar:0,n=Math.max(1e3,.01*e),k=`${t.ket_laporan||""} ${t.ket_dth||""}`.toUpperCase();if(isCashDroppingRow(t))return "CASH_DROPPING";if(!/\b(?:BELUM|TIDAK)\s+LUNAS\b/.test(k)&&/\bLUNAS\b/.test(k))return "LUNAS";if(null==t.tagihan_dth&&null!=t.tagihan_laporan)return "BAYAR_TANPA_TAGIHAN_DTH";if(/\bTITIP\b/.test(k)&&a>0)return "TITIP";return null==t.tagihan_dth||null!=t.total_bayar&&0!==t.total_bayar?a>=e-n?"LUNAS":a>0?"TITIP":"BELUM_BAYAR":"BELUM_BAYAR"}function isUsableText(t){return null!=t&&String(t).trim()!==""&&String(t).trim().toLowerCase()!=="undefined"&&String(t).trim().toLowerCase()!=="null"&&String(t).trim().toLowerCase()!=="nan"}function buildAddressMap(){const t={};const put=(e)=>{if(!e||!e.no_faktur)return;const a=e.no_faktur,n=e.alamat;if(!isUsableText(t[a])&&isUsableText(n))t[a]=String(n).trim()};allDth.forEach(put),allLap.forEach(put),allPjl.forEach(put);return t}function repairLapPaymentDates(){
+function setupFile(t,e,a,n,l){const r=document.getElementById(t),s=document.getElementById(e),o=document.getElementById(a);r.addEventListener("change",async()=>{if(!r.files[0])return;if(o.textContent=r.files[0].name,s.classList.add("has-file"),l){const t=document.getElementById(l),e=t?t.querySelector(".fn"):null;t&&t.classList.add("ready"),e&&e.id!=="triggerLabelPjl"&&e.id!=="triggerLabelLap"&&e.id!=="triggerLabelDth"&&(e.textContent=r.files[0].name)}const t=document.getElementById("loadingOverlay");t.style.display="flex",setLoadingProgress(0,"Memproses data...",r.files[0].name);try{await n(r.files[0])}catch(t){console.error(t),showToast(t.message||"Gagal baca file.","danger",7e3)}finally{t.style.display="none",setLoadingProgress(null,"Memproses data...","")}updateReadyState()})}function updateReadyState(){const t=allDth.length>0&&allLap.length>0;document.getElementById("btnProcess").disabled=!t,document.getElementById("statAnalisaReady").innerHTML=t?`Siap analisa · Data Tagihan <strong>${new Set(allDth.map(t=>t.no_faktur)).size}</strong> faktur · Data Uang Masuk <strong>${new Set(allLap.map(t=>t.no_faktur)).size}</strong> faktur`:"Upload file di tab <strong>Data Tagihan</strong> dan <strong>Data Uang Masuk</strong> terlebih dahulu"}function categorize(t){const e=null!=t.tagihan_dth?t.tagihan_dth:null!=t.tagihan_laporan?t.tagihan_laporan:0,a=null!=t.total_bayar?t.total_bayar:0,n=Math.max(1e3,.01*e),k=`${t.ket_laporan||""} ${t.ket_dth||""}`.toUpperCase();if(isCashDroppingRow(t))return "CASH_DROPPING";if(!/\b(?:BELUM|TIDAK)\s+LUNAS\b/.test(k)&&/\bLUNAS\b/.test(k)&&a<=e+n)return "LUNAS";if(null==t.tagihan_dth&&null!=t.tagihan_laporan)return "BAYAR_TANPA_TAGIHAN_DTH";if(/\bTITIP\b/.test(k)&&a>0)return "TITIP";return null==t.tagihan_dth||null!=t.total_bayar&&0!==t.total_bayar?a>=e-n?"LUNAS":a>0?"TITIP":"BELUM_BAYAR":"BELUM_BAYAR"}function isUsableText(t){return null!=t&&String(t).trim()!==""&&String(t).trim().toLowerCase()!=="undefined"&&String(t).trim().toLowerCase()!=="null"&&String(t).trim().toLowerCase()!=="nan"}function buildAddressMap(){const t={};const put=(e)=>{if(!e||!e.no_faktur)return;const a=e.no_faktur,n=e.alamat;if(!isUsableText(t[a])&&isUsableText(n))t[a]=String(n).trim()};allDth.forEach(put),allLap.forEach(put),allPjl.forEach(put);return t}function repairLapPaymentDates(){
   allLap.forEach(r=>{
     const d=parseAnyDate(r.payment_date);
     if(d&&d.getFullYear()>=2020&&d.getFullYear()<=2100){
@@ -2122,8 +2127,18 @@ async function aggregate(t,e){
   const dthMap=new Map(dth.map(r=>[String(r.no_faktur).trim(),r]));
   const lapMap=new Map(lap.map(r=>[String(r.no_faktur).trim(),r]));
   const matchedLapToDth=new Map(), usedDth=new Set();
-  // Tahap 1: nomor faktur persis tetap menjadi prioritas utama.
-  lap.forEach(l=>{const k=String(l.no_faktur||"").trim();if(k&&dthMap.has(k)){matchedLapToDth.set(k,k);usedDth.add(k);}});
+  // Tahap 1: nomor faktur persis tetap menjadi prioritas, TETAPI jangan dipercaya
+  // jika total pembayaran sudah melebihi tagihan DTH secara material. Kasus seperti ini
+  // sering terjadi saat uang masuk memakai nomor faktur yang salah/terulang. Biarkan
+  // tahap fuzzy memeriksa identitas + tanggal + nominal sebelum memasangkannya.
+  lap.forEach(l=>{
+    const k=String(l.no_faktur||"").trim(), d=k&&dthMap.get(k);
+    if(!d)return;
+    const bayar=toFloat(l.total_bayar), tagihan=toFloat(d.tagihan_dth);
+    const tol=Math.max(1000,.02*Math.max(bayar,tagihan));
+    const overpay=tagihan>0&&bayar>tagihan+tol;
+    if(!overpay){matchedLapToDth.set(k,k);usedDth.add(k);}
+  });
   // Tahap 2: cari pembayaran yang salah nomor faktur berdasarkan identitas transaksi.
   const unmatchedLap=lap.filter(l=>!matchedLapToDth.has(String(l.no_faktur||"").trim()));
   const unmatchedDth=dth.filter(d=>!usedDth.has(String(d.no_faktur||"").trim()));
@@ -2158,7 +2173,10 @@ async function aggregate(t,e){
       ket_dth:d.ket_dth||"",ket_laporan:l.ket_laporan||"",section:l.section||"",sheet_dth:d.sheet_dth||"",sheet_laporan:l.sheet_laporan||"",tgl_nota:d.tgl_nota||null,tgl_faktur:l.tgl_faktur||null,
       match_type:isFuzzy?"FUZZY_IDENTITY":"EXACT_INVOICE",match_source_no_faktur:isFuzzy?String(l.no_faktur||""):"",match_score:isFuzzy?(l._match_score||0):0
     };
-    s.status=categorize(s);s.sisa=Math.max(0,(s.tagihan_dth||0)-(s.total_bayar||0));s._months=new Set();
+    s.status=categorize(s);
+    s.sisa=Math.max(0,(s.tagihan_dth||0)-(s.total_bayar||0));
+    s.kelebihan_bayar=Math.max(0,(s.total_bayar||0)-(s.tagihan_dth||0));
+    s._months=new Set();
     (s.sheet_dth||"").split(",").forEach(x=>{const m=x.trim();if(m)s._months.add(sheetToMonthKey(m))});
     (s.sheet_laporan||"").split(",").forEach(x=>{const m=x.trim();if(m)s._months.add(sheetToMonthKey(m))});
     r.push(s);
@@ -2212,7 +2230,7 @@ function renderSubTab(sub){if(!analisaGroups||analisaRenderedTabs.has(sub))retur
         <td class="rp sisa-val">${fmtRp(t.sisa)}</td>
         <td class="rp">${fmtRp(t.minyak_cash)}</td><td class="rp">${fmtRp(t.minyak_transfer)}</td>
         <td class="rp">${fmtRp(t.rupa_cash)}</td><td class="rp">${fmtRp(t.rupa_transfer)}</td>
-        <td>${t.ket_laporan}</td><td>${t.sheet_dth}</td><td>${t.sheet_laporan}</td>`);else if("belum"===sub)renderTable("tblBelum",sortByDateAsc(e.BELUM_BAYAR,"tgl_nota"),t=>`
+        <td>${t.kelebihan_bayar>0?`<span title="Total pembayaran melebihi tagihan DTH" style="color:var(--danger);font-weight:700">⚠ Lebih bayar ${fmtRp(t.kelebihan_bayar)}</span> `:""}${t.ket_laporan}</td><td>${t.sheet_dth}</td><td>${t.sheet_laporan}</td>`);else if("belum"===sub)renderTable("tblBelum",sortByDateAsc(e.BELUM_BAYAR,"tgl_nota"),t=>`
         <td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal('${String(t.no_faktur).replace(/'/g,"\\'")}')">${t.no_faktur}</a></td><td>${fmtDate(t.tgl_nota)}</td><td>${t.nama_outlet}</td><td>${isUsableText(t.alamat)?t.alamat:"-"}</td><td>${t.salesman_dth}</td>
         <td class="rp">${fmtRp(t.tagihan_dth)}</td><td>${t.ket_dth}</td><td>${t.sheet_dth}</td>`);else if("tanpa"===sub)renderTable("tblTanpa",e.BAYAR_TANPA_TAGIHAN_DTH.filter(t=>!isCashDroppingRow(t)).sort((t,e)=>(t.sheet_laporan||"").localeCompare(e.sheet_laporan||"")),t=>`
         <td>${t.no_faktur}</td><td>${t.nama_toko}</td><td>${t.sales_laporan}</td>
