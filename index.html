@@ -1140,25 +1140,33 @@ body.startup-scanner-active {
         </div>
 
         <div id="pjl-bulan" class="d-none">
-          <div class="table-toolbar">
-            <h5>Rekap per Bulan</h5>
+          <div class="table-toolbar" style="align-items:center">
+            <div><h5 style="margin:0">Rekap Penjualan &amp; Profit Per Bulan</h5><div style="font-size:.72rem;color:var(--muted)">Semua bulan yang tersedia dari seluruh Data Penjualan</div></div>
+            <button type="button" class="btn-ghost" id="btnExportPjlBulanTop"><i class="bi bi-file-earmark-excel me-1"></i>Save Excel</button>
           </div>
           <div class="table-container">
             <table class="table table-sm table-striped table-hover" id="tblPjlBulan">
               <thead><tr>
                 <th>Bulan</th><th>Jumlah Faktur</th><th>Total Qty</th>
-                <th>Total Penjualan</th><th>Total Margin</th>
+                <th>Total Penjualan</th><th>Total HPP</th><th>Profit</th><th>Margin %</th>
               </tr></thead>
-              <tbody>
-        <tr><td>Agustus 2026</td>
-        <td>344</td><td>7.585</td>
-        <td class="rp">Rp 237.266.063</td><td class="rp">Rp 12.718.822,42</td></tr></tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
       </div>
 
       <div id="pjl-raw" class="d-none">
+        <div id="pjlRawSummary" class="summary-row" style="margin-bottom:.7rem">
+          <div class="s-card pjlOmzet"><div class="ico"><i class="bi bi-cash-coin"></i></div><div><div class="lbl">Total Penjualan Bulan</div><div class="num" id="pjlRawTotalSales">Rp 0</div></div></div>
+          <div class="s-card pjlHpp"><div class="ico"><i class="bi bi-box-seam"></i></div><div><div class="lbl">Total HPP Bulan</div><div class="num" id="pjlRawTotalHpp">Rp 0</div></div></div>
+          <div class="s-card pjlProfit"><div class="ico"><i class="bi bi-graph-up-arrow"></i></div><div><div class="lbl">Total Profit Bulan</div><div class="num" id="pjlRawTotalProfit">Rp 0</div></div></div>
+          <div class="s-card pjlMargin"><div class="ico"><i class="bi bi-percent"></i></div><div><div class="lbl">Margin Bulan</div><div class="num" id="pjlRawMargin">0,00%</div></div></div>
+        </div>
+        <div class="table-toolbar" style="align-items:center">
+          <div><h5 style="margin:0">DATA TRANSAKSI PENJUALAN</h5><div id="pjlRawMonthLabel" style="font-size:.72rem;color:var(--muted)">-</div></div>
+          <button type="button" class="btn-ghost" id="btnExportPjlRawTop"><i class="bi bi-file-earmark-excel me-1"></i>Save Excel</button>
+        </div>
         <div class="table-container" id="wrapPjl">
           <div class="empty-state d-none" id="emptyPjl">
             <i class="bi bi-file-earmark-excel"></i>
@@ -1419,7 +1427,7 @@ function getPjlMonthKey(r){
 }
 function computeMonthsFromRowsKey(t,e){const a=new Set;return t.forEach(r=>{const k=e==="bulan_key"?getPjlMonthKey(r):r[e];k&&a.add(k)}),[...a].sort()}
 function filterRowsByMonthKey(t,e,a){return 0===a.size?t:t.filter(r=>{const k=e==="bulan_key"?getPjlMonthKey(r):r[e];return k&&a.has(k)})}
-function renderPjlTable(){const t=sortByDateDesc(filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl),"tanggal");bindVirtualTable("tblPjlRaw",t,t=>`\n        <td>${fmtDate(t.tanggal)}</td><td>${t.no_faktur}</td><td>${t.produk}</td>\n        <td>${t.jumlah}</td><td>${t.satuan}</td>\n        <td class="rp">${fmtRp(t.harga_jual)}</td><td class="rp">${fmtRp(t.disc)}</td>\n        <td class="rp">${fmtRp(t.total)}</td><td>${t.sales}</td><td>${t.customer}</td>\n        <td>${t.alamat}</td><td>${t.pembayaran}</td>\n        <td class="rp">${fmtRp(t.harga_beli)}</td><td class="rp">${fmtRp(t.margin)}</td>`);const e=t.reduce((t,e)=>t+(e.total||0),0);document.getElementById("totalPjl").textContent=fmtRp(e),renderPjlSummary(t),(typeof renderPjlRekap==="function")&&renderPjlRekap(t),renderPjlProduk(),(typeof renderPjlBulan==="function")&&renderPjlBulan(),(typeof renderPjlRingkasan==="function")&&renderPjlRingkasan()}function renderPjlSummary(t){const e=t.reduce((t,e)=>t+(e.total||0),0),n=t.reduce((t,e)=>t+(e.margin||0),0),r=[{cls:"pjlOmzet",icon:"bi-cash-coin",label:"Total Penjualan",val:fmtRp(e)},{cls:"pjlMargin",icon:"bi-graph-up",label:"Total Margin",val:fmtRp(n)}];document.getElementById("summaryCardsPjl").innerHTML=r.map(t=>`\n        <div class="s-card ${t.cls}">\n          <div class="ico"><i class="bi ${t.icon}"></i></div>\n          <div>\n            <div class="lbl">${t.label}</div>\n            <div class="num">${t.val}</div>\n          </div>\n        </div>`).join("")}function fmtPjlReportNum(v,dec){
+function renderPjlTable(){const t=sortByDateDesc(filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl),"tanggal");bindVirtualTable("tblPjlRaw",t,t=>`\n        <td>${fmtDate(t.tanggal)}</td><td>${t.no_faktur}</td><td>${t.produk}</td>\n        <td>${t.jumlah}</td><td>${t.satuan}</td>\n        <td class="rp">${fmtRp(t.harga_jual)}</td><td class="rp">${fmtRp(t.disc)}</td>\n        <td class="rp">${fmtRp(t.total)}</td><td>${t.sales}</td><td>${t.customer}</td>\n        <td>${t.alamat}</td><td>${t.pembayaran}</td>\n        <td class="rp">${fmtRp(t.harga_beli)}</td><td class="rp">${fmtRp(t.margin)}</td>`);const e=t.reduce((t,e)=>t+(e.total||0),0);document.getElementById("totalPjl").textContent=fmtRp(e),renderPjlSummary(t),(typeof renderPjlRawSummary==="function")&&renderPjlRawSummary(t),(typeof renderPjlRekap==="function")&&renderPjlRekap(t),renderPjlProduk(),(typeof renderPjlBulan==="function")&&renderPjlBulan(),(typeof renderPjlRingkasan==="function")&&renderPjlRingkasan()}function renderPjlSummary(t){const e=t.reduce((t,e)=>t+(e.total||0),0),n=t.reduce((t,e)=>t+(e.margin||0),0),r=[{cls:"pjlOmzet",icon:"bi-cash-coin",label:"Total Penjualan",val:fmtRp(e)},{cls:"pjlMargin",icon:"bi-graph-up",label:"Total Margin",val:fmtRp(n)}];document.getElementById("summaryCardsPjl").innerHTML=r.map(t=>`\n        <div class="s-card ${t.cls}">\n          <div class="ico"><i class="bi ${t.icon}"></i></div>\n          <div>\n            <div class="lbl">${t.label}</div>\n            <div class="num">${t.val}</div>\n          </div>\n        </div>`).join("")}function fmtPjlReportNum(v,dec){
   const n=Number(v)||0;
   if(dec==null) dec = Math.abs(n%1)>1e-9 ? 2 : 0;
   return n.toLocaleString("id-ID",{minimumFractionDigits:dec,maximumFractionDigits:dec});
@@ -2796,31 +2804,40 @@ setupFile("fileDth","chipDth","labelDth",async t=>{const{records:e,sheetCount:a}
     }
   }
   function exportPjlSalesExcel(){
-    const rows=salesRows(); if(!rows.length){showToast("Tidak ada data Penjualan untuk diekspor.","warning");return;}
-    const out=[
-      ["PENJUALAN & PROFIT PER SALES PER PRODUK"],[],[],
-      ["Sales","Produk","Jumlah","Harga Jual","Harga Beli","Total Penjualan","Total HPP","Profit","Margin %","Jml Faktur"]
-    ];
-    rows.forEach(r=>out.push([r.sales,r.produk,r.qty,fmtPjlPriceRange(r.jualVals),fmtPjlPriceRange(r.beliVals),r.sell,r.hpp,r.profit,r.margin,r.faktur]));
-    const total=rows.reduce((a,r)=>({qty:a.qty+r.qty,sell:a.sell+r.sell,hpp:a.hpp+r.hpp}),{qty:0,sell:0,hpp:0}); const allInv=new Set(rows.map(r=>String(r.no_faktur||'').trim()).filter(Boolean)); total.faktur=allInv.size;
-    const profit=total.sell-total.hpp, margin=total.sell?profit/total.sell:0;
-    out.push(["TOTAL SEMUA","",total.qty,"","",total.sell,total.hpp,profit,margin,total.faktur]);
-    const wb=XLSX.utils.book_new(), ws=XLSX.utils.aoa_to_sheet(out);
-    ws["A1"].s={font:{bold:true,size:14}};
-    ws.mergeCells("A1:J1");
-    ws["A4"].s={font:{bold:true},fill:{fgColor:{rgb:"D9EAF7"}}};
-    ws["A4"].s={font:{bold:true}};
-    for(let c=0;c<10;c++) ws["A4"+""];
-    for(let r=5;r<=ws['!ref']?0:0;r++){}
-    const range=XLSX.utils.decode_range(ws['!ref']);
-    for(let c=0;c<10;c++) ws[XLSX.utils.encode_cell({r:3,c})].s={font:{bold:true}};
-    for(let r=4;r<=range.e.r;r++){
-      [3,4,5,6,7].forEach(c=>{const cell=ws[XLSX.utils.encode_cell({r,c})];if(cell)cell.z='Rp #,##0.00';});
-      const m=ws[XLSX.utils.encode_cell({r,c:8})];if(m)m.z='0.00%';
-    }
-    const widths=[16,30,12,15,15,18,18,16,12,12]; ws['!cols']=widths.map(w=>({wch:w}));
-    XLSX.utils.book_append_sheet(wb,ws,"Per Sales per Produk");
-    XLSX.writeFile(wb,`PENJUALAN_PER_SALES_PER_PRODUK_${new Date().toISOString().slice(0,10)}.xlsx`);
+    const rows=salesRows();
+    if(!rows.length){showToast("Tidak ada data Penjualan untuk diekspor.","warning");return;}
+    try{
+      const out=[
+        ["PENJUALAN & PROFIT PER SALES PER PRODUK"],
+        [`PERIODE: ${activeMonthsPjl.size?[...activeMonthsPjl].map(monthLabelFull).join(", ").toUpperCase():"SEMUA BULAN"}`],
+        [],
+        ["Sales","Produk","Jumlah","Harga Jual","Harga Beli","Total Penjualan","Total HPP","Profit","Margin %","Jml Faktur"]
+      ];
+      rows.forEach(r=>out.push([r.sales,r.produk,r.qty,fmtPjlPriceRange(r.jualVals),fmtPjlPriceRange(r.beliVals),r.sell,r.hpp,r.profit,r.margin,r.faktur]));
+      const total=rows.reduce((a,r)=>({qty:a.qty+r.qty,sell:a.sell+r.sell,hpp:a.hpp+r.hpp}),{qty:0,sell:0,hpp:0});
+      const allInv=new Set();
+      filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl).forEach(r=>{const n=String(r.no_faktur||"").trim();if(n)allInv.add(n)});
+      const profit=total.sell-total.hpp, margin=total.sell?profit/total.sell:0;
+      out.push(["TOTAL SEMUA","",total.qty,"","",total.sell,total.hpp,profit,margin,allInv.size]);
+      const ws=XLSX.utils.aoa_to_sheet(out);
+      ws["A1"].s={font:{bold:true,size:14}};
+      ws["A2"].s={font:{italic:true}};
+      ws["A4"].s={font:{bold:true}};
+      ws["!merges"]=[{s:{r:0,c:0},e:{r:0,c:9}},{s:{r:1,c:0},e:{r:1,c:9}}];
+      ws["!cols"]=[{wch:22},{wch:34},{wch:12},{wch:18},{wch:18},{wch:20},{wch:18},{wch:18},{wch:13},{wch:14}];
+      ws["!freeze"]={xSplit:0,ySplit:4};
+      const range=XLSX.utils.decode_range(ws["!ref"]);
+      for(let r=4;r<=range.e.r;r++){
+        [5,6,7].forEach(c=>{const cell=ws[XLSX.utils.encode_cell({r,c})];if(cell)cell.z='#,##0.00';});
+        const m=ws[XLSX.utils.encode_cell({r,c:8})];if(m)m.z='0.00%';
+        const q=ws[XLSX.utils.encode_cell({r,c:2})];if(q)q.z='#,##0.00';
+      }
+      XLSX.utils.book_append_sheet(XLSX.utils.book_new(),ws,"Per Sales per Produk");
+      const wb=XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb,ws,"Per Sales per Produk");
+      XLSX.writeFile(wb,`PENJUALAN_PER_SALES_PER_PRODUK_${new Date().toISOString().slice(0,10)}.xlsx`);
+      showToast("Excel Per Sales berhasil disimpan.","success");
+    }catch(err){console.error(err);showToast("Gagal menyimpan Excel Per Sales: "+(err.message||err),"danger",7000);}
   }
   window.renderPjlSalesCompact=renderPjlSalesCompact;
   window.exportPjlSalesExcel=exportPjlSalesExcel;
@@ -2872,22 +2889,31 @@ setupFile("fileDth","chipDth","labelDth",async t=>{const{records:e,sheetCount:a}
     XLSX.writeFile(wb,`PENJUALAN_RINGKASAN_${new Date().toISOString().slice(0,10)}.xlsx`);showToast('Excel Ringkasan berhasil disimpan.','success');
   }
   function exportRaw(){
-    const rows=sortByDateDesc(filteredPjl(),'tanggal'); if(!rows.length){showToast('Tidak ada transaksi untuk diekspor.','warning');return;}
-    const aoa=[['DATA TRANSAKSI PENJUALAN'],[`PERIODE: ${currentMonthText()}`],['Tanggal','No Faktur','Produk','Jumlah','Satuan','Harga Jual','Disc','Total','Sales','Customer','Alamat','Pembayaran','Harga Beli','Margin']];
-    rows.forEach(r=>aoa.push([fmtDate(r.tanggal),r.no_faktur,r.produk,r.jumlah,r.satuan,r.harga_jual,r.disc,r.total,r.sales,r.customer,r.alamat,r.pembayaran,r.harga_beli,r.margin]));
-    const wb=makeBook(aoa,'Data Transaksi','DATA TRANSAKSI PENJUALAN',currentMonthText(),2,[13,18,32,12,10,16,14,18,18,28,34,18,16,18],(ws,n)=>{for(let r=3;r<n;r++){[5,6,7,12,13].forEach(c=>ws[XLSX.utils.encode_cell({r,c})].z=moneyFmt);ws[XLSX.utils.encode_cell({r,c:3})].z=intFmt;}});
-    XLSX.writeFile(wb,`DATA_TRANSAKSI_PENJUALAN_${new Date().toISOString().slice(0,10)}.xlsx`);showToast(`Excel Data Transaksi berhasil disimpan · ${rows.length} baris.`,'success');
+    const rows=sortByDateDesc(filteredPjl(),'tanggal');
+    if(!rows.length){showToast('Tidak ada transaksi untuk diekspor.','warning');return;}
+    try{
+      const aoa=[['DATA TRANSAKSI PENJUALAN'],[`PERIODE: ${currentMonthText()}`],[],['Tanggal','No Faktur','Produk','Jumlah','Satuan','Harga Jual','Disc','Total','Sales','Customer','Alamat','Pembayaran','Harga Beli','Margin']];
+      rows.forEach(r=>aoa.push([fmtDate(r.tanggal),r.no_faktur,r.produk,r.jumlah,r.satuan,r.harga_jual,r.disc,r.total,r.sales,r.customer,r.alamat,r.pembayaran,r.harga_beli,r.margin]));
+      const qty=rows.reduce((s,r)=>s+(Number(r.jumlah)||0),0),sell=rows.reduce((s,r)=>s+(Number(r.total)||0),0),hpp=rows.reduce((s,r)=>s+(Number(r.harga_beli)||0)*(Number(r.jumlah)||0),0),profit=sell-hpp,margin=sell?profit/sell:0;
+      aoa.push([],['TOTAL BULAN','', '',qty,'','','',sell,'','','','','',profit],['HPP BULAN','','','','','','',hpp],['MARGIN BULAN','','','','','','',margin]);
+      const wb=makeBook(aoa,'Data Transaksi','DATA TRANSAKSI PENJUALAN',currentMonthText(),3,[13,18,32,12,10,16,14,18,18,28,34,18,16,18],(ws,n)=>{for(let r=4;r<n;r++){[5,6,7,12,13].forEach(c=>{const cell=ws[XLSX.utils.encode_cell({r,c})];if(cell)cell.z=moneyFmt;});const q=ws[XLSX.utils.encode_cell({r,c:3})];if(q)q.z=intFmt;}});
+      XLSX.writeFile(wb,`DATA_TRANSAKSI_PENJUALAN_${new Date().toISOString().slice(0,10)}.xlsx`);showToast(`Excel Data Transaksi berhasil disimpan · ${rows.length} baris.`,'success');
+    }catch(err){console.error(err);showToast('Gagal menyimpan Excel Data Transaksi: '+(err.message||err),'danger',7000);}
   }
   function exportBulan(){
-    const rows=filteredPjl(); if(!rows.length){showToast('Tidak ada Data Penjualan untuk diekspor.','warning');return;}
-    const map=new Map();
-    rows.forEach(r=>{const k=r.bulan_key||getPjlMonthKey(r);if(!k)return;if(!map.has(k))map.set(k,{k,inv:new Set(),qty:0,sell:0,margin:0});const g=map.get(k);if(String(r.no_faktur||'').trim())g.inv.add(String(r.no_faktur).trim());g.qty+=Number(r.jumlah)||0;g.sell+=Number(r.total)||0;g.margin+=Number(r.margin)||0;});
-    const data=[...map.values()].sort((a,b)=>a.k.localeCompare(b.k));
-    const aoa=[['PENJUALAN & PROFIT PER BULAN'],[`PERIODE FILTER: ${currentMonthText()}`],['Bulan','Jumlah Faktur','Total Qty','Total Penjualan','Total Margin']];
-    data.forEach(g=>aoa.push([monthLabelFull(g.k),g.inv.size,g.qty,g.sell,g.margin]));
-    const allInv=new Set(rows.map(r=>String(r.no_faktur||'').trim()).filter(Boolean));aoa.push(['TOTAL',allInv.size,rows.reduce((s,r)=>s+(Number(r.jumlah)||0),0),rows.reduce((s,r)=>s+(Number(r.total)||0),0),rows.reduce((s,r)=>s+(Number(r.margin)||0),0)]);
-    const wb=makeBook(aoa,'Per Bulan','PENJUALAN & PROFIT PER BULAN',currentMonthText(),2,[24,16,16,22,20],(ws,n)=>{for(let r=3;r<n;r++){ws[XLSX.utils.encode_cell({r,c:1})].z=intFmt;ws[XLSX.utils.encode_cell({r,c:2})].z=intFmt;ws[XLSX.utils.encode_cell({r,c:3})].z=moneyFmt;ws[XLSX.utils.encode_cell({r,c:4})].z=moneyFmt;}});
-    XLSX.writeFile(wb,`PENJUALAN_PER_BULAN_${new Date().toISOString().slice(0,10)}.xlsx`);showToast('Excel Per Bulan berhasil disimpan.','success');
+    const rows=allPjl.slice();
+    if(!rows.length){showToast('Tidak ada Data Penjualan untuk diekspor.','warning');return;}
+    try{
+      const map=new Map();
+      rows.forEach(r=>{const k=r.bulan_key||getPjlMonthKey(r);if(!k)return;if(!map.has(k))map.set(k,{k,inv:new Set(),qty:0,sell:0,hpp:0});const g=map.get(k);const q=Number(r.jumlah)||0;g.inv.add(String(r.no_faktur||'').trim());g.qty+=q;g.sell+=Number(r.total)||0;g.hpp+=(Number(r.harga_beli)||0)*q;});
+      const data=[...map.values()].sort((a,b)=>a.k.localeCompare(b.k));
+      const aoa=[['PENJUALAN & PROFIT PER BULAN'],['SEMUA BULAN'],[],['Bulan','Jumlah Faktur','Total Qty','Total Penjualan','Total HPP','Profit','Margin %']];
+      data.forEach(g=>{const profit=g.sell-g.hpp;aoa.push([monthLabelFull(g.k),g.inv.size,g.qty,g.sell,g.hpp,profit,g.sell?profit/g.sell:0]);});
+      const allInv=new Set(rows.map(r=>String(r.no_faktur||'').trim()).filter(Boolean));const qty=rows.reduce((s,r)=>s+(Number(r.jumlah)||0),0),sell=rows.reduce((s,r)=>s+(Number(r.total)||0),0),hpp=rows.reduce((s,r)=>s+(Number(r.harga_beli)||0)*(Number(r.jumlah)||0),0),profit=sell-hpp;
+      aoa.push(['TOTAL',allInv.size,qty,sell,hpp,profit,sell?profit/sell:0]);
+      const wb=makeBook(aoa,'Per Bulan','PENJUALAN & PROFIT PER BULAN','SEMUA BULAN',3,[24,16,16,22,20,20,13],(ws,n)=>{for(let r=4;r<n;r++){[3,4,5].forEach(c=>{const cell=ws[XLSX.utils.encode_cell({r,c})];if(cell)cell.z=moneyFmt;});[1,2].forEach(c=>{const cell=ws[XLSX.utils.encode_cell({r,c})];if(cell)cell.z=intFmt;});const m=ws[XLSX.utils.encode_cell({r,c:6})];if(m)m.z=pctFmt;}});
+      XLSX.writeFile(wb,`PENJUALAN_PER_BULAN_${new Date().toISOString().slice(0,10)}.xlsx`);showToast('Excel Per Bulan berhasil disimpan.','success');
+    }catch(err){console.error(err);showToast('Gagal menyimpan Excel Per Bulan: '+(err.message||err),'danger',7000);}
   }
   function exportQtyStok(){
     const pjl=allPjl.filter(r=>0===activeMonthsQtyStok.size||activeMonthsQtyStok.has(r.bulan_key)).filter(r=>inQtyStokDate(r));
@@ -2907,6 +2933,39 @@ setupFile("fileDth","chipDth","labelDth",async t=>{const{records:e,sheetCount:a}
     const q=document.querySelector('#pjl-qtystok .table-toolbar'); if(q)addButton(q,'btnExportPjlQtyStok','Save Excel',exportQtyStok);
   }
   window.exportPjlRingkasanExcel=exportRingkasan;window.exportPjlRawExcel=exportRaw;window.exportPjlBulanExcel=exportBulan;window.exportPjlQtyStokExcel=exportQtyStok;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+})();
+</script>
+
+
+<script>
+/* ===== PERBAIKAN DATA TRANSAKSI + PER BULAN ===== */
+(function(){
+  function renderPjlRawSummary(rows){
+    rows=Array.isArray(rows)?rows:[];
+    const sell=rows.reduce((s,r)=>s+(Number(r.total)||0),0);
+    const hpp=rows.reduce((s,r)=>s+(Number(r.harga_beli)||0)*(Number(r.jumlah)||0),0);
+    const profit=sell-hpp, margin=sell?profit/sell:0;
+    const set=(id,val)=>{const e=document.getElementById(id);if(e)e.textContent=val;};
+    set('pjlRawTotalSales',fmtRp(sell));set('pjlRawTotalHpp',fmtRp(hpp));set('pjlRawTotalProfit',fmtRp(profit));set('pjlRawMargin',(margin*100).toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2})+'%');
+    set('pjlRawMonthLabel',activeMonthsPjl.size?[...activeMonthsPjl].map(monthLabelFull).join(', '):'Semua Bulan');
+  }
+  function renderPjlBulan(){
+    const tbody=document.querySelector('#tblPjlBulan tbody');if(!tbody)return;
+    const map=new Map();
+    allPjl.forEach(r=>{const k=r.bulan_key||getPjlMonthKey(r);if(!k)return;if(!map.has(k))map.set(k,{k,inv:new Set(),qty:0,sell:0,hpp:0});const g=map.get(k),q=Number(r.jumlah)||0;const n=String(r.no_faktur||'').trim();if(n)g.inv.add(n);g.qty+=q;g.sell+=Number(r.total)||0;g.hpp+=(Number(r.harga_beli)||0)*q;});
+    const data=[...map.values()].sort((a,b)=>a.k.localeCompare(b.k));
+    tbody.innerHTML=data.map(g=>{const profit=g.sell-g.hpp,margin=g.sell?profit/g.sell:0;return `<tr><td>${monthLabelFull(g.k)}</td><td>${g.inv.size.toLocaleString('id-ID')}</td><td>${g.qty.toLocaleString('id-ID',{maximumFractionDigits:2})}</td><td class="rp">${fmtRp(g.sell)}</td><td class="rp">${fmtRp(g.hpp)}</td><td class="rp">${fmtRp(profit)}</td><td>${(margin*100).toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2})}%</td></tr>`}).join('');
+    const sell=data.reduce((s,g)=>s+g.sell,0),hpp=data.reduce((s,g)=>s+g.hpp,0),profit=sell-hpp,inv=new Set(allPjl.map(r=>String(r.no_faktur||'').trim()).filter(Boolean)).size,qty=allPjl.reduce((s,r)=>s+(Number(r.jumlah)||0),0);
+    if(data.length)tbody.insertAdjacentHTML('beforeend',`<tr style="font-weight:800"><td>TOTAL SEMUA BULAN</td><td>${inv.toLocaleString('id-ID')}</td><td>${qty.toLocaleString('id-ID',{maximumFractionDigits:2})}</td><td class="rp">${fmtRp(sell)}</td><td class="rp">${fmtRp(hpp)}</td><td class="rp">${fmtRp(profit)}</td><td>${(sell?(profit/sell)*100:0).toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2})}%</td></tr>`);
+  }
+  window.renderPjlRawSummary=renderPjlRawSummary;window.renderPjlBulan=renderPjlBulan;
+  function install(){
+    document.getElementById('btnExportPjlSales')?.addEventListener('click',()=>window.exportPjlSalesExcel&&window.exportPjlSalesExcel());
+    document.getElementById('btnExportPjlRawTop')?.addEventListener('click',()=>window.exportPjlRawExcel&&window.exportPjlRawExcel());
+    document.getElementById('btnExportPjlBulanTop')?.addEventListener('click',()=>window.exportPjlBulanExcel&&window.exportPjlBulanExcel());
+    renderPjlBulan();
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
 })();
 </script>
