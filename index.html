@@ -1,17 +1,18 @@
 <!DOCTYPE html>
+<!-- saved from url=(0058)https://graitosaja1-cell.github.io/newANALISAv2/index.html -->
 <html lang="id" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Analisa Tagihan</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="./Analisa Tagihan_files/bootstrap.min.css" rel="stylesheet">
+  <link href="./Analisa Tagihan_files/bootstrap-icons.min.css" rel="stylesheet">
+  <script src="./Analisa Tagihan_files/xlsx.full.min.js.download"></script>
+  <script src="./Analisa Tagihan_files/supabase-js@2"></script>
   <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="https://graitosaja1-cell.github.io/newANALISAv2/manifest.json">
   <meta name="theme-color" content="#0b0f19">
-  <link rel="icon" href="icon-192.png">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" href="https://graitosaja1-cell.github.io/newANALISAv2/icon-192.png">
+  <link rel="apple-touch-icon" href="https://graitosaja1-cell.github.io/newANALISAv2/icon-192.png">
   <style>:root,[data-theme=dark]{--bg:#0b0f19;--surface:#121826;--surface2:#1a2234;--border:rgba(255,255,255,.10);--text:#e8eef8;--text-strong:#ffffff;--muted:#9aa8c0;--primary:#3b82f6;--primary-glow:rgba(59,130,246,.35);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--info:#06b6d4;--radius:14px;--thead-bg:#0f1520;--row-odd:rgba(255,255,255,.035);--row-hover:rgba(59,130,246,.12);--card-shadow:0 8px 24px rgba(0,0,0,.35);--topbar-bg:linear-gradient(180deg, rgba(18,24,38,.97), rgba(18,24,38,.90));--grid-line:rgba(59,130,246,.04);--input-bg:#1a2234;--badge-lunas-bg:rgba(16,185,129,.22);--badge-lunas-fg:#6ee7b7;--badge-titip-bg:rgba(245,158,11,.22);--badge-titip-fg:#fcd34d;--badge-belum-bg:rgba(239,68,68,.22);--badge-belum-fg:#fca5a5;--badge-tanpa-bg:rgba(6,182,212,.22);--badge-tanpa-fg:#67e8f9;--sisa:#f87171}[data-theme=light]{--bg:#f0f2f7;--surface:#ffffff;--surface2:#f5f7fb;--border:rgba(0,0,0,.10);--text:#1e293b;--text-strong:#0f172a;--muted:#64748b;--primary:#2563eb;--primary-glow:rgba(37,99,235,.20);--success:#059669;--warning:#d97706;--danger:#dc2626;--info:#0891b2;--thead-bg:#1e293b;--row-odd:rgba(0,0,0,.025);--row-hover:rgba(37,99,235,.07);--card-shadow:0 4px 16px rgba(0,0,0,.08);--topbar-bg:linear-gradient(180deg, #ffffff, #f8fafc);--grid-line:rgba(37,99,235,.05);--input-bg:#ffffff;--badge-lunas-bg:rgba(5,150,105,.12);--badge-lunas-fg:#047857;--badge-titip-bg:rgba(217,119,6,.12);--badge-titip-fg:#b45309;--badge-belum-bg:rgba(220,38,38,.12);--badge-belum-fg:#b91c1c;--badge-tanpa-bg:rgba(8,145,178,.12);--badge-tanpa-fg:#0e7490;--sisa:#dc2626}*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;margin:0;transition:background .25s,color .25s}body::before{content:'';position:fixed;inset:0;z-index:-1;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:40px 40px}.topbar{background:var(--topbar-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:.65rem 0;position:sticky;top:0;z-index:100}.topbar h1{font-size:1.05rem;font-weight:700;letter-spacing:-.02em;margin:0;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}[data-theme=light] .topbar h1{background:linear-gradient(90deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.topbar .sub{font-size:.68rem;color:var(--muted)}.theme-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;font-size:1rem}.theme-btn:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow)}.net-indicator{display:flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--muted);user-select:none}.net-dot{width:9px;height:9px;border-radius:50%;background:var(--danger);position:relative;flex:0 0 auto}.net-dot.online{background:var(--primary);animation:1.6s ease-in-out infinite netPulse}.net-dot.online::after{content:'';position:absolute;inset:-4px;border-radius:50%;background:var(--primary);opacity:.35;animation:1.6s ease-in-out infinite netPulseRing}@keyframes netPulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.55)}50%{box-shadow:0 0 0 4px rgba(59,130,246,0)}}@keyframes netPulseRing{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.6);opacity:0}}.main-wrap{padding:.75rem 1.1rem 1.5rem;max-width:100%}.main-nav{display:flex;gap:.35rem;margin-bottom:.85rem;border-bottom:1px solid var(--border);padding-bottom:0;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:thin}.main-nav .nav-btn{background:0 0;border:none;color:var(--muted);font-size:.82rem;font-weight:600;padding:.55rem 1.1rem;border-bottom:2px solid transparent;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:.4rem;flex-shrink:0;white-space:nowrap}.main-nav .nav-btn:hover{color:var(--primary)}.main-nav .nav-btn.active{color:var(--primary);border-bottom-color:var(--primary)}.main-nav .nav-btn .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:background .2s}.main-nav .nav-btn.ready .dot{background:var(--success);box-shadow:0 0 6px var(--success)}.main-nav .nav-btn .cnt{font-size:.65rem;background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:.1rem .4rem;color:var(--muted)}.upload-bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.55rem .8rem;margin-bottom:.7rem}.upload-bar .file-chip{display:inline-flex;align-items:center;gap:.4rem;background:var(--surface2);border:1px dashed var(--border);border-radius:8px;padding:.35rem .7rem;cursor:pointer;font-size:.78rem;color:var(--muted);transition:.15s;max-width:360px}.upload-bar .file-chip:hover{border-color:var(--primary);color:var(--primary)}.upload-bar .file-chip.has-file{border-style:solid;border-color:var(--success);color:var(--success);background:rgba(16,185,129,.08)}.upload-bar .file-chip .fn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}.mini-dropdown{position:relative;margin-bottom:.7rem}.mini-trigger{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.5rem .8rem;cursor:pointer;font-size:.78rem;color:var(--text);transition:border-color .15s}.mini-trigger:hover{border-color:var(--primary)}.mini-trigger .mt-left{display:flex;align-items:center;gap:.5rem;overflow:hidden;min-width:0}.mini-trigger .mt-left .fn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}.mini-trigger.ready .mt-left .fn{color:var(--text)}.mini-trigger .status-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:0 0 auto}.mini-trigger.ready .status-dot{background:var(--success);box-shadow:0 0 6px var(--success)}.mini-trigger .chevron{transition:transform .2s;color:var(--muted);flex:0 0 auto}.mini-dropdown.open .mini-trigger .chevron{transform:rotate(180deg)}.mini-dropdown.open .mini-trigger{border-color:var(--primary)}.mini-panel{pointer-events:auto;position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:60;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--card-shadow);padding:.6rem .7rem;display:none}.mini-dropdown.open .mini-panel{display:block}.mini-panel .upload-bar{border:none;padding:0;margin-bottom:0;background:0 0}.mini-panel .stat-line{display:block;margin-top:.35rem}.mini-dropdown.compact{display:inline-block;margin-bottom:0;width:auto}.mini-dropdown.compact .mini-trigger{width:auto;padding:.32rem .65rem;white-space:nowrap}.mini-dropdown.compact .mini-panel{left:auto;right:0;min-width:300px;max-width:92vw}.mini-dropdown.compact .mini-trigger .fn{max-width:130px}.btn-glow{background:linear-gradient(135deg,#3b82f6,#6366f1);border:none;color:#fff!important;font-weight:600;border-radius:8px;padding:.4rem 1rem;font-size:.8rem;box-shadow:0 4px 16px var(--primary-glow);transition:transform .15s}.btn-glow:hover:not(:disabled){transform:translateY(-1px);color:#fff!important}.btn-glow:disabled{opacity:.4;cursor:not-allowed}.btn-ghost{background:0 0;border:1px solid var(--border);color:var(--muted);border-radius:8px;font-size:.75rem;padding:.3rem .6rem;transition:.15s}.btn-ghost:hover:not(:disabled){border-color:var(--success);color:var(--success)}.btn-ghost:disabled{opacity:.4}.filter-bar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin:0;padding:0;background:0 0;border:none}.filter-bar label{font-size:.7rem;color:var(--muted);margin:0;white-space:nowrap}.raw-filter-bar{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:0 0 .55rem;padding:.35rem .65rem;background:var(--surface);border:1px solid var(--border);border-radius:10px}.raw-filter-bar label{font-size:.7rem;color:var(--muted);margin:0;white-space:nowrap}.raw-total{margin-left:auto;font-size:.72rem;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:.2rem .65rem;border-radius:999px;white-space:nowrap}.raw-total strong{color:var(--text-strong);font-weight:700}
 .raw-filter-bar{gap:.45rem;padding:.4rem .7rem;align-items:center}
 .raw-filter-bar label{font-size:.72rem;font-weight:500;color:var(--muted)}
@@ -779,11 +780,11 @@ body.startup-scanner-active {
 .mini-dropdown{pointer-events:auto!important}
 .mini-panel{pointer-events:auto!important}
 </style><meta name="build-note" content="Persistent snapshot conflict fix: local newer data is never overwritten by stale cloud snapshot."></head>
-<body>
-<div id="loadingOverlay" style="display:none">
+<body class="" style="">
+<div id="loadingOverlay" style="display: none;">
     <div class="text-center" style="min-width:280px;max-width:90vw">
       <div class="spinner-border mb-3"></div>
-      <div id="loadingStatus" style="color:var(--primary);font-weight:600;font-size:.85rem;margin-bottom:.6rem">Memuat data &amp; menghitung analisa...</div>
+      <div id="loadingStatus" style="color:var(--primary);font-weight:600;font-size:.85rem;margin-bottom:.6rem">Memproses data...</div>
       <div id="loadingBarWrap" style="display:none;background:var(--surface2);border-radius:999px;height:8px;overflow:hidden;border:1px solid var(--border)">
         <div id="loadingBar" style="height:100%;width:0%;background:linear-gradient(90deg,#3b82f6,#6366f1);border-radius:999px;transition:width .25s ease"></div>
       </div>
@@ -793,14 +794,33 @@ body.startup-scanner-active {
 
   <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-  <div class="modal fade fd-modal" id="fakturDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal fade fd-modal" id="fakturDetailModal" tabindex="-1" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered modal-xl fd-modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title"><i class="bi bi-receipt"></i> <span id="fdModalTitle">Detail Faktur</span></div>
+          <div class="modal-title"><i class="bi bi-receipt"></i> <span id="fdModalTitle">Cek Faktur Penjualan · 011003260800020</span></div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
-        <div class="modal-body" id="fdModalBody"></div>
+        <div class="modal-body" id="fdModalBody"><div class="fd-section"><div class="fd-section-title"><i class="bi bi-receipt"></i> Identitas &amp; Jatuh Tempo</div><div class="fd-grid">
+    <div class="fd-field"><div class="fd-label">No Faktur Penjualan</div><div class="fd-val">011003260800020</div></div>
+    <div class="fd-field"><div class="fd-label">Pembayaran</div><div class="fd-val">Tempo</div></div>
+    <div class="fd-field"><div class="fd-label">Customer</div><div class="fd-val">JADI BARU</div></div>
+    <div class="fd-field"><div class="fd-label">Sales</div><div class="fd-val">RAJU</div></div>
+    <div class="fd-field"><div class="fd-label">Tanggal Transaksi</div><div class="fd-val">08/01/26</div></div>
+    <div class="fd-field"><div class="fd-label">Jatuh Tempo (13 Hari)</div><div class="fd-val">20/01/26</div></div>
+    <div class="fd-field"><div class="fd-label">Status Tempo</div><div class="fd-val">Overdue 208 hari</div></div>
+    <div class="fd-field"><div class="fd-label">Total Nominal Penjualan</div><div class="fd-val rp">Rp 25.743.000</div></div>
+  </div><div class="fd-note fd-warn"><i class="bi bi-calendar-check"></i> <strong>Overdue 208 hari</strong> · Jatuh tempo 13 hari dihitung inklusif: tanggal transaksi = hari ke-1.</div></div><div class="fd-section"><div class="fd-section-title"><i class="bi bi-file-earmark-text"></i> Data Tagihan (DTH)</div><div class="fd-note fd-warn"><i class="bi bi-search"></i> <strong>No Faktur Penjualan 011003260800020</strong> tidak ditemukan langsung di DTH. Sistem menemukan <strong>No Faktur DTH kandidat 011003260700740</strong> berdasarkan kemiripan data. <u>Kandidat ini belum otomatis dianggap faktur yang sama.</u></div><div class="fd-grid">
+      <div class="fd-field"><div class="fd-label">No Faktur Penjualan</div><div class="fd-val">011003260800020</div></div>
+      <div class="fd-field"><div class="fd-label">No Faktur DTH (Kandidat)</div><div class="fd-val">011003260700740</div></div>
+      <div class="fd-field"><div class="fd-label">Nama Outlet DTH</div><div class="fd-val">JADI BARU</div></div>
+      <div class="fd-field"><div class="fd-label">Salesman DTH</div><div class="fd-val">RAJU</div></div>
+      <div class="fd-field"><div class="fd-label">Alamat DTH</div><div class="fd-val">KEBUMEN</div></div>
+      <div class="fd-field"><div class="fd-label">Tanggal Nota DTH</div><div class="fd-val">18/07/26</div></div>
+      <div class="fd-field"><div class="fd-label">Tanggal Tempo DTH</div><div class="fd-val">31/07/26</div></div>
+      <div class="fd-field"><div class="fd-label">Total Tagihan DTH Kandidat</div><div class="fd-val rp">Rp 20.858.000</div></div>
+      <div class="fd-field"><div class="fd-label">Keterangan DTH</div><div class="fd-val">MINYAK</div></div>
+    </div></div><div class="fd-top-row"><div class="fd-section"><div class="fd-section-title"><i class="bi bi-cash-stack"></i> Data Uang Masuk</div><div class="fd-note"><i class="bi bi-info-circle-fill"></i> Belum ada uang masuk tercatat untuk faktur ini.</div></div><div class="fd-section"><div class="fd-section-title"><i class="bi bi-cart-check"></i> Data Penjualan · Rincian Nominal</div><div class="fd-note fd-warn"><i class="bi bi-calculator"></i> <strong>Total Nominal Penjualan: Rp 25.743.000</strong> · 3 baris transaksi · Pembayaran: Tempo</div><div class="table-container" style="max-height:220px"><table class="fd-mini-table"><thead><tr><th>Tanggal</th><th>Produk</th><th>Jumlah</th><th>Harga Jual</th><th>Disc</th><th>Total</th><th>Pembayaran</th></tr></thead><tbody><tr><td>08/01/26</td><td>FITRI BOTOL 200ML</td><td>100 KRT</td><td class="rp">Rp 115.800</td><td class="rp">Rp 0</td><td class="rp"><strong>Rp 11.580.000</strong></td><td>Tempo</td></tr><tr><td>08/01/26</td><td>FITRI BOTOL 800ML</td><td>50 KRT</td><td class="rp">Rp 215.100</td><td class="rp">Rp 0</td><td class="rp"><strong>Rp 10.755.000</strong></td><td>Tempo</td></tr><tr><td>08/01/26</td><td>FITRI  BOTOL 400ML</td><td>30 KRT</td><td class="rp">Rp 113.600</td><td class="rp">Rp 0</td><td class="rp"><strong>Rp 3.408.000</strong></td><td>Tempo</td></tr></tbody></table></div></div></div></div>
       </div>
     </div>
   </div>
@@ -827,7 +847,7 @@ body.startup-scanner-active {
 
   <div class="main-wrap">
     <div class="main-nav">
-      <button class="nav-btn ready" data-tab="dth" id="navDth">
+      <button class="nav-btn ready active" data-tab="dth" id="navDth">
         <span class="dot" id="dotDth"></span>
         <i class="bi bi-file-earmark-spreadsheet"></i> Data Tagihan
         <span class="cnt" id="cntDth">467</span>
@@ -835,35 +855,35 @@ body.startup-scanner-active {
       <button class="nav-btn ready" data-tab="laporan" id="navLap">
         <span class="dot" id="dotLap"></span>
         <i class="bi bi-cash-stack"></i> Data Uang Masuk
-        <span class="cnt" id="cntLap">1584</span>
+        <span class="cnt" id="cntLap">2645</span>
       </button>
       <button class="nav-btn ready" data-tab="penjualan" id="navPjl">
         <span class="dot" id="dotPjl"></span>
         <i class="bi bi-basket3"></i> Data Penjualan
-        <span class="cnt" id="cntPjl">2634</span>
+        <span class="cnt" id="cntPjl">3859</span>
       </button>
-      <button class="nav-btn ready active" data-tab="analisa" id="navAnalisa">
+      <button class="nav-btn ready" data-tab="analisa" id="navAnalisa">
         <span class="dot" id="dotAnalisa"></span>
         <i class="bi bi-graph-up-arrow"></i> Analisa
-        <span class="cnt" id="cntAnalisa">1645</span>
+        <span class="cnt" id="cntAnalisa">2665</span>
       </button>
     </div>
 
     <!-- TAB DTH -->
-    <div class="tab-panel d-none" id="panelDth">
+    <div class="tab-panel" id="panelDth">
       <div class="raw-filter-bar" id="filterBarDth" style="display: flex;">
         <label><i class="bi bi-funnel me-1"></i>Filter Bulan:</label>
-        <div class="month-pills" id="monthPillsDth"><span class="month-pill" data-month="__ALL__">Semua</span><span class="month-pill active" data-month="08">Agustus</span></div>
+        <div class="month-select" id="monthPillsDth"><button type="button" class="month-select-trigger"><span class="ms-label">Agustus</span><i class="bi bi-chevron-down ms-chevron"></i></button><div class="month-select-panel"><div class="month-select-option" data-month="__ALL__">Semua Bulan</div><div class="month-select-option active" data-month="08">Agustus (terbaru)</div></div></div>
         <div class="dth-view-toggle" id="dthViewToggle">
-          <button type="button" class="dvt-btn active" data-view="all"><i class="bi bi-table"></i> Data Tagihan</button>
-          <button type="button" class="dvt-btn dvt-warn" data-view="cek"><i class="bi bi-shield-exclamation"></i> Cek Data <span class="dvt-badge" id="badgeCekData">0</span></button>
+          <button type="button" class="dvt-btn" data-view="all"><i class="bi bi-table"></i> Data Tagihan</button>
+          <button type="button" class="dvt-btn dvt-warn active" data-view="cek"><i class="bi bi-shield-exclamation"></i> Cek Data <span class="dvt-badge" id="badgeCekData">93</span></button>
         </div>
         <div class="raw-total" style="margin-left:0">Total Tagihan: <strong id="totalDth">Rp 353.966.100</strong></div>
         <input type="search" class="search-box" placeholder="Cari faktur / outlet / sales..." data-table="tblDthRaw" style="margin-left:auto;">
         <div class="mini-dropdown compact" id="ddDth">
-          <button type="button" class="mini-trigger" id="triggerDth">
+          <button type="button" class="mini-trigger ready" id="triggerDth">
             <span class="mt-left">
-              <span class="status-dot" id="dotUploadDth"></span>
+              <span class="status-dot ready" id="dotUploadDth"></span>
               <i class="bi bi-list"></i>
               <span class="fn" id="triggerLabelDth">MENU</span>
             </span>
@@ -871,18 +891,18 @@ body.startup-scanner-active {
           </button>
           <div class="mini-panel">
             <div class="upload-bar">
-              <div class="file-chip" id="chipDth" onclick="document.getElementById('fileDth').click()">
+              <div class="file-chip" id="chipDth" onclick="document.getElementById(&#39;fileDth&#39;).click()">
                 <i class="bi bi-upload"></i>
                 <span class="fn" id="labelDth">Pilih file Data Tagihan (Sales &amp; Cash Dropping) (.xlsx)</span>
                 <input type="file" id="fileDth" accept=".xlsx,.xls" class="d-none">
               </div>
-              <span class="stat-line" id="statDth"><strong>549</strong> baris · <strong>467</strong> faktur unik (dari cloud)</span>
+              <span class="stat-line" id="statDth"><strong>549</strong> baris · <strong>467</strong> faktur unik (data terbaru di perangkat)</span>
             </div>
           </div>
         </div>
       </div>
       <div class="fd-note d-none" id="cekDataBelumUpload" style="margin-bottom:.55rem"></div>
-      <div class="table-container" id="wrapDth">
+      <div class="table-container d-none" id="wrapDth">
         <div class="empty-state d-none" id="emptyDth">
           <i class="bi bi-file-earmark-excel"></i>
           <p>Upload file Data Tagihan untuk melihat data di sini</p>
@@ -892,10 +912,121 @@ body.startup-scanner-active {
             <th>No Faktur</th><th>Nama Outlet</th><th>Alamat</th><th>Salesman</th>
             <th>Tgl Nota</th><th>Tgl Tempo</th><th>Tagihan</th><th>Ket</th><th>Sheet</th>
           </tr></thead>
-          <tbody></tbody>
+          <tbody><tr>
+        <td>011003260701179</td><td>TOKO MULYO</td><td>PASAR TLOGO</td><td>RAJU.T</td>
+        <td>31/07/26</td><td>13/08/26</td>
+        <td class="rp">Rp 870.000</td><td>RUPA2</td><td>10-08</td></tr><tr>
+        <td>011003260701120</td><td>FAKIH</td><td>RANTEWIRINGIN</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 215.100</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701122</td><td>TOKO IRMA</td><td>WARUNG PRING</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 1.075.500</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701123</td><td>TOKO AL HIKMAH</td><td>WARUNG PRING</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 794.100</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701124</td><td>TOKO MANJA</td><td>AMBALKUMOLO</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 555.900</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701125</td><td>TOKO CHOLID</td><td>WARUNG PRING</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 568.000</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701126</td><td>TOKO DEASRI</td><td>PASAR BOCOR BLOK A14</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 2.206.800</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701127</td><td>TOKO RINANTI</td><td>PASAR BOCOR</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 328.700</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701128</td><td>TOKO EKI</td><td>PASAR BOCOR</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 215.100</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701129</td><td>TOKO MUDAKIR</td><td>WARUNG PRING</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 340.800</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701130</td><td>TOKO SITI B03</td><td>PASAR BOCOR</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 1.075.500</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701131</td><td>TOKO NING</td><td>MURTIREJO</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 227.200</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701132</td><td>FAKIH</td><td>RANTEWIRINGIN</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 115.528</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701133</td><td>TOKO IRMA</td><td>WARUNG PRING</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 719.640</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701134</td><td>TOKO DEASRI</td><td>PASAR BOCOR BLOK A14</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 276.000</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701135</td><td>TOKO IBU ATUN</td><td>PASAR BOCOR</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 431.784</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701136</td><td>TOKO RINANTI</td><td>PASAR BOCOR</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 359.820</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701137</td><td>TOKO EKI</td><td>PASAR BOCOR</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 141.200</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701138</td><td>TOKO NING</td><td>MURTIREJO</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 68.556</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701139</td><td>TOKO SAHLIL</td><td>BOCOR</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 234.000</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701143</td><td>TOKO SAKIMAH</td><td>KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 215.100</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701144</td><td>SUMBER BERKAH</td><td>KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 430.200</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701145</td><td>TOKO BU MUJI</td><td>PASAR KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 657.400</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701146</td><td>TOKO WARSILAH</td><td>PASAR KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 113.600</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701147</td><td>TOKO PONIAH</td><td>PASAR KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 229.400</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701149</td><td>TOKO YANI</td><td>PASAR KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 215.100</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701150</td><td>TOKO SALMIASIH</td><td>PASAR KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 113.600</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701151</td><td>TOKO SITUM</td><td>PASAR KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 328.700</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701152</td><td>TOKO SUKARNI</td><td>PANJANGSARI</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 645.300</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701153</td><td>TOKO SISWANTO</td><td>POHKUMBANG</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 2.091.000</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701155</td><td>TOKO WARISAH</td><td>KEDUNGJATI</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 645.300</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701141</td><td>TOKO SIDOMULYO</td><td>KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 399.000</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701142</td><td>TOKO ASIH</td><td>PASAR KEMIT</td><td>RAJU.T</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 231.000</td><td>RUPA2</td><td>12-08</td></tr><tr>
+        <td>011003260701107</td><td>TOKO DJONO</td><td>SELOKERTO</td><td>HAFID</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 889.000</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701108</td><td>TOKO MARNI</td><td>PASAR JATIRATA</td><td>M.KHAFIDUN</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 988.300</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701109</td><td>TOKO WIWIN</td><td>JATIROTO RT 4 RW 1</td><td>M.KHAFIDUN</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 340.800</td><td>MINYAK</td><td>12-08</td></tr><tr>
+        <td>011003260701111</td><td>TOKO PARTI</td><td>KRETEG</td><td>M.KHAFIDUN</td>
+        <td>30/07/26</td><td>12/08/26</td>
+        <td class="rp">Rp 889.000</td><td>MINYAK</td><td>12-08</td></tr><tr aria-hidden="true" style="height:16384px"><td colspan="20" style="padding:0;border:none;height:16384px"></td></tr></tbody>
         </table>
       </div>
-      <div class="table-container d-none" id="wrapDthCek">
+      <div class="table-container" id="wrapDthCek">
         <div class="empty-state d-none" id="emptyCekData">
           <i class="bi bi-shield-check"></i>
           <p>Semua transaksi Penjualan Tempo sudah tercatat di Data Tagihan.</p>
@@ -904,7 +1035,7 @@ body.startup-scanner-active {
           <thead><tr>
             <th>No Faktur</th><th>Tanggal</th><th>Customer</th><th>Alamat</th><th>Sales</th><th>Total</th><th>Pembayaran</th><th>Kemungkinan Cocok di DTH</th>
           </tr></thead>
-          <tbody></tbody>
+          <tbody><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800020&#39;,&#39;011003260700740&#39;)">011003260800020</a></td><td>08/01/26</td><td>JADI BARU</td><td>KEBUMEN</td><td>RAJU</td><td class="rp">Rp 25.743.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700740</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800067&#39;,&#39;011003260800059&#39;)">011003260800067</a></td><td>08/03/26</td><td>TOKO FAMILI</td><td>PASAR KARANGSAMBUNG</td><td>JOSSY</td><td class="rp">Rp 6.273.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800059</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 9.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800069&#39;,&#39;011003260700787&#39;)">011003260800069</a></td><td>08/03/26</td><td>BERKAH MULYA</td><td>KALIGENDING</td><td>JOSSY</td><td class="rp">Rp 3.817.000</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700787</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800050&#39;,&#39;011003260700797&#39;)">011003260800050</a></td><td>08/03/26</td><td>TOKO DANANG</td><td>PASAR PON</td><td>RAJU</td><td class="rp">Rp 3.226.500</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700797</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800106&#39;,&#39;011003260700697&#39;)">011003260800106</a></td><td>08/04/26</td><td>TOKO JAHIR</td><td>KALIBAGOR</td><td>RAJU</td><td class="rp">Rp 2.151.000</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700697</strong> · Customer 100% · Alamat 100% · Sales cocok · Total cocok · No Faktur mirip · skor 13.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800068&#39;,&#39;011003260700791&#39;)">011003260800068</a></td><td>08/03/26</td><td>TOKO KASINAH</td><td>LANGSE</td><td>JOSSY</td><td class="rp">Rp 2.091.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700791</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800012&#39;,&#39;011003260700740&#39;)">011003260800012</a></td><td>08/01/26</td><td>TOKO SILMI</td><td>KEBUMEN</td><td>RAJU</td><td class="rp">Rp 1.995.300</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700740</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 5.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800033&#39;,&#39;011003260800135&#39;)">011003260800033</a></td><td>08/01/26</td><td>PUSAKA INDAH</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 1.654.500</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800135</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800088&#39;,&#39;011003260800109&#39;)">011003260800088</a></td><td>08/04/26</td><td>TOKO ATUN</td><td>WOTBUONO</td><td>JOSSY</td><td class="rp">Rp 1.333.500</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800109</strong> · Customer 100% · Alamat 88% · Sales cocok · No Faktur mirip · Seri sama · skor 10.1</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800041&#39;,&#39;011003260700770&#39;)">011003260800041</a></td><td>08/03/26</td><td>TOKO EDI SUNARYO</td><td>SUWUK</td><td>HAFID</td><td class="rp">Rp 1.302.700</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700770</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800013&#39;,&#39;011003260700736&#39;)">011003260800013</a></td><td>08/01/26</td><td>TOKO RIZQUNA</td><td>KEBUMEN</td><td>RAJU</td><td class="rp">Rp 1.224.300</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700736</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.1</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800098&#39;,&#39;011003260700809&#39;)">011003260800098</a></td><td>08/04/26</td><td>TOKO YULI</td><td>ROWOKELE</td><td>HAFID</td><td class="rp">Rp 1.120.600</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700809</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800075&#39;,&#39;011003260700820&#39;)">011003260800075</a></td><td>08/04/26</td><td>TOKO TUTI</td><td>PASAR JATISARI</td><td>RAJU</td><td class="rp">Rp 1.002.600</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700820</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800039&#39;,&#39;011003260700767&#39;)">011003260800039</a></td><td>08/03/26</td><td>TOKO AL BAROKAH</td><td>BUAYAN</td><td>HAFID</td><td class="rp">Rp 986.100</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700767</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800052&#39;,&#39;011003260700799&#39;)">011003260800052</a></td><td>08/03/26</td><td>TOKO MIAMI</td><td>PADURESO</td><td>RAJU</td><td class="rp">Rp 926.400</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700799</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800032&#39;,&#39;011003260800135&#39;)">011003260800032</a></td><td>08/01/26</td><td>PI MART</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 876.900</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800135</strong> · Alamat 100% · Sales cocok · Total cocok · No Faktur mirip · Seri sama · skor 9.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800101&#39;,&#39;011003260800102&#39;)">011003260800101</a></td><td>08/04/26</td><td>BAROKAH MART</td><td>DEMANGSARI</td><td>HAFID</td><td class="rp">Rp 872.500</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800102</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800100&#39;,&#39;011003260700810&#39;)">011003260800100</a></td><td>08/04/26</td><td>TOKO MARMO</td><td>PASAR ROWOKELE</td><td>HAFID</td><td class="rp">Rp 860.400</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700810</strong> · Customer 100% · Alamat 100% · Total mendekati · No Faktur mirip · skor 9.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800027&#39;,&#39;011003260800022&#39;)">011003260800027</a></td><td>08/01/26</td><td>TOKO AMIN</td><td>SIDOARJO</td><td>JOSSY</td><td class="rp">Rp 780.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800022</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 9.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800089&#39;,&#39;011003260700834&#39;)">011003260800089</a></td><td>08/04/26</td><td>TOKO ANJAR</td><td>KEDUNGWINANGUN</td><td>JOSSY</td><td class="rp">Rp 775.400</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700834</strong> · Alamat 100% · No Faktur mirip · skor 5.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800082&#39;,&#39;011003260700938&#39;)">011003260800082</a></td><td>08/04/26</td><td>TOKO PUTRI LESTARI</td><td>SIDOMORO</td><td>RAJU</td><td class="rp">Rp 661.800</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700938</strong> · Sales cocok · Total cocok · No Faktur mirip · skor 8.6</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800051&#39;,&#39;011003260700796&#39;)">011003260800051</a></td><td>08/03/26</td><td>TOKO NAPSYAH</td><td>PASAR PON</td><td>RAJU</td><td class="rp">Rp 657.400</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700796</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800037&#39;,&#39;011003260700764&#39;)">011003260800037</a></td><td>08/03/26</td><td>SINAR PURWOGONDO</td><td>PURWOGONDO</td><td>HAFID</td><td class="rp">Rp 657.400</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700764</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800111&#39;,&#39;011003260700762&#39;)">011003260800111</a></td><td>08/04/26</td><td>TOKO RATMI</td><td>BANYU MUDAL</td><td>HAFID</td><td class="rp">Rp 652.500</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700762</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800015&#39;,&#39;011003260701025&#39;)">011003260800015</a></td><td>08/01/26</td><td>LUHAM CELL</td><td>KALIREJO</td><td>RAJU</td><td class="rp">Rp 645.300</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260701025</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 5.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800095&#39;,&#39;011003260800091&#39;)">011003260800095</a></td><td>08/04/26</td><td>TOKO SRC CITRA</td><td>WOTBUONO</td><td>JOSSY</td><td class="rp">Rp 606.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800091</strong> · Customer 100% · Alamat 88% · Sales cocok · No Faktur mirip · Seri sama · skor 9.1</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800014&#39;,&#39;011003260701025&#39;)">011003260800014</a></td><td>08/01/26</td><td>TOKO MAHASIM</td><td>KALIREJO</td><td>RAJU</td><td class="rp">Rp 576.800</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260701025</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 5.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800058&#39;,&#39;011003260700779&#39;)">011003260800058</a></td><td>08/03/26</td><td>TOKO TUMI</td><td>PASAR KARANGSAMBUNG</td><td>JOSSY</td><td class="rp">Rp 546.000</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700779</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800019&#39;,&#39;011003260700740&#39;)">011003260800019</a></td><td>08/01/26</td><td>JADI BARU</td><td>KEBUMEN</td><td>RAJU</td><td class="rp">Rp 544.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700740</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800006&#39;,&#39;011003260800002&#39;)">011003260800006</a></td><td>08/01/26</td><td>TOKO SARTINI</td><td>PASAR MERGOSONO</td><td>HAFID</td><td class="rp">Rp 454.400</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800002</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800023&#39;,&#39;011003260700187&#39;)">011003260800023</a></td><td>08/01/26</td><td>TOKO BU SANTI</td><td>PASAR KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 451.500</td><td>Tempo</td><td><span style="color:var(--warning)"><i class="bi bi-search"></i> <strong>Kemungkinan sama transaksi</strong>: <strong>011003260700187</strong> · Alamat 100% · Sales cocok · Total cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800045&#39;,&#39;011003260700769&#39;)">011003260800045</a></td><td>08/03/26</td><td>TOKO KIKI</td><td>JLADRI</td><td>HAFID</td><td class="rp">Rp 450.560</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700769</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800110&#39;,&#39;011003260700809&#39;)">011003260800110</a></td><td>08/04/26</td><td>TOKO YULI</td><td>ROWOKELE</td><td>HAFID</td><td class="rp">Rp 445.500</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700809</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800086&#39;,&#39;011003260800093&#39;)">011003260800086</a></td><td>08/04/26</td><td>TOKO NETRAL</td><td>PANDANLOR</td><td>JOSSY</td><td class="rp">Rp 444.500</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800093</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800024&#39;,&#39;011003260700187&#39;)">011003260800024</a></td><td>08/01/26</td><td>TOKO REJO</td><td>PASAR KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 435.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700187</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800028&#39;,&#39;011003260700804&#39;)">011003260800028</a></td><td>08/01/26</td><td>PI MART</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 435.000</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700804</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800053&#39;,&#39;011003260700935&#39;)">011003260800053</a></td><td>08/03/26</td><td>AFNAN CELL</td><td>WONOKROMO</td><td>RAJU</td><td class="rp">Rp 430.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700935</strong> · Sales cocok · Total cocok · No Faktur mirip · skor 7.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800077&#39;,&#39;011003260700822&#39;)">011003260800077</a></td><td>08/04/26</td><td>BILQIS MART</td><td>ROWOREJO</td><td>RAJU</td><td class="rp">Rp 430.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700822</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800078&#39;,&#39;011003260700819&#39;)">011003260800078</a></td><td>08/04/26</td><td>TOKO SHEKH</td><td>KELAPA SAWIT</td><td>RAJU</td><td class="rp">Rp 430.200</td><td>Tempo</td><td><span style="color:var(--warning)"><i class="bi bi-search"></i> <strong>Kemungkinan sama transaksi</strong>: <strong>011003260700819</strong> · Customer 100% · Alamat 100% · Sales cocok · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800079&#39;,&#39;011003260700818&#39;)">011003260800079</a></td><td>08/04/26</td><td>TOKO TAMSIS</td><td>SANGUBANYU</td><td>RAJU</td><td class="rp">Rp 430.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700818</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 7.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800080&#39;,&#39;011003260700824&#39;)">011003260800080</a></td><td>08/04/26</td><td>TOKO NIKMATIN</td><td>SANGUBANYU</td><td>RAJU</td><td class="rp">Rp 430.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700824</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800036&#39;,&#39;011003260700301&#39;)">011003260800036</a></td><td>08/01/26</td><td>TOKO CAKRA</td><td>SRUNI</td><td>RAJU</td><td class="rp">Rp 418.200</td><td>Tempo</td><td><span style="color:var(--muted)"><i class="bi bi-search"></i> <strong>Kemungkinan kebetulan</strong>: <strong>011003260700301</strong> · Sales cocok · Tanggal ±7 hari · No Faktur mirip · skor 3.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800054&#39;,&#39;011003260700795&#39;)">011003260800054</a></td><td>08/03/26</td><td>TOKO AKROM</td><td>KALIPUTIH</td><td>RAJU</td><td class="rp">Rp 413.680</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700795</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 10.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800064&#39;,&#39;011003260800059&#39;)">011003260800064</a></td><td>08/03/26</td><td>TOKO DENOK</td><td>PASAR KARANGSAMBUNG</td><td>JOSSY</td><td class="rp">Rp 390.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800059</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 6.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800035&#39;,&#39;011003260800008&#39;)">011003260800035</a></td><td>08/01/26</td><td>TOKO PRATAMA</td><td>BANYUMUDAL</td><td>HAFID</td><td class="rp">Rp 360.000</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800008</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 11.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800066&#39;,&#39;011003260700234&#39;)">011003260800066</a></td><td>08/03/26</td><td>TOKO SUPARMAN</td><td>LANGSE</td><td>JOSSY</td><td class="rp">Rp 360.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700234</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800026&#39;,&#39;011003260800135&#39;)">011003260800026</a></td><td>08/01/26</td><td>TOKO POJOK</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 348.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800135</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 7.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800038&#39;,&#39;011003260800040&#39;)">011003260800038</a></td><td>08/03/26</td><td>TOKO SAFANIYAH</td><td>BUAYAN</td><td>HAFID</td><td class="rp">Rp 343.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800040</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 6.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800010&#39;,&#39;011003260800269&#39;)">011003260800010</a></td><td>08/01/26</td><td>TOKO SHINTA</td><td>JLN. KARANGBOLONG KM.8</td><td>HAFID</td><td class="rp">Rp 340.800</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800269</strong> · Sales cocok · No Faktur mirip · Seri sama · skor 6.1</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800016&#39;,&#39;&#39;)">011003260800016</a></td><td>08/01/26</td><td>BUMDES MAPAN 1</td><td>BUMIREJO</td><td>RAJU</td><td class="rp">Rp 328.700</td><td>Tempo</td><td><span style="color:var(--muted)">Tidak ditemukan kandidat DTH yang cukup kuat</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800021&#39;,&#39;011003260700805&#39;)">011003260800021</a></td><td>08/01/26</td><td>TOKO SRC KARUNIA</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 328.700</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700805</strong> · Alamat 100% · Total cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800029&#39;,&#39;011003260700201&#39;)">011003260800029</a></td><td>08/01/26</td><td>TOKO TINEM</td><td>PASAR KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 316.800</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700201</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800065&#39;,&#39;011003260700248&#39;)">011003260800065</a></td><td>08/03/26</td><td>TOKO SUTARMAN</td><td>UTARA LIPPI</td><td>JOSSY</td><td class="rp">Rp 288.000</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700248</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800044&#39;,&#39;011003260700764&#39;)">011003260800044</a></td><td>08/03/26</td><td>SINAR PURWOGONDO</td><td>PURWOGONDO</td><td>HAFID</td><td class="rp">Rp 268.304</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700764</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800056&#39;,&#39;011003260700797&#39;)">011003260800056</a></td><td>08/03/26</td><td>TOKO DANANG</td><td>PASAR PON</td><td>RAJU</td><td class="rp">Rp 232.950</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700797</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800031&#39;,&#39;011003260800135&#39;)">011003260800031</a></td><td>08/01/26</td><td>SUMBER REJEKI</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 231.000</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800135</strong> · Alamat 100% · Sales cocok · Total cocok · No Faktur mirip · Seri sama · skor 11.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800097&#39;,&#39;011003260700808&#39;)">011003260800097</a></td><td>08/04/26</td><td>TOKO WALUYO</td><td>BUNIAYU</td><td>HAFID</td><td class="rp">Rp 229.400</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700808</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800007&#39;,&#39;011003260700724&#39;)">011003260800007</a></td><td>08/01/26</td><td>TOKO RUDI</td><td>PASAR MERGOSONO</td><td>HAFID</td><td class="rp">Rp 227.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700724</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800004&#39;,&#39;011003260800002&#39;)">011003260800004</a></td><td>08/01/26</td><td>TOKO WIWIN</td><td>PASAR MERGOSONO</td><td>HAFID</td><td class="rp">Rp 227.200</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800002</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800076&#39;,&#39;011003260700821&#39;)">011003260800076</a></td><td>08/04/26</td><td>TOKO SARYADI</td><td>PASAR JATI SARI</td><td>RAJU</td><td class="rp">Rp 227.200</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700821</strong> · Customer 100% · Alamat 100% · Sales cocok · Total cocok · No Faktur mirip · skor 13.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800090&#39;,&#39;011003260700834&#39;)">011003260800090</a></td><td>08/04/26</td><td>TOKO SRC SETIA HATI</td><td>KEDUNGWINANGUN</td><td>JOSSY</td><td class="rp">Rp 227.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700834</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800099&#39;,&#39;011003260800113&#39;)">011003260800099</a></td><td>08/04/26</td><td>TOKO MUKTI</td><td>PASAR ROWOKELE</td><td>HAFID</td><td class="rp">Rp 227.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800113</strong> · Customer 100% · Sales cocok · No Faktur mirip · Seri sama · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800063&#39;,&#39;011003260700791&#39;)">011003260800063</a></td><td>08/03/26</td><td>TOKO KASINAH</td><td>LANGSE</td><td>JOSSY</td><td class="rp">Rp 225.280</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700791</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800070&#39;,&#39;011003260700806&#39;)">011003260800070</a></td><td>08/03/26</td><td>TOKO BAKSO FAMILY</td><td>SIDOHARJO</td><td>JOSSY</td><td class="rp">Rp 217.500</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700806</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800071&#39;,&#39;011003260700805&#39;)">011003260800071</a></td><td>08/03/26</td><td>TOKO SUBUR</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 217.500</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700805</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800104&#39;,&#39;011003260700810&#39;)">011003260800104</a></td><td>08/04/26</td><td>TOKO MARMO</td><td>PASAR ROWOKELE</td><td>HAFID</td><td class="rp">Rp 215.892</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700810</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800001&#39;,&#39;011003260800002&#39;)">011003260800001</a></td><td>08/01/26</td><td>TOKO SYUKUR</td><td>PASAR MERGOSONO</td><td>HAFID</td><td class="rp">Rp 215.100</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800002</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800049&#39;,&#39;011003260700795&#39;)">011003260800049</a></td><td>08/03/26</td><td>TOKO AKROM</td><td>KALIPUTIH</td><td>RAJU</td><td class="rp">Rp 215.100</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700795</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800060&#39;,&#39;011003260800059&#39;)">011003260800060</a></td><td>08/03/26</td><td>TOKO DENOK</td><td>PASAR KARANGSAMBUNG</td><td>JOSSY</td><td class="rp">Rp 215.100</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800059</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 6.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800061&#39;,&#39;011003260700783&#39;)">011003260800061</a></td><td>08/03/26</td><td>TOKO SUTARMAN</td><td>UTARA LIPPI</td><td>JOSSY</td><td class="rp">Rp 215.100</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700783</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800087&#39;,&#39;011003260700832&#39;)">011003260800087</a></td><td>08/04/26</td><td>TOKO TINI/HADI SUWITO</td><td>KEDUNGSARI</td><td>JOSSY</td><td class="rp">Rp 215.100</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700832</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800092&#39;,&#39;011003260700807&#39;)">011003260800092</a></td><td>08/04/26</td><td>TOKO SITI</td><td>PANDANLOR</td><td>JOSSY</td><td class="rp">Rp 215.100</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700807</strong> · Customer 100% · Alamat 100% · Total cocok · No Faktur mirip · skor 11.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800057&#39;,&#39;011003260700799&#39;)">011003260800057</a></td><td>08/03/26</td><td>TOKO MIAMI</td><td>PADURESO</td><td>RAJU</td><td class="rp">Rp 184.200</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700799</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800085&#39;,&#39;011003260800107&#39;)">011003260800085</a></td><td>08/04/26</td><td>TOKO KANAYA</td><td>PASAR JOGOSIMO</td><td>JOSSY</td><td class="rp">Rp 179.556</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800107</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800046&#39;,&#39;011003260700771&#39;)">011003260800046</a></td><td>08/03/26</td><td>TOKO MBA SRI</td><td>KEDALEMAN KULON</td><td>HAFID</td><td class="rp">Rp 167.752</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700771</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800112&#39;,&#39;011003260701100&#39;)">011003260800112</a></td><td>08/04/26</td><td>TOKO BERKAH</td><td>SIDOMORO</td><td>RAJU</td><td class="rp">Rp 156.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260701100</strong> · Customer 100% · Sales cocok · No Faktur mirip · skor 5.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800094&#39;,&#39;011003260800109&#39;)">011003260800094</a></td><td>08/04/26</td><td>TOKO ATUN</td><td>WOTBUONO</td><td>JOSSY</td><td class="rp">Rp 156.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800109</strong> · Customer 100% · Alamat 88% · Sales cocok · No Faktur mirip · Seri sama · skor 9.1</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800096&#39;,&#39;011003260700838&#39;)">011003260800096</a></td><td>08/04/26</td><td>TOKO SRC SETIA HATI</td><td>KEDUNGWINANGUN</td><td>JOSSY</td><td class="rp">Rp 156.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700838</strong> · Customer 100% · Alamat 100% · Total mendekati · No Faktur mirip · skor 7.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800103&#39;,&#39;011003260700808&#39;)">011003260800103</a></td><td>08/04/26</td><td>TOKO WALUYO</td><td>BUNIAYU</td><td>HAFID</td><td class="rp">Rp 137.112</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700808</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800055&#39;,&#39;011003260700046&#39;)">011003260800055</a></td><td>08/03/26</td><td>AFNAN CELL</td><td>WONOKROMO</td><td>RAJU</td><td class="rp">Rp 117.140</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700046</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 7.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800043&#39;,&#39;011003260700771&#39;)">011003260800043</a></td><td>08/03/26</td><td>TOKO MBA SRI</td><td>KEDALEMAN KULON</td><td>HAFID</td><td class="rp">Rp 115.800</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700771</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800062&#39;,&#39;011003260700234&#39;)">011003260800062</a></td><td>08/03/26</td><td>TOKO SUPARMAN</td><td>LANGSE</td><td>JOSSY</td><td class="rp">Rp 115.800</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700234</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800003&#39;,&#39;011003260800002&#39;)">011003260800003</a></td><td>08/01/26</td><td>TOKO MARSIH</td><td>PASAR MERGOSONO</td><td>HAFID</td><td class="rp">Rp 113.600</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800002</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800005&#39;,&#39;011003260800002&#39;)">011003260800005</a></td><td>08/01/26</td><td>BU SUGI</td><td>PASAR MERGOSONO</td><td>HAFID</td><td class="rp">Rp 113.600</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260800002</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 8.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800017&#39;,&#39;011003260700907&#39;)">011003260800017</a></td><td>08/01/26</td><td>BUMDES MAPAN 2</td><td>KARANGSARI</td><td>RAJU</td><td class="rp">Rp 113.600</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700907</strong> · Sales cocok · Total cocok · No Faktur mirip · skor 7.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800081&#39;,&#39;011003260700818&#39;)">011003260800081</a></td><td>08/04/26</td><td>TOKO BU NUR</td><td>SANGUBANYU</td><td>RAJU</td><td class="rp">Rp 113.600</td><td>Tempo</td><td><span style="color:var(--success)"><i class="bi bi-search"></i> <strong>Kemungkinan besar transaksi sama</strong>: <strong>011003260700818</strong> · Customer 100% · Alamat 100% · Sales cocok · Total cocok · No Faktur mirip · skor 13.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800047&#39;,&#39;011003260700770&#39;)">011003260800047</a></td><td>08/03/26</td><td>TOKO EDI SUNARYO</td><td>SUWUK</td><td>HAFID</td><td class="rp">Rp 105.600</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700770</strong> · Customer 100% · Alamat 100% · No Faktur mirip · skor 6.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800048&#39;,&#39;011003260800042&#39;)">011003260800048</a></td><td>08/03/26</td><td>TOKO SIPUR</td><td>WETON WETAN</td><td>HAFID</td><td class="rp">Rp 105.600</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800042</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 6.8</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800025&#39;,&#39;011003260700187&#39;)">011003260800025</a></td><td>08/01/26</td><td>TOKO BAMBANG</td><td>PASAR KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 87.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700187</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 7.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800030&#39;,&#39;011003260700187&#39;)">011003260800030</a></td><td>08/01/26</td><td>TOKO BU MINAH</td><td>PASAR KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 80.000</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700187</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 7.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800083&#39;,&#39;011003260700822&#39;)">011003260800083</a></td><td>08/04/26</td><td>BILQIS MART</td><td>ROWOREJO</td><td>RAJU</td><td class="rp">Rp 52.800</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700822</strong> · Customer 100% · Alamat 100% · Sales cocok · No Faktur mirip · skor 8.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800018&#39;,&#39;011003260700006&#39;)">011003260800018</a></td><td>08/01/26</td><td>BUMDES MAPAN 2</td><td>KARANGSARI</td><td>RAJU</td><td class="rp">Rp 34.278</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260700006</strong> · Alamat 100% · Sales cocok · No Faktur mirip · skor 7.3</span></td></tr><tr><td><a href="javascript:void(0)" class="link-faktur" onclick="openFakturModal(&#39;011003260800034&#39;,&#39;011003260800135&#39;)">011003260800034</a></td><td>08/01/26</td><td>PUSAKA INDAH</td><td>KARANGANYAR</td><td>JOSSY</td><td class="rp">Rp 21.600</td><td>Tempo</td><td><span style="color:var(--info)"><i class="bi bi-search"></i> <strong>Kandidat perlu dicek</strong>: <strong>011003260800135</strong> · Alamat 100% · Sales cocok · No Faktur mirip · Seri sama · skor 6.8</span></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -913,42 +1044,42 @@ body.startup-scanner-active {
     <div class="tab-panel d-none" id="panelLaporan">
       <div class="lap-cash-wrap">
         <div class="lap-cards">
-          <div class="lap-card"><div class="lbl">Minyak (Cash+TRF)</div><div class="num" id="lapMinyak">Rp 0</div></div>
-          <div class="lap-card"><div class="lbl">Rupa-Rupa (Cash+TRF)</div><div class="num" id="lapRupa">Rp 0</div></div>
-          <div class="lap-card total"><div class="lbl">Total Uang Masuk (Minyak + Rupa-Rupa)</div><div class="num" id="totalLap">Rp 0</div></div>
+          <div class="lap-card"><div class="lbl">Minyak (Cash+TRF)</div><div class="num" id="lapMinyak">Rp 207.302.824</div></div>
+          <div class="lap-card"><div class="lbl">Rupa-Rupa (Cash+TRF)</div><div class="num" id="lapRupa">Rp 59.785.695</div></div>
+          <div class="lap-card total"><div class="lbl">Total Uang Masuk (Minyak + Rupa-Rupa)</div><div class="num" id="totalLap">Rp 267.088.519</div></div>
         </div>
         <div class="raw-filter-bar" id="filterBarLap" style="display:flex;gap:.45rem;align-items:center;flex-wrap:wrap">
           <label><i class="bi bi-funnel me-1"></i>Filter Bulan:</label>
-          <div class="month-pills" id="monthPillsLap"></div>
-          <span class="lap-day-hint" id="lapDayHint"></span>
+          <div class="month-select" id="monthPillsLap" style="display: flex;"><button type="button" class="month-select-trigger"><span class="ms-label">Agustus 2026</span><i class="bi bi-chevron-down ms-chevron"></i></button><div class="month-select-panel"><div class="month-select-option" data-month="__ALL__">Semua Bulan</div><div class="month-select-option" data-month="2026-06">Juni 2026</div><div class="month-select-option" data-month="2026-07">Juli 2026</div><div class="month-select-option active" data-month="2026-08">Agustus 2026 (terbaru)</div></div></div>
+          <span class="lap-day-hint" id="lapDayHint">Agustus 2026 · 497 baris</span>
           <input type="search" class="search-box" placeholder="Cari No Faktur, toko, alamat, sales..." data-table="tblLapRaw" style="margin-left:auto;width:250px;min-width:150px;">
           <div class="mini-dropdown compact" id="ddLap">
-            <button type="button" class="mini-trigger" id="triggerLap">
-              <span class="mt-left"><span class="status-dot" id="dotUploadLap"></span><i class="bi bi-list"></i><span class="fn" id="triggerLabelLap">MENU</span></span>
+            <button type="button" class="mini-trigger ready" id="triggerLap">
+              <span class="mt-left"><span class="status-dot ready" id="dotUploadLap"></span><i class="bi bi-list"></i><span class="fn" id="triggerLabelLap">MENU</span></span>
               <i class="bi bi-chevron-down chevron"></i>
             </button>
             <div class="mini-panel">
               <div class="upload-bar">
-                <div class="file-chip" id="chipLap" onclick="document.getElementById('fileLap').click()">
+                <div class="file-chip" id="chipLap" onclick="document.getElementById(&#39;fileLap&#39;).click()">
                   <i class="bi bi-upload"></i><span class="fn" id="labelLap">Pilih file Data Uang Masuk Harian (.xlsx)</span>
                   <input type="file" id="fileLap" accept=".xlsx,.xls" class="d-none">
                 </div>
                 <button type="button" class="btn-ghost" id="btnHapusLap" style="margin-top:.45rem;width:100%;border-color:#ef4444;color:#ef4444">
                   <i class="bi bi-trash3 me-1"></i> Hapus semua Data Uang Masuk
                 </button>
-                <span class="stat-line" id="statLap">Belum ada data</span>
+                <span class="stat-line" id="statLap"><strong>2874</strong> baris · <strong>2645</strong> faktur unik (data terbaru di perangkat)</span>
               </div>
             </div>
           </div>
         </div>
         <div class="table-container" id="wrapLap">
-          <div class="empty-state d-none" id="emptyLap"><i class="bi bi-file-earmark-excel"></i><p>Belum ada Data Uang Masuk.</p><button type="button" class="btn-glow" onclick="document.getElementById('fileLap').click()"><i class="bi bi-upload me-1"></i>Upload Data Uang Masuk</button></div>
+          <div class="empty-state d-none" id="emptyLap"><i class="bi bi-file-earmark-excel"></i><p>Belum ada Data Uang Masuk.</p><button type="button" class="btn-glow" onclick="document.getElementById(&#39;fileLap&#39;).click()"><i class="bi bi-upload me-1"></i>Upload Data Uang Masuk</button></div>
           <table class="table table-sm table-striped table-hover" id="tblLapRaw">
             <thead><tr>
               <th>No Faktur</th><th>Tanggal Uang Masuk</th><th>Sales</th><th>Nama Toko</th><th>Alamat</th>
               <th>Tagihan</th><th>Minyak Cash</th><th>Minyak TF</th><th>Rupa Cash</th><th>Rupa TF</th>
               <th>Total Bayar</th><th>Ket</th><th>Section</th><th>Sheet</th>
-            </tr></thead><tbody></tbody>
+            </tr></thead><tbody><tr><td colspan="20" style="text-align:center;color:var(--muted);padding:1.5rem">Tidak ada data</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -957,27 +1088,26 @@ body.startup-scanner-active {
     <!-- TAB PENJUALAN -->
     <div class="tab-panel d-none" id="panelPenjualan">
       <div id="pjlResultSection" style="display: block;">
-        <div class="pjl-header-row" id="filterBarPjl">
+        <div class="pjl-header-row" id="filterBarPjl" style="display: flex;">
           <div class="summary-row" id="summaryCardsPjl">
-            <div class="s-card pjlOmzet">
-              <div class="ico"><i class="bi bi-cash-coin"></i></div>
-              <div>
-                <div class="lbl">Total Penjualan</div>
-                <div class="num">Rp 237.266.063</div>
-              </div>
-            </div>
-            <div class="s-card pjlMargin">
-              <div class="ico"><i class="bi bi-graph-up"></i></div>
-              <div>
-                <div class="lbl">Total Margin</div>
-                <div class="num">Rp 12.718.822,42</div>
-              </div>
-            </div>
+        <div class="s-card pjlOmzet">
+          <div class="ico"><i class="bi bi-cash-coin"></i></div>
+          <div>
+            <div class="lbl">Total Penjualan</div>
+            <div class="num">Rp 291.149.394</div>
           </div>
+        </div>
+        <div class="s-card pjlMargin">
+          <div class="ico"><i class="bi bi-graph-up"></i></div>
+          <div>
+            <div class="lbl">Total Margin</div>
+            <div class="num">Rp 16.033.729,69</div>
+          </div>
+        </div></div>
           <div class="pjl-header-controls">
             <div class="pjl-filter-inline">
               <label><i class="bi bi-funnel me-1"></i>Filter Bulan:</label>
-              <div class="month-pills" id="monthPillsPjl"></div>
+              <div class="month-select" id="monthPillsPjl"><button type="button" class="month-select-trigger"><span class="ms-label">Agustus 2026</span><i class="bi bi-chevron-down ms-chevron"></i></button><div class="month-select-panel"><div class="month-select-option" data-month="__ALL__">Semua Bulan</div><div class="month-select-option" data-month="2026-05">Mei 2026</div><div class="month-select-option" data-month="2026-06">Juni 2026</div><div class="month-select-option" data-month="2026-07">Juli 2026</div><div class="month-select-option active" data-month="2026-08">Agustus 2026 (terbaru)</div></div></div>
             </div>
             <input type="search" class="search-box pjl-search-wide" id="searchPjlHeader" placeholder="Cari no faktur / nama toko / sales / produk..." data-table="tblPjlRaw">
             <div class="mini-dropdown compact" id="ddPjl">
@@ -990,7 +1120,7 @@ body.startup-scanner-active {
               </button>
               <div class="mini-panel">
                 <div class="upload-bar">
-                  <div class="file-chip" id="chipPjl" onclick="document.getElementById('filePjl').click()">
+                  <div class="file-chip" id="chipPjl" onclick="document.getElementById(&#39;filePjl&#39;).click()">
                     <i class="bi bi-upload"></i>
                     <span class="fn" id="labelPjl">Pilih file Data Penjualan (.xlsx)</span>
                     <input type="file" id="filePjl" accept=".xlsx,.xls" class="d-none">
@@ -998,16 +1128,16 @@ body.startup-scanner-active {
                   <button type="button" class="btn-ghost" id="btnHapusPjl" style="margin-top:.45rem;width:100%;border-color:#ef4444;color:#ef4444">
                     <i class="bi bi-trash3 me-1"></i> Hapus semua Data Penjualan
                   </button>
-                  <span class="stat-line" id="statPjl">Belum ada data</span>
+                  <span class="stat-line" id="statPjl"><strong>6199</strong> baris · <strong>3859</strong> faktur unik (data terbaru di perangkat)</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <span id="totalPjl" class="d-none">Rp 237.266.063</span>
+        <span id="totalPjl" class="d-none">Rp 291.149.394</span>
         <div class="sub-tabs" id="pjlSubTabs">
-          <button class="st active" data-sub="ringkasan">RINGKASAN</button>
-          <button class="st" data-sub="raw">DATA TRANSAKSI</button>
+          <button class="st" data-sub="ringkasan">RINGKASAN</button>
+          <button class="st active" data-sub="raw">DATA TRANSAKSI</button>
           <button class="st" data-sub="sales">PER SALES</button>
           <button class="st" data-sub="produk">PER PRODUK</button>
           <button class="st" data-sub="bulan">PER BULAN</button>
@@ -1015,11 +1145,11 @@ body.startup-scanner-active {
         </div>
 
         
-        <div id="pjl-ringkasan" class="">
+        <div id="pjl-ringkasan" class="d-none">
           <div class="table-toolbar" style="align-items:center">
             <div>
               <h5 style="margin-bottom:.12rem;font-style:italic">RINGKASAN PENJUALAN PER SALES</h5>
-              <div id="pjlRingkasanMonthLabel" style="font-size:.72rem;color:var(--muted)">-</div>
+              <div id="pjlRingkasanMonthLabel" style="font-size:.72rem;color:var(--muted)">Agustus 2026</div>
             </div>
           </div>
           <div class="table-container" style="max-height:calc(100vh - 300px);overflow:auto">
@@ -1027,7 +1157,7 @@ body.startup-scanner-active {
               <thead><tr>
                 <th>Sales</th><th class="text-end">Total Qty</th><th class="text-end">Total Penjualan</th><th class="text-end">Total HPP</th><th class="text-end">Profit</th><th class="text-end">Margin %</th><th class="text-end">Jml Faktur</th>
               </tr></thead>
-              <tbody></tbody>
+              <tbody><tr><td>RAJU</td><td class="text-end">5.117</td><td class="rp text-end">Rp 131.467.507</td><td class="rp text-end">Rp 124.133.230,04</td><td class="rp text-end">Rp 7.334.276,96</td><td class="text-end">5,58%</td><td class="text-end">138</td></tr><tr><td>JOSSY</td><td class="text-end">3.390</td><td class="rp text-end">Rp 89.478.077</td><td class="rp text-end">Rp 84.754.645,17</td><td class="rp text-end">Rp 4.723.431,83</td><td class="text-end">5,28%</td><td class="text-end">170</td></tr><tr><td>HAFID</td><td class="text-end">1.890</td><td class="rp text-end">Rp 69.757.210</td><td class="rp text-end">Rp 65.794.789,1</td><td class="rp text-end">Rp 3.962.420,9</td><td class="text-end">5,68%</td><td class="text-end">144</td></tr><tr><td>GC</td><td class="text-end">4</td><td class="rp text-end">Rp 446.600</td><td class="rp text-end">Rp 433.000</td><td class="rp text-end">Rp 13.600</td><td class="text-end">3,05%</td><td class="text-end">1</td></tr><tr><td>PARIMIN</td><td class="text-end">0</td><td class="rp text-end">Rp 0</td><td class="rp text-end">Rp 0</td><td class="rp text-end">Rp 0</td><td class="text-end">0,00%</td><td class="text-end">3</td></tr><tr style="font-weight:800"><td>TOTAL SEMUA</td><td class="text-end">10.401</td><td class="rp text-end">Rp 291.149.394</td><td class="rp text-end">Rp 275.115.664,31</td><td class="rp text-end">Rp 16.033.729,69</td><td class="text-end">5,51%</td><td class="text-end">456</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -1046,7 +1176,7 @@ body.startup-scanner-active {
                 </button>
                 <div class="mini-panel">
                   <div class="upload-bar">
-                    <div class="file-chip" id="chipStok" onclick="document.getElementById('fileStok').click()">
+                    <div class="file-chip" id="chipStok" onclick="document.getElementById(&#39;fileStok&#39;).click()">
                       <i class="bi bi-upload"></i>
                       <span class="fn" id="labelStok">Pilih file Data Stok Gudang (.xlsx)</span>
                       <input type="file" id="fileStok" accept=".xlsx,.xls" class="d-none">
@@ -1058,9 +1188,9 @@ body.startup-scanner-active {
             </div>
           </div>
 
-          <div class="raw-filter-bar" id="filterBarQtyStok">
+          <div class="raw-filter-bar" id="filterBarQtyStok" style="display: flex;">
             <label><i class="bi bi-funnel me-1"></i>Filter Bulan:</label>
-            <div class="month-pills" id="monthPillsQtyStok"></div>
+            <div class="month-select" id="monthPillsQtyStok"><button type="button" class="month-select-trigger"><span class="ms-label">Semua Bulan</span><i class="bi bi-chevron-down ms-chevron"></i></button><div class="month-select-panel"><div class="month-select-option active" data-month="__ALL__">Semua Bulan</div><div class="month-select-option" data-month="2026-05">Mei 2026</div><div class="month-select-option" data-month="2026-06">Juni 2026</div><div class="month-select-option" data-month="2026-07">Juli 2026</div><div class="month-select-option" data-month="2026-08">Agustus 2026 (terbaru)</div></div></div>
             <label style="margin-left:.6rem"><i class="bi bi-calendar3 me-1"></i>Filter Tanggal:</label>
             <input type="date" id="qtyStokDate" class="search-box" style="width:auto;flex:0 0 auto">
             <button class="btn-ghost" id="btnResetQtyStokFilter" type="button"><i class="bi bi-x-circle me-1"></i>Reset Filter</button>
@@ -1074,8 +1204,8 @@ body.startup-scanner-active {
               </div>
               <div class="table-container">
                 <table class="table table-sm table-striped table-hover" id="tblQtyPenjualan">
-                  <thead><tr><th>Produk</th></tr></thead>
-                  <tbody></tbody>
+                  <thead><tr><th>Produk</th><th>(tanpa sales)</th><th>GC</th><th>HAFID</th><th>JOSSY</th><th>PARIMIN</th><th>RAJU</th><th>Total</th></tr></thead>
+                  <tbody><tr><td>SAMBAL STICK 9 GR <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>7.832</td><td>4.686</td><td>-</td><td>15.900</td><td style="font-weight:700">28.418</td></tr><tr><td>SAMBAL CABE 500GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>1.398</td><td>8.305</td><td>-</td><td>2.363</td><td style="font-weight:700">12.066</td></tr><tr><td>MARGARINE FORVITA <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>3.315</td><td>2.869</td><td>-</td><td>1.814</td><td style="font-weight:700">7.998</td></tr><tr><td>SHZ KIREI 85GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>602</td><td>391</td><td>-</td><td>6.235</td><td style="font-weight:700">7.228</td></tr><tr><td>FITRI BOTOL 800ML <span style="color:var(--muted);font-size:.68rem">(KRT)</span></td><td>-</td><td>-</td><td>1.584</td><td>2.194</td><td>-</td><td>1.722</td><td style="font-weight:700">5.500</td></tr><tr><td>FITRI  BOTOL 400ML <span style="color:var(--muted);font-size:.68rem">(KRT)</span></td><td>-</td><td>3</td><td>1.357</td><td>1.031</td><td>-</td><td>941</td><td style="font-weight:700">3.332</td></tr><tr><td>SAMBAL REFFIL 600ML <span style="color:var(--muted);font-size:.68rem">(KRT)</span></td><td>-</td><td>-</td><td>654</td><td>1.094</td><td>-</td><td>937</td><td style="font-weight:700">2.685</td></tr><tr><td>MIE IKAT KECIL <span style="color:var(--muted);font-size:.68rem">(IKT)</span></td><td>-</td><td>-</td><td>936</td><td>475</td><td>-</td><td>649</td><td style="font-weight:700">2.060</td></tr><tr><td>FITRI BOTOL 200ML <span style="color:var(--muted);font-size:.68rem">(KRT)</span></td><td>-</td><td>1</td><td>403</td><td>483</td><td>-</td><td>1.055</td><td style="font-weight:700">1.942</td></tr><tr><td>SHZ MYORI 85GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>257</td><td>246</td><td>-</td><td>1.360</td><td style="font-weight:700">1.863</td></tr><tr><td>SHZ SAKURA 85GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>261</td><td>387</td><td>-</td><td>1.140</td><td style="font-weight:700">1.788</td></tr><tr><td>SHZ HANA 85GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>137</td><td>170</td><td>-</td><td>1.358</td><td style="font-weight:700">1.665</td></tr><tr><td>SHZ KENSHO 85GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>255</td><td>204</td><td>-</td><td>1.193</td><td style="font-weight:700">1.652</td></tr><tr><td>SHZ CLASIC/MATSU 85GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>115</td><td>175</td><td>-</td><td>1.215</td><td style="font-weight:700">1.505</td></tr><tr><td>NS CRIPSY CRACKERS <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>30</td><td>483</td><td>-</td><td>685</td><td style="font-weight:700">1.198</td></tr><tr><td>KECAP GUNA 520 REFF <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>829</td><td>15</td><td>-</td><td>108</td><td style="font-weight:700">952</td></tr><tr><td>KECAP NAS REFF 520ML <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>246</td><td>48</td><td>-</td><td>264</td><td style="font-weight:700">558</td></tr><tr><td>ZEN JUNIPERBERRIES <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>216</td><td>42</td><td>-</td><td>102</td><td style="font-weight:700">360</td></tr><tr><td>AGAR LUMBA SUPER PUTIH <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>3</td><td>354</td><td>-</td><td>-</td><td style="font-weight:700">357</td></tr><tr><td>SOUN BAKSO GAJAH 2 KP <span style="color:var(--muted);font-size:.68rem">(BAL)</span></td><td>-</td><td>-</td><td>88</td><td>56</td><td>-</td><td>213</td><td style="font-weight:700">357</td></tr><tr><td>KECAP REF 300ML <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>267</td><td>-</td><td>-</td><td>72</td><td style="font-weight:700">339</td></tr><tr><td>ZEN SANDALWOOD <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>156</td><td>60</td><td>-</td><td>120</td><td style="font-weight:700">336</td></tr><tr><td>COCOMAXI CAIR 65GR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>276</td><td>-</td><td>32</td><td style="font-weight:700">308</td></tr><tr><td>SAMBAL BOTOL MEJA 130ML <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>132</td><td>46</td><td>-</td><td>126</td><td style="font-weight:700">304</td></tr><tr><td>KECAP BOTOL NAS 130ML <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>60</td><td>15</td><td>-</td><td>180</td><td style="font-weight:700">255</td></tr><tr><td>BIHUN JAGUNG <span style="color:var(--muted);font-size:.68rem">(BAL)</span></td><td>-</td><td>-</td><td>108</td><td>37</td><td>-</td><td>47</td><td style="font-weight:700">192</td></tr><tr><td>KERUPUK UDANG RJW <span style="color:var(--muted);font-size:.68rem">(BAL)</span></td><td>-</td><td>-</td><td>38</td><td>59</td><td>-</td><td>53</td><td style="font-weight:700">150</td></tr><tr><td>KERUPUK BWG BIBIR RJW <span style="color:var(--muted);font-size:.68rem">(BAL)</span></td><td>-</td><td>-</td><td>28</td><td>81</td><td>-</td><td>41</td><td style="font-weight:700">150</td></tr><tr><td>KECAP CG ASIN BESAR 625ML <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>72</td><td>-</td><td>48</td><td style="font-weight:700">120</td></tr><tr><td>NS KUE KERING <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>30</td><td>-</td><td>66</td><td style="font-weight:700">96</td></tr><tr><td>BOTOL 600ML <span style="color:var(--muted);font-size:.68rem">(KRT)</span></td><td>-</td><td>-</td><td>8</td><td>43</td><td>-</td><td>15</td><td style="font-weight:700">66</td></tr><tr><td>NS KG MARIE RAJA <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>33</td><td>-</td><td>28</td><td style="font-weight:700">61</td></tr><tr><td>KERUPUK BWG PUTIH RJW <span style="color:var(--muted);font-size:.68rem">(BAL)</span></td><td>-</td><td>-</td><td>-</td><td>17</td><td>-</td><td>16</td><td style="font-weight:700">33</td></tr><tr><td>ZEN REFF SANDALWOOD <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>31</td><td>-</td><td>-</td><td style="font-weight:700">31</td></tr><tr><td>NS CRIPSY LEMON <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>30</td><td>-</td><td>-</td><td style="font-weight:700">30</td></tr><tr><td>ZEN REFF JUNIPERBERIS <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>25</td><td>-</td><td>-</td><td style="font-weight:700">25</td></tr><tr><td>KECAP GUNA JRG <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>23</td><td style="font-weight:700">23</td></tr><tr><td>JELLYGAR STRAWBERRY <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>-</td><td>7</td><td>-</td><td>8</td><td style="font-weight:700">15</td></tr><tr><td>AGAR LUMBA HEMAT MERAH <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>1</td><td>11</td><td>-</td><td>-</td><td style="font-weight:700">12</td></tr><tr><td>KECAP JERIGEN 6KG <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>10</td><td>-</td><td>-</td><td>-</td><td style="font-weight:700">10</td></tr><tr><td>AGAR LUMBA HEMAT HIJAU <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>1</td><td>8</td><td>-</td><td>-</td><td style="font-weight:700">9</td></tr><tr><td>AGAR LUMBA HEMAT PUTIH <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>-</td><td>9</td><td>-</td><td>-</td><td style="font-weight:700">9</td></tr><tr><td>AGAR LUMBA HEMAT COKLAT <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>-</td><td>8</td><td>-</td><td>-</td><td style="font-weight:700">8</td></tr><tr><td>JELLYGAR BLUEBERRY <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>-</td><td>2</td><td>-</td><td>5</td><td style="font-weight:700">7</td></tr><tr><td>JELLYGAR LECI <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>-</td><td>2</td><td>-</td><td>4</td><td style="font-weight:700">6</td></tr><tr><td>ZEN REFF TEATREE <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>6</td><td>-</td><td>-</td><td style="font-weight:700">6</td></tr><tr><td>ZEN SULPHUR <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>6</td><td style="font-weight:700">6</td></tr><tr><td>AGAR LUMBA SUPER COKLAT <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>4</td><td>1</td><td>-</td><td>-</td><td style="font-weight:700">5</td></tr><tr><td>AGAR LUMBA SUPER MERAH <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>5</td><td>-</td><td>-</td><td>-</td><td style="font-weight:700">5</td></tr><tr><td>AGAR LUMBA SUPER HIJAU <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>3</td><td>1</td><td>-</td><td>-</td><td style="font-weight:700">4</td></tr><tr><td>PUDDING MANGGO <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>-</td><td>1</td><td>-</td><td>3</td><td style="font-weight:700">4</td></tr><tr><td>JELLYGAR HEMAT MELON <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>-</td><td>3</td><td>-</td><td>1</td><td style="font-weight:700">4</td></tr><tr><td>PUDDING COCOPANDAN <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>3</td><td style="font-weight:700">3</td></tr><tr><td>JELLY ORANGE <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>-</td><td>2</td><td>-</td><td>1</td><td style="font-weight:700">3</td></tr><tr><td>JELLYGAR PLAIN <span style="color:var(--muted);font-size:.68rem">(BOX)</span></td><td>-</td><td>-</td><td>-</td><td>1</td><td>-</td><td>1</td><td style="font-weight:700">2</td></tr><tr><td>PUDDING CHOCOCREAM <span style="color:var(--muted);font-size:.68rem">(PAK)</span></td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td style="font-weight:700">0</td></tr><tr><td>ZEN REFF SEASALT <span style="color:var(--muted);font-size:.68rem">(PCS)</span></td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td style="font-weight:700">0</td></tr></tbody>
                 </table>
               </div>
             </div>
@@ -1086,8 +1216,8 @@ body.startup-scanner-active {
               </div>
               <div class="table-container">
                 <table class="table table-sm table-striped table-hover" id="tblQtyStok">
-                  <thead><tr><th>Produk</th></tr></thead>
-                  <tbody></tbody>
+                  <thead><tr><th>Produk</th><th>Total</th></tr></thead>
+                  <tbody><tr><td colspan="2" style="text-align:center;color:var(--muted)">Tidak ada data</td></tr></tbody>
                 </table>
               </div>
             </div>
@@ -1122,7 +1252,7 @@ body.startup-scanner-active {
           <div class="table-toolbar" style="align-items:center">
             <div>
               <h5 style="margin-bottom:.12rem;font-style:italic">PENJUALAN &amp; PROFIT PER PRODUK (Semua Sales)</h5>
-              <div id="pjlProdukMonthLabel" style="font-size:.72rem;color:var(--muted)">-</div>
+              <div id="pjlProdukMonthLabel" style="font-size:.72rem;color:var(--muted)">AGUSTUS 2026</div>
             </div>
             <div class="tt-controls">
               <input type="search" class="search-box" placeholder="Cari produk..." data-table="tblPjlProduk">
@@ -1144,7 +1274,207 @@ body.startup-scanner-active {
                 <th class="text-end">Margin %</th>
                 <th class="text-end">Jml Faktur</th>
               </tr></thead>
-              <tbody></tbody>
+              <tbody><tr>
+    <td>AGAR LUMBA HEMAT COKLAT</td><td class="text-end">1</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">1.725,00</td><td class="text-end">6,90%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>AGAR LUMBA HEMAT HIJAU</td><td class="text-end">1</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">1.725,00</td><td class="text-end">6,90%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>AGAR LUMBA HEMAT MERAH</td><td class="text-end">1</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">1.725,00</td><td class="text-end">6,90%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>AGAR LUMBA HEMAT PUTIH</td><td class="text-end">1</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">25.000,00</td><td class="rp text-end">23.275,00</td>
+    <td class="rp text-end">1.725,00</td><td class="text-end">6,90%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>AGAR LUMBA SUPER PUTIH</td><td class="text-end">60</td>
+    <td class="rp text-end">34.500,00</td><td class="rp text-end">32.119,00</td>
+    <td class="rp text-end">2.070.000,00</td><td class="rp text-end">1.927.140,00</td>
+    <td class="rp text-end">142.860,00</td><td class="text-end">6,90%</td>
+    <td class="text-end">2</td></tr><tr>
+    <td>BIHUN JAGUNG</td><td class="text-end">15</td>
+    <td class="rp text-end">62.152,00</td><td class="rp text-end">52.252,00</td>
+    <td class="rp text-end">932.280,00</td><td class="rp text-end">783.780,00</td>
+    <td class="rp text-end">148.500,00</td><td class="text-end">15,93%</td>
+    <td class="text-end">10</td></tr><tr>
+    <td>BOTOL 600ML</td><td class="text-end">4</td>
+    <td class="rp text-end">18.600,00</td><td class="rp text-end">16.200,00</td>
+    <td class="rp text-end">74.400,00</td><td class="rp text-end">64.800,00</td>
+    <td class="rp text-end">9.600,00</td><td class="text-end">12,90%</td>
+    <td class="text-end">2</td></tr><tr>
+    <td>FITRI  BOTOL 400ML</td><td class="text-end">527</td>
+    <td class="rp text-end">110.100,00 - 113.600,00</td><td class="rp text-end">107.500,00</td>
+    <td class="rp text-end">59.527.700,00</td><td class="rp text-end">56.652.500,00</td>
+    <td class="rp text-end">2.875.200,00</td><td class="text-end">4,83%</td>
+    <td class="text-end">173</td></tr><tr>
+    <td>FITRI BOTOL 200ML</td><td class="text-end">633</td>
+    <td class="rp text-end">113.100,00 - 115.800,00</td><td class="rp text-end">110.500,00</td>
+    <td class="rp text-end">72.665.300,00</td><td class="rp text-end">69.946.500,00</td>
+    <td class="rp text-end">2.718.800,00</td><td class="text-end">3,74%</td>
+    <td class="text-end">112</td></tr><tr>
+    <td>FITRI BOTOL 800ML</td><td class="text-end">460</td>
+    <td class="rp text-end">205.000,00 - 215.100,00</td><td class="rp text-end">201.900,00</td>
+    <td class="rp text-end">97.370.000,00</td><td class="rp text-end">92.874.000,00</td>
+    <td class="rp text-end">4.496.000,00</td><td class="text-end">4,62%</td>
+    <td class="text-end">109</td></tr><tr>
+    <td>JELLY ORANGE</td><td class="text-end">1</td>
+    <td class="rp text-end">21.500,00</td><td class="rp text-end">17.255,00</td>
+    <td class="rp text-end">21.500,00</td><td class="rp text-end">17.255,00</td>
+    <td class="rp text-end">4.245,00</td><td class="text-end">19,74%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>JELLYGAR BLUEBERRY</td><td class="text-end">1</td>
+    <td class="rp text-end">21.501,00</td><td class="rp text-end">17.500,00</td>
+    <td class="rp text-end">21.501,00</td><td class="rp text-end">17.500,00</td>
+    <td class="rp text-end">4.001,00</td><td class="text-end">18,61%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>JELLYGAR HEMAT MELON</td><td class="text-end">1</td>
+    <td class="rp text-end">21.500,00</td><td class="rp text-end">17.255,00</td>
+    <td class="rp text-end">21.500,00</td><td class="rp text-end">17.255,00</td>
+    <td class="rp text-end">4.245,00</td><td class="text-end">19,74%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>JELLYGAR STRAWBERRY</td><td class="text-end">2</td>
+    <td class="rp text-end">21.500,00</td><td class="rp text-end">17.255,00</td>
+    <td class="rp text-end">43.000,00</td><td class="rp text-end">34.510,00</td>
+    <td class="rp text-end">8.490,00</td><td class="text-end">19,74%</td>
+    <td class="text-end">2</td></tr><tr>
+    <td>KECAP BOTOL NAS 130ML</td><td class="text-end">6</td>
+    <td class="rp text-end">4.625,00</td><td class="rp text-end">4.162,00</td>
+    <td class="rp text-end">27.750,00</td><td class="rp text-end">24.972,00</td>
+    <td class="rp text-end">2.778,00</td><td class="text-end">10,01%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>KECAP GUNA 520 REFF</td><td class="text-end">63</td>
+    <td class="rp text-end">12.000,00</td><td class="rp text-end">9.900,00</td>
+    <td class="rp text-end">756.000,00</td><td class="rp text-end">623.700,00</td>
+    <td class="rp text-end">132.300,00</td><td class="text-end">17,50%</td>
+    <td class="text-end">6</td></tr><tr>
+    <td>KECAP GUNA JRG</td><td class="text-end">2</td>
+    <td class="rp text-end">95.000,00</td><td class="rp text-end">85.500,00</td>
+    <td class="rp text-end">190.000,00</td><td class="rp text-end">171.000,00</td>
+    <td class="rp text-end">19.000,00</td><td class="text-end">10,00%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>KECAP NAS REFF 520ML</td><td class="text-end">90</td>
+    <td class="rp text-end">15.350,00</td><td class="rp text-end">13.800,00</td>
+    <td class="rp text-end">1.381.500,00</td><td class="rp text-end">1.242.000,00</td>
+    <td class="rp text-end">139.500,00</td><td class="text-end">10,10%</td>
+    <td class="text-end">6</td></tr><tr>
+    <td>KECAP REF 300ML</td><td class="text-end">6</td>
+    <td class="rp text-end">6.250,00</td><td class="rp text-end">5.625,00</td>
+    <td class="rp text-end">37.500,00</td><td class="rp text-end">33.750,00</td>
+    <td class="rp text-end">3.750,00</td><td class="text-end">10,00%</td>
+    <td class="text-end">1</td></tr><tr>
+    <td>KERUPUK BWG BIBIR RJW</td><td class="text-end">4</td>
+    <td class="rp text-end">77.000,00 - 80.000,00</td><td class="rp text-end">65.000,00</td>
+    <td class="rp text-end">311.000,00</td><td class="rp text-end">260.000,00</td>
+    <td class="rp text-end">51.000,00</td><td class="text-end">16,40%</td>
+    <td class="text-end">2</td></tr><tr>
+    <td>MARGARINE FORVITA</td><td class="text-end">698</td>
+    <td class="rp text-end">5.713,00</td><td class="rp text-end">5.301,00</td>
+    <td class="rp text-end">3.987.674,00</td><td class="rp text-end">3.700.098,00</td>
+    <td class="rp text-end">287.576,00</td><td class="text-end">7,21%</td>
+    <td class="text-end">26</td></tr><tr>
+    <td>MIE IKAT KECIL</td><td class="text-end">255</td>
+    <td class="rp text-end">21.928,00 - 23.528,00</td><td class="rp text-end">19.141,00</td>
+    <td class="rp text-end">5.722.640,00</td><td class="rp text-end">4.880.955,00</td>
+    <td class="rp text-end">841.685,00</td><td class="text-end">14,71%</td>
+    <td class="text-end">23</td></tr><tr>
+    <td>NS CRIPSY CRACKERS</td><td class="text-end">277</td>
+    <td class="rp text-end">9.200,00 - 9.566,00</td><td class="rp text-end">9.148,00</td>
+    <td class="rp text-end">2.646.488,00</td><td class="rp text-end">2.533.996,00</td>
+    <td class="rp text-end">112.492,00</td><td class="text-end">4,25%</td>
+    <td class="text-end">12</td></tr><tr>
+    <td>NS KG MARIE RAJA</td><td class="text-end">61</td>
+    <td class="rp text-end">9.333,00</td><td class="rp text-end">8.852,00</td>
+    <td class="rp text-end">569.313,00</td><td class="rp text-end">539.972,00</td>
+    <td class="rp text-end">29.341,00</td><td class="text-end">5,15%</td>
+    <td class="text-end">7</td></tr><tr>
+    <td>NS KUE KERING</td><td class="text-end">96</td>
+    <td class="rp text-end">9.100,00</td><td class="rp text-end">8.665,00</td>
+    <td class="rp text-end">873.600,00</td><td class="rp text-end">831.840,00</td>
+    <td class="rp text-end">41.760,00</td><td class="text-end">4,78%</td>
+    <td class="text-end">14</td></tr><tr>
+    <td>SAMBAL BOTOL MEJA 130ML</td><td class="text-end">37</td>
+    <td class="rp text-end">3.500,00</td><td class="rp text-end">2.622,00</td>
+    <td class="rp text-end">129.500,00</td><td class="rp text-end">97.014,00</td>
+    <td class="rp text-end">32.486,00</td><td class="text-end">25,09%</td>
+    <td class="text-end">5</td></tr><tr>
+    <td>SAMBAL CABE 500GR</td><td class="text-end">1.536</td>
+    <td class="rp text-end">3.250,00</td><td class="rp text-end">2.811,00</td>
+    <td class="rp text-end">4.992.000,00</td><td class="rp text-end">4.317.696,00</td>
+    <td class="rp text-end">674.304,00</td><td class="text-end">13,51%</td>
+    <td class="text-end">28</td></tr><tr>
+    <td>SAMBAL REFFIL 600ML</td><td class="text-end">357</td>
+    <td class="rp text-end">43.500,00</td><td class="rp text-end">39.360,00</td>
+    <td class="rp text-end">15.529.500,00</td><td class="rp text-end">14.051.520,00</td>
+    <td class="rp text-end">1.477.980,00</td><td class="text-end">9,52%</td>
+    <td class="text-end">53</td></tr><tr>
+    <td>SAMBAL STICK 9 GR</td><td class="text-end">4.146</td>
+    <td class="rp text-end">3.528,00 - 3.600,00</td><td class="rp text-end">3.240,00</td>
+    <td class="rp text-end">14.781.600,00</td><td class="rp text-end">13.433.040,00</td>
+    <td class="rp text-end">1.348.560,00</td><td class="text-end">9,12%</td>
+    <td class="text-end">32</td></tr><tr>
+    <td>SHZ CLASIC/MATSU 85GR</td><td class="text-end">63</td>
+    <td class="rp text-end">4.400,00</td><td class="rp text-end">4.172,19</td>
+    <td class="rp text-end">277.200,00</td><td class="rp text-end">262.847,97</td>
+    <td class="rp text-end">14.352,03</td><td class="text-end">5,18%</td>
+    <td class="text-end">7</td></tr><tr>
+    <td>SHZ HANA 85GR</td><td class="text-end">60</td>
+    <td class="rp text-end">4.400,00</td><td class="rp text-end">4.172,19</td>
+    <td class="rp text-end">264.000,00</td><td class="rp text-end">250.331,40</td>
+    <td class="rp text-end">13.668,60</td><td class="text-end">5,18%</td>
+    <td class="text-end">6</td></tr><tr>
+    <td>SHZ KENSHO 85GR</td><td class="text-end">234</td>
+    <td class="rp text-end">4.237,00 - 4.400,00</td><td class="rp text-end">4.172,19</td>
+    <td class="rp text-end">1.006.128,00</td><td class="rp text-end">976.292,46</td>
+    <td class="rp text-end">29.835,54</td><td class="text-end">2,97%</td>
+    <td class="text-end">11</td></tr><tr>
+    <td>SHZ KIREI 85GR</td><td class="text-end">151</td>
+    <td class="rp text-end">4.400,00</td><td class="rp text-end">4.172,19</td>
+    <td class="rp text-end">664.400,00</td><td class="rp text-end">630.000,69</td>
+    <td class="rp text-end">34.399,31</td><td class="text-end">5,18%</td>
+    <td class="text-end">18</td></tr><tr>
+    <td>SHZ MYORI 85GR</td><td class="text-end">253</td>
+    <td class="rp text-end">4.237,00 - 4.400,00</td><td class="rp text-end">4.172,19</td>
+    <td class="rp text-end">1.089.728,00</td><td class="rp text-end">1.055.564,07</td>
+    <td class="rp text-end">34.163,93</td><td class="text-end">3,14%</td>
+    <td class="text-end">16</td></tr><tr>
+    <td>SHZ SAKURA 85GR</td><td class="text-end">168</td>
+    <td class="rp text-end">4.400,00</td><td class="rp text-end">4.172,19</td>
+    <td class="rp text-end">739.200,00</td><td class="rp text-end">700.927,92</td>
+    <td class="rp text-end">38.272,08</td><td class="text-end">5,18%</td>
+    <td class="text-end">20</td></tr><tr>
+    <td>SOUN BAKSO GAJAH 2 KP</td><td class="text-end">28</td>
+    <td class="rp text-end">71.964,00</td><td class="rp text-end">63.738,00</td>
+    <td class="rp text-end">2.014.992,00</td><td class="rp text-end">1.784.664,00</td>
+    <td class="rp text-end">230.328,00</td><td class="text-end">11,43%</td>
+    <td class="text-end">13</td></tr><tr>
+    <td>ZEN JUNIPERBERRIES</td><td class="text-end">48</td>
+    <td class="rp text-end">3.000,00 - 3.150,00</td><td class="rp text-end">2.792,30</td>
+    <td class="rp text-end">145.800,00</td><td class="rp text-end">134.030,40</td>
+    <td class="rp text-end">11.769,60</td><td class="text-end">8,07%</td>
+    <td class="text-end">3</td></tr><tr>
+    <td>ZEN SANDALWOOD</td><td class="text-end">48</td>
+    <td class="rp text-end">3.000,00 - 3.150,00</td><td class="rp text-end">2.792,30</td>
+    <td class="rp text-end">145.800,00</td><td class="rp text-end">134.030,40</td>
+    <td class="rp text-end">11.769,60</td><td class="text-end">8,07%</td>
+    <td class="text-end">3</td></tr><tr>
+    <td>ZEN SULPHUR</td><td class="text-end">6</td>
+    <td class="rp text-end">3.150,00</td><td class="rp text-end">2.847,00</td>
+    <td class="rp text-end">18.900,00</td><td class="rp text-end">17.082,00</td>
+    <td class="rp text-end">1.818,00</td><td class="text-end">9,62%</td>
+    <td class="text-end">1</td></tr><tr style="font-weight:800;background:var(--surface2)">
+    <td>TOTAL</td><td class="text-end">10.401</td>
+    <td class="rp text-end">-</td><td class="rp text-end">-</td>
+    <td class="rp text-end">291.149.394,00</td><td class="rp text-end">275.115.664,31</td>
+    <td class="rp text-end">16.033.729,69</td><td class="text-end">5,51%</td>
+    <td class="text-end">732</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -1168,7 +1498,7 @@ body.startup-scanner-active {
         </div>
       </div>
 
-      <div id="pjl-raw" class="d-none">
+      <div id="pjl-raw" class="">
         <div class="table-container" id="wrapPjl">
           <div class="empty-state d-none" id="emptyPjl">
             <i class="bi bi-file-earmark-excel"></i>
@@ -1180,32 +1510,254 @@ body.startup-scanner-active {
               <th>Harga Jual</th><th>Disc</th><th>Total</th><th>Sales</th><th>Customer</th>
               <th>Alamat</th><th>Pembayaran</th><th>Harga Beli</th><th>Margin</th>
             </tr></thead>
-            <tbody></tbody>
+            <tbody><tr>
+        <td>15/08/26</td><td>011003260800428</td><td>FITRI  BOTOL 400ML</td>
+        <td>50</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 5.680.000</td><td>RAJU</td><td>JADI BARU</td>
+        <td>KEBUMEN</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 305.000</td></tr><tr>
+        <td>15/08/26</td><td>011003260800428</td><td>FITRI BOTOL 200ML</td>
+        <td>100</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 11.580.000</td><td>RAJU</td><td>JADI BARU</td>
+        <td>KEBUMEN</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 530.000</td></tr><tr>
+        <td>15/08/26</td><td>011003260800429</td><td>FITRI  BOTOL 400ML</td>
+        <td>10</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 1.136.000</td><td>RAJU</td><td>TOKO SILMI</td>
+        <td>KEBUMEN</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 61.000</td></tr><tr>
+        <td>15/08/26</td><td>011003260800430</td><td>FITRI BOTOL 200ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 115.800</td><td>RAJU</td><td>TOKO HUSADA</td>
+        <td>SELANG</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 5.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800430</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>RAJU</td><td>TOKO HUSADA</td>
+        <td>SELANG</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800431</td><td>FITRI BOTOL 200ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 115.800</td><td>RAJU</td><td>BUMDES MAPAN 2</td>
+        <td>KARANGSARI</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 5.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800432</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>RAJU</td><td>TOKO UMAT</td>
+        <td>KUTOSARI</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800454</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>RAJU</td><td>TOKO SINAR LAWET 2</td>
+        <td>JL KEJAYAN</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800454</td><td>FITRI BOTOL 200ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 115.800</td><td>RAJU</td><td>TOKO SINAR LAWET 2</td>
+        <td>JL KEJAYAN</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 5.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800455</td><td>MARGARINE FORVITA</td>
+        <td>12</td><td>PCS</td>
+        <td class="rp">Rp 5.713</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 68.556</td><td>RAJU</td><td>TOKO SINAR LAWET 2</td>
+        <td>JL KEJAYAN</td><td>Tempo</td>
+        <td class="rp">Rp 5.301</td><td class="rp">Rp 4.944</td></tr><tr>
+        <td>15/08/26</td><td>011003260800456</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>JOSSY</td><td>TOKO GOTREK</td>
+        <td>SIDOAGUNG</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800456</td><td>FITRI BOTOL 200ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 115.800</td><td>JOSSY</td><td>TOKO GOTREK</td>
+        <td>SIDOAGUNG</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 5.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800433</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>HAFID</td><td>TOKO SYUKUR</td>
+        <td>PASAR MERGOSONO</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800434</td><td>FITRI BOTOL 200ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 115.800</td><td>HAFID</td><td>TOKO MARSIH</td>
+        <td>PASAR MERGOSONO</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 5.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800435</td><td>FITRI BOTOL 200ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 115.800</td><td>HAFID</td><td>BU SUGI</td>
+        <td>PASAR MERGOSONO</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 5.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800435</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>HAFID</td><td>BU SUGI</td>
+        <td>PASAR MERGOSONO</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800436</td><td>FITRI  BOTOL 400ML</td>
+        <td>2</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 227.200</td><td>HAFID</td><td>TOKO WIWIN</td>
+        <td>PASAR MERGOSONO</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 12.200</td></tr><tr>
+        <td>15/08/26</td><td>011003260800437</td><td>FITRI BOTOL 200ML</td>
+        <td>4</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 463.200</td><td>HAFID</td><td>TOKO SHINTA</td>
+        <td>JLN. KARANGBOLONG KM.8</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 21.200</td></tr><tr>
+        <td>15/08/26</td><td>011003260800438</td><td>SAMBAL REFFIL 600ML</td>
+        <td>10</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 435.000</td><td>HAFID</td><td>TOKO SUPRI</td>
+        <td>KUWARU</td><td>Cash</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 41.400</td></tr><tr>
+        <td>15/08/26</td><td>011003260800439</td><td>SAMBAL STICK 9 GR</td>
+        <td>80</td><td>PAK</td>
+        <td class="rp">Rp 3.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 288.000</td><td>HAFID</td><td>TOKO PRATAMA</td>
+        <td>BANYUMUDAL</td><td>Tempo</td>
+        <td class="rp">Rp 3.240</td><td class="rp">Rp 28.800</td></tr><tr>
+        <td>15/08/26</td><td>011003260800440</td><td>FITRI  BOTOL 400ML</td>
+        <td>3</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 340.800</td><td>HAFID</td><td>TOKO RUDI</td>
+        <td>PASAR MERGOSONO</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 18.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800441</td><td>BIHUN JAGUNG</td>
+        <td>3</td><td>BAL</td>
+        <td class="rp">Rp 62.152</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 186.456</td><td>RAJU</td><td>JADI BARU</td>
+        <td>KEBUMEN</td><td>Tempo</td>
+        <td class="rp">Rp 52.252</td><td class="rp">Rp 29.700</td></tr><tr>
+        <td>15/08/26</td><td>011003260800442</td><td>SAMBAL REFFIL 600ML</td>
+        <td>11</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 478.500</td><td>JOSSY</td><td>TOKO POJOK</td>
+        <td>KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 45.540</td></tr><tr>
+        <td>15/08/26</td><td>011003260800442</td><td>MARGARINE FORVITA</td>
+        <td>12</td><td>PCS</td>
+        <td class="rp">Rp 5.713</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 68.556</td><td>JOSSY</td><td>TOKO POJOK</td>
+        <td>KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 5.301</td><td class="rp">Rp 4.944</td></tr><tr>
+        <td>15/08/26</td><td>011003260800443</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>JOSSY</td><td>TOKO SRC KARUNIA</td>
+        <td>KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800444</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>JOSSY</td><td>TOKO ANYAR</td>
+        <td>PLARANGAN</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800445</td><td>FITRI  BOTOL 400ML</td>
+        <td>2</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 227.200</td><td>JOSSY</td><td>TOKO BU KANIT</td>
+        <td>PASAR KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 12.200</td></tr><tr>
+        <td>15/08/26</td><td>011003260800446</td><td>FITRI BOTOL 200ML</td>
+        <td>2</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 231.600</td><td>JOSSY</td><td>TOKO YONO</td>
+        <td>PASAR KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 10.600</td></tr><tr>
+        <td>15/08/26</td><td>011003260800447</td><td>FITRI BOTOL 200ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 115.800</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 115.800</td><td>JOSSY</td><td>TOKO BU MINAH</td>
+        <td>PASAR KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 110.500</td><td class="rp">Rp 5.300</td></tr><tr>
+        <td>15/08/26</td><td>011003260800448</td><td>FITRI  BOTOL 400ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 113.600</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 113.600</td><td>JOSSY</td><td>SUMBER REJEKI</td>
+        <td>KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 107.500</td><td class="rp">Rp 6.100</td></tr><tr>
+        <td>15/08/26</td><td>011003260800449</td><td>NS KUE KERING</td>
+        <td>5</td><td>PCS</td>
+        <td class="rp">Rp 9.100</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 45.500</td><td>JOSSY</td><td>SUMBER REJEKI</td>
+        <td>KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 8.665</td><td class="rp">Rp 2.175</td></tr><tr>
+        <td>15/08/26</td><td>011003260800450</td><td>SAMBAL REFFIL 600ML</td>
+        <td>6</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 261.000</td><td>JOSSY</td><td>TOKO RATIH</td>
+        <td>PASAR KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 24.840</td></tr><tr>
+        <td>15/08/26</td><td>011003260800451</td><td>SAMBAL REFFIL 600ML</td>
+        <td>1</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 43.500</td><td>JOSSY</td><td>TOKO ANA</td>
+        <td>PASAR KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 4.140</td></tr><tr>
+        <td>15/08/26</td><td>011003260800452</td><td>SAMBAL REFFIL 600ML</td>
+        <td>5</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 217.500</td><td>JOSSY</td><td>TOKO REJO</td>
+        <td>PASAR KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 20.700</td></tr><tr>
+        <td>15/08/26</td><td>011003260800453</td><td>SAMBAL REFFIL 600ML</td>
+        <td>5</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 217.500</td><td>JOSSY</td><td>TOKO BU SANTI</td>
+        <td>PASAR KARANGANYAR</td><td>Tempo</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 20.700</td></tr><tr>
+        <td>14/08/26</td><td>011003260800427</td><td>SAMBAL REFFIL 600ML</td>
+        <td>4</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 174.000</td><td>RAJU</td><td>TOKO 60 (ENAM PULUH)</td>
+        <td>PASAR KUTOWINANGUN</td><td>Tempo</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 16.560</td></tr><tr>
+        <td>14/08/26</td><td>011003260800409</td><td>SAMBAL REFFIL 600ML</td>
+        <td>10</td><td>KRT</td>
+        <td class="rp">Rp 43.500</td><td class="rp">Rp 0</td>
+        <td class="rp">Rp 435.000</td><td>RAJU</td><td>TOKO OKI/ARETA</td>
+        <td>AMBAL</td><td>Tempo</td>
+        <td class="rp">Rp 39.360</td><td class="rp">Rp 41.400</td></tr><tr aria-hidden="true" style="height:22784px"><td colspan="20" style="padding:0;border:none;height:22784px"></td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
     <!-- TAB ANALISA -->
-    <div class="tab-panel" id="panelAnalisa">
+    <div class="tab-panel d-none" id="panelAnalisa">
       <div class="top-controls-row">
-        <div class="sub-tabs" id="analisaSubTabs" style="display:none;">
+        <div class="sub-tabs" id="analisaSubTabs" style="display: flex;">
           <button class="st active" data-sub="ringkasan">RINGKASAN</button>
-          <button class="st" data-sub="lunas">LUNAS <span class="badge bg-success" id="badgeLunas">387</span></button>
-          <button class="st" data-sub="titip">TITIP <span class="badge bg-warning text-dark" id="badgeTitip">18</span></button>
-          <button class="st" data-sub="belum">BELUM BAYAR <span class="badge bg-danger" id="badgeBelum">62</span></button>
-          <button class="st" data-sub="tanpa">PEMBAYARAN BELUM TERIDENTIFIKASI <span class="badge bg-info text-dark" id="badgeTanpa">6</span></button>
-          <button class="st" data-sub="semua">SEMUA DATA <span class="badge bg-secondary" id="badgeSemua">473</span></button>
+          <button class="st" data-sub="lunas">LUNAS <span class="badge bg-success" id="badgeLunas">504</span></button>
+          <button class="st" data-sub="titip">TITIP <span class="badge bg-warning text-dark" id="badgeTitip">22</span></button>
+          <button class="st" data-sub="belum">BELUM BAYAR <span class="badge bg-danger" id="badgeBelum">21</span></button>
+          <button class="st" data-sub="tanpa">PEMBAYARAN BELUM TERIDENTIFIKASI <span class="badge bg-info text-dark" id="badgeTanpa">4</span></button>
+          <button class="st" data-sub="semua">SEMUA DATA <span class="badge bg-secondary" id="badgeSemua">551</span></button>
         </div>
-        <div class="filter-bar" id="filterBarWrap" style="display:none;">
+        <div class="filter-bar" id="filterBarWrap" style="display: flex;">
           <label><i class="bi bi-funnel me-1"></i>Filter Bulan:</label>
-          <div class="month-pills" id="monthPills"><span class="month-pill" data-month="__ALL__">Semua</span><span class="month-pill" data-month="07">Juli</span><span class="month-pill active" data-month="08">Agustus</span></div>
+          <div class="month-select" id="monthPills"><button type="button" class="month-select-trigger"><span class="ms-label">Agustus</span><i class="bi bi-chevron-down ms-chevron"></i></button><div class="month-select-panel"><div class="month-select-option" data-month="__ALL__">Semua Bulan</div><div class="month-select-option" data-month="06">Juni</div><div class="month-select-option" data-month="07">Juli</div><div class="month-select-option active" data-month="08">Agustus (terbaru)</div></div></div>
           <button class="btn-ghost" id="btnResetFilter" style="font-size:.68rem;padding:.18rem .45rem">
             <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
           </button>
         </div>
         <div class="mini-dropdown compact ms-auto" id="ddMenu">
-          <button type="button" class="mini-trigger ready" id="triggerMenu" onclick="this.parentElement.classList.toggle('open');">
+          <button type="button" class="mini-trigger ready" id="triggerMenu" onclick="this.parentElement.classList.toggle(&#39;open&#39;);">
             <span class="mt-left">
               <span class="status-dot" id="dotCloud"></span>
               <i class="bi bi-list"></i>
@@ -1215,12 +1767,12 @@ body.startup-scanner-active {
           </button>
           <div class="mini-panel" style="min-width:300px">
             <div class="upload-bar" style="flex-direction:column;align-items:stretch;gap:.55rem">
-              <span class="stat-line" id="statAnalisaReady">Siap analisa · Data Tagihan <strong>467</strong> faktur · Data Uang Masuk <strong>1584</strong> faktur</span>
+              <span class="stat-line" id="statAnalisaReady">Siap analisa · Data Tagihan <strong>467</strong> faktur · Data Uang Masuk <strong>2645</strong> faktur</span>
               <button class="btn-glow" id="btnProcess" style="width:100%">
                 <i class="bi bi-play-fill me-1"></i>Jalankan Analisa
               </button>
               <hr style="margin:.15rem 0;border-color:var(--border);opacity:.6">
-              <span class="stat-line" id="cloudStatus"><i class="bi bi-cloud-check me-1" style="color:var(--success)"></i>Data online · update terakhir 12 Agu 2026, 14.55</span>
+              <span class="stat-line" id="cloudStatus"><i class="bi bi-cloud-arrow-up me-1"></i>Data perangkat lebih baru dari cloud · 16 Agu 2026, 00.59</span>
               <div class="d-flex gap-2 flex-wrap">
                 <button class="btn-ghost" id="btnCloudLoad">
                   <i class="bi bi-cloud-download me-1"></i>Muat dari Cloud
@@ -1249,45 +1801,64 @@ body.startup-scanner-active {
         </div>
       </div>
 
-      <div id="resultSection" style="display:none;">
-        <div class="summary-row" id="summaryCards"><div class="s-card lunas">
+      <div id="resultSection" style="display: block;">
+        <div class="summary-row" id="summaryCards"><div class="s-card diterima">
+          <div class="ico"><i class="bi bi-cash-stack"></i></div>
+          <div><div class="lbl">Total Uang Diterima</div><div class="num">Rp 267.088.519</div><div class="amt">berdasarkan pembayaran</div></div>
+        </div><div class="s-card lunas">
           <div class="ico"><i class="bi bi-check-circle"></i></div>
           <div>
             <div class="lbl">Lunas</div>
-            <div class="num">387</div>
-            <div class="amt">Rp 231.767.030</div>
+            <div class="num">504</div>
+            <div class="amt">Rp 286.936.563</div>
           </div>
         </div><div class="s-card titip">
           <div class="ico"><i class="bi bi-hourglass-split"></i></div>
           <div>
             <div class="lbl">Titip</div>
-            <div class="num">18</div>
-            <div class="amt">Rp 23.843.000</div>
+            <div class="num">22</div>
+            <div class="amt">Rp 25.648.080</div>
           </div>
         </div><div class="s-card belum">
           <div class="ico"><i class="bi bi-exclamation-triangle"></i></div>
           <div>
             <div class="lbl">Belum Bayar</div>
-            <div class="num">62</div>
-            <div class="amt">Rp 49.411.240</div>
+            <div class="num">21</div>
+            <div class="amt">Rp 28.432.580</div>
           </div>
         </div><div class="s-card tanpa">
           <div class="ico"><i class="bi bi-question-circle"></i></div>
           <div>
             <div class="lbl">Pembayaran Belum Teridentifikasi</div>
-            <div class="num">6</div>
-            <div class="amt">Rp 4.508.464</div>
+            <div class="num">4</div>
+            <div class="amt">Rp 2.725.600</div>
           </div>
         </div></div>
 
         <div id="sub-ringkasan">
-          <div id="anomaliAlert" class="" style="margin-bottom:.65rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--danger);background:rgba(239,68,68,.10);font-size:.78rem;color:var(--text)"><i class="bi bi-exclamation-triangle-fill me-1" style="color:var(--danger)"></i><strong>6 anomali terdeteksi:</strong> ada uang masuk (total Rp 4.508.464) di Data Uang Masuk yang no. fakturnya <u>tidak ditemukan</u> di Data Tagihan (DTH). Cek tab <strong>PEMBAYARAN BELUM TERIDENTIFIKASI</strong> untuk detail per faktur.</div>
+          <div id="anomaliAlert" class="" style="margin-bottom:.65rem;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--danger);background:rgba(239,68,68,.10);font-size:.78rem;color:var(--text)"><i class="bi bi-exclamation-triangle-fill me-1" style="color:var(--danger)"></i><strong>4 anomali terdeteksi:</strong> ada uang masuk (total Rp 1.106.300) di Data Uang Masuk yang no. fakturnya <u>tidak ditemukan</u> di Data Tagihan (DTH). Cek tab <strong>PEMBAYARAN BELUM TERIDENTIFIKASI</strong> untuk detail per faktur.</div>
           <div class="ringkasan-card">
             <h5 class="mb-2" style="font-size:.85rem">Ringkasan Status Faktur</h5>
             <div class="table-responsive">
               <table class="table table-bordered table-hover mb-0" id="tblRingkasan">
                 <thead><tr><th>Status</th><th>Jumlah Faktur</th><th>Total Tagihan (DTH)</th><th>Total Bayar</th><th>Sisa</th></tr></thead>
-                <tbody></tbody>
+                <tbody><tr>
+          <td><strong>Lunas</strong></td><td>504</td>
+          <td class="rp">Rp 250.940.610</td><td class="rp">Rp 294.439.737</td>
+          <td class="rp">Rp 8.848.234</td>
+        </tr><tr>
+          <td><strong>Titip</strong></td><td>22</td>
+          <td class="rp">Rp 25.648.080</td><td class="rp">Rp 11.826.280</td>
+          <td class="rp">Rp 14.038.900</td>
+        </tr><tr>
+          <td><strong>Belum Bayar</strong></td><td>21</td>
+          <td class="rp">Rp 28.432.580</td><td class="rp">Rp 0</td>
+          <td class="rp">Rp 28.432.580</td>
+        </tr><tr>
+          <td><strong>Pembayaran Belum Teridentifikasi</strong></td><td>4</td>
+          <td class="rp">Rp 0</td><td class="rp">Rp 1.106.300</td>
+          <td class="rp">Rp 0</td>
+        </tr></tbody>
               </table>
             </div>
           </div>
@@ -1393,8 +1964,8 @@ body.startup-scanner-active {
     <footer>Analisa Tagihan · Diproses 100% di browser</footer>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>function showResultControls(t){document.getElementById("resultSection").style.display=t?"block":"none",document.getElementById("analisaSubTabs").style.display=t?"flex":"none",document.getElementById("filterBarWrap").style.display=t?"flex":"none"}const BULAN={"01":"Januari","02":"Februari","03":"Maret","04":"April","05":"Mei","06":"Juni","07":"Juli","08":"Agustus","09":"September",10:"Oktober",11:"November",12:"Desember"};function sheetToMonthKey(t){const e=String(t).match(/(\d{1,2})-(\d{1,2})/);if(e)return e[2].padStart(2,"0");const a=String(t).match(/(\d{1,2})/);return a?a[1].padStart(2,"0"):t}function monthLabel(t){return BULAN[t]||t}function parseAnyDate(t){let e=null;if(t instanceof Date)e=t;else if("number"==typeof t)e=new Date(Math.round(86400*(t-25569)*1e3));else if(t){const a=String(t).trim(),n=a.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(n)e=new Date(+n[1],+n[2]-1,+n[3]);else{const l=a.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);l&&(e=new Date(+l[3]<100?+l[3]+2e3:+l[3],+l[2]-1,+l[1]))}}return!e||isNaN(e.getTime())?null:e}function sortByDateDesc(t,e){return t.slice().sort((t,a)=>{const n=parseAnyDate(t[e]),l=parseAnyDate(a[e]);return n&&l?l-n:n?-1:l?1:0})}function sortByDateAsc(t,e){return t.slice().sort((t,a)=>{const n=parseAnyDate(t[e]),l=parseAnyDate(a[e]);return n&&l?n-l:n?-1:l?1:0})}function dateToMonthKey(t){const e=parseAnyDate(t);return e?e.getFullYear()+"-"+String(e.getMonth()+1).padStart(2,"0"):null}function monthLabelFull(t){const[e,a]=String(t).split("-");return(BULAN[a]||a)+" "+e}const htmlEl=document.documentElement;function applyTheme(t){htmlEl.setAttribute("data-theme",t),localStorage.setItem("dth-theme",t),document.getElementById("themeIcon").className="dark"===t?"bi bi-sun-fill":"bi bi-moon-stars-fill"}applyTheme(localStorage.getItem("dth-theme")||"dark"),document.getElementById("themeToggle").addEventListener("click",()=>{applyTheme("dark"===htmlEl.getAttribute("data-theme")?"light":"dark")});const fmtRp=t=>null==t||isNaN(t)?"-":"Rp "+Number(t).toLocaleString("id-ID"),toFloat=t=>{if(null==t||""===t)return 0;const e=parseFloat(String(t).replace(/[^0-9.-]/g,""));return isNaN(e)?0:e},isFaktur=t=>null!=t&&String(t).trim().startsWith("011"),cleanStr=t=>null==t||""===t||"NaN"===String(t)||"nan"===String(t)?"":String(t).trim(),fakturSeri=t=>{const s=String(t||"").trim();return isFaktur(s)&&s.length>=12?s.substring(8,12):null},fmtDate=t=>{if(null==t||""===t)return"-";let e=null;if(t instanceof Date)e=t;else if("number"==typeof t)e=new Date(Math.round(86400*(t-25569)*1e3));else{const a=String(t).trim();if(!a)return"-";let n=a.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(n)e=new Date(+n[1],+n[2]-1,+n[3]);else if(n=a.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/)){let l=+n[1],r=+n[2],s=+n[3];s=s<100?s+2e3:s;let o,d;l>12&&r<=12?(d=l,o=r):(o=l,d=r),e=new Date(s,o-1,d)}}if(!e||isNaN(e.getTime()))return String(t);const a=String(e.getDate()).padStart(2,"0"),n=String(e.getMonth()+1).padStart(2,"0"),l=String(e.getFullYear()).slice(-2);return`${a}/${n}/${l}`};const TOAST_ICONS={danger:"bi-x-circle-fill",warning:"bi-exclamation-triangle-fill",success:"bi-check-circle-fill",info:"bi-info-circle-fill"};function showToast(t,e="danger",a=5e3){const n=document.getElementById("toastContainer");if(!n)return void alert(t);const l=document.createElement("div");l.className=`app-toast t-${e}`,l.innerHTML=`<i class="bi ${TOAST_ICONS[e]||TOAST_ICONS.info} toast-ico"></i><div class="toast-body"></div><button type="button" class="toast-close" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>`,l.querySelector(".toast-body").textContent=t,n.appendChild(l),requestAnimationFrame(()=>l.classList.add("show"));const r=()=>{l.classList.remove("show"),l.classList.add("hide"),setTimeout(()=>l.remove(),260)};let s=null;a>0&&(s=setTimeout(r,a)),l.querySelector(".toast-close").addEventListener("click",()=>{s&&clearTimeout(s),r()})}document.querySelectorAll(".main-nav .nav-btn").forEach(t=>{t.addEventListener("click",()=>{document.querySelectorAll(".main-nav .nav-btn").forEach(t=>t.classList.remove("active")),t.classList.add("active"),document.querySelectorAll(".tab-panel").forEach(t=>t.classList.add("d-none"));document.getElementById({dth:"panelDth",laporan:"panelLaporan",penjualan:"panelPenjualan",analisa:"panelAnalisa"}[t.dataset.tab]).classList.remove("d-none")})}),document.querySelectorAll("#analisaSubTabs .st").forEach(t=>{t.addEventListener("click",()=>{document.querySelectorAll("#analisaSubTabs .st").forEach(t=>t.classList.remove("active")),t.classList.add("active"),["ringkasan","lunas","titip","belum","tanpa","semua"].forEach(e=>{document.getElementById("sub-"+e).classList.toggle("d-none",e!==t.dataset.sub)}),renderSubTab(t.dataset.sub)})}),document.querySelectorAll("#pjlSubTabs .st").forEach(t=>{t.addEventListener("click",()=>{document.querySelectorAll("#pjlSubTabs .st").forEach(t=>t.classList.remove("active")),t.classList.add("active"),["ringkasan","raw","sales","produk","bulan","qtystok"].forEach(e=>{const el=document.getElementById("pjl-"+e);if(el)el.classList.toggle("d-none",e!==t.dataset.sub)});const sub=t.dataset.sub;if(sub==="qtystok")renderQtyStokTables();else if(sub==="ringkasan"){(typeof renderPjlRingkasan==="function")?renderPjlRingkasan():showToast("Ringkasan Penjualan belum tersedia.","warning")}else if(sub==="sales")renderPjlSalesCompact();else if(sub==="produk"||sub==="bulan"||sub==="raw")renderPjlTable()})});document.getElementById("btnExportPjlProduk")?.addEventListener("click",exportPjlProdukExcel);document.getElementById("btnExportPjlSales")?.addEventListener("click",()=>{if(typeof exportPjlSalesExcel==="function"){exportPjlSalesExcel()}else{showToast("Fitur export Laporan Penjualan per Sales belum tersedia.","warning")}});document.getElementById("rkRupaSearch")?.addEventListener("input",()=>{const d=window._rkRupaAll;if(!d)return;const q=(document.getElementById("rkRupaSearch").value||"").trim().toLowerCase();const rows=q?d.rows.filter(r=>r.produk.toLowerCase().includes(q)):d.rows;renderRkTable("tblRkRupa",rows,d.sales,false);});function computeMonthsFromStokOrPjl(){const t=new Set;return allPjl.forEach(e=>{e.bulan_key&&t.add(e.bulan_key)}),allStok.forEach(e=>{e.bulan_key&&t.add(e.bulan_key)}),[...t].sort()}function inQtyStokDate(t){if(!qtyStokDate)return!0;const e=parseAnyDate(t);if(!e)return!1;const a=new Date(qtyStokDate+"T00:00:00");return e.getFullYear()===a.getFullYear()&&e.getMonth()===a.getMonth()&&e.getDate()===a.getDate()}function renderQtyStokTables(){const t=computeMonthsFromStokOrPjl();document.getElementById("filterBarQtyStok").style.display=t.length?"flex":"none",buildMonthDropdown("monthPillsQtyStok",t,activeMonthsQtyStok,renderQtyStokTables,monthLabelFull);let e=allPjl.filter(t=>0===activeMonthsQtyStok.size||activeMonthsQtyStok.has(t.bulan_key));e=e.filter(t=>inQtyStokDate(t.tanggal));let a=allStok.filter(t=>0===activeMonthsQtyStok.size||activeMonthsQtyStok.has(t.bulan_key));a=a.filter(t=>inQtyStokDate(t.tanggal));const pm={},ss=new Set;e.forEach(t=>{const p=t.produk||"(kosong)",s=t.sales||"(tanpa sales)";ss.add(s),pm[p]||(pm[p]={produk:p,by:{},total:0,satuan:t.satuan||""}),pm[p].by[s]=(pm[p].by[s]||0)+(t.jumlah||0),pm[p].total+=t.jumlah||0,pm[p].satuan||(pm[p].satuan=t.satuan||"")});const sc=[...ss].sort((a,b)=>a.localeCompare(b,"id")),pr=Object.values(pm).sort((a,b)=>b.total-a.total),qh=document.querySelector("#tblQtyPenjualan thead");qh&&(qh.innerHTML="<tr><th>Produk</th>"+sc.map(s=>`<th>${s}</th>`).join("")+"<th>Total</th></tr>");const gh=pr.map(p=>{const cells=sc.map(s=>`<td>${p.by[s]?p.by[s].toLocaleString("id-ID"):"-"}</td>`).join(""),nm=p.satuan?`${p.produk} <span style="color:var(--muted);font-size:.68rem">(${p.satuan})</span>`:p.produk;return `<tr><td>${nm}</td>${cells}<td style="font-weight:700">${p.total.toLocaleString("id-ID")}</td></tr>`}).join("");document.querySelector("#tblQtyPenjualan tbody").innerHTML=gh||`<tr><td colspan="${sc.length+2}" style="text-align:center;color:var(--muted)">Tidak ada data</td></tr>`;const pm2={},ss2=new Set;a.forEach(t=>{const p=t.produk||"(kosong)",s=t.sales||"(tanpa sales)";ss2.add(s),pm2[p]||(pm2[p]={produk:p,by:{},total:0,satuan:t.satuan||""}),pm2[p].by[s]=(pm2[p].by[s]||0)+(t.keluar||0),pm2[p].total+=t.keluar||0,pm2[p].satuan||(pm2[p].satuan=t.satuan||"")});const sc2=[...ss2].sort((a,b)=>a.localeCompare(b,"id")),pr2=Object.values(pm2).sort((a,b)=>b.total-a.total),qh2=document.querySelector("#tblQtyStok thead");qh2&&(qh2.innerHTML="<tr><th>Produk</th>"+sc2.map(s=>`<th>${s}</th>`).join("")+"<th>Total</th></tr>");const gh2=pr2.map(p=>{const cells=sc2.map(s=>`<td>${p.by[s]?p.by[s].toLocaleString("id-ID"):"-"}</td>`).join(""),nm=p.satuan?`${p.produk} <span style="color:var(--muted);font-size:.68rem">(${p.satuan})</span>`:p.produk;return `<tr><td>${nm}</td>${cells}<td style="font-weight:700">${p.total.toLocaleString("id-ID")}</td></tr>`}).join("");document.querySelector("#tblQtyStok tbody").innerHTML=gh2||`<tr><td colspan="${sc2.length+2}" style="text-align:center;color:var(--muted)">Tidak ada data</td></tr>`}function buildMonthDropdown(containerId,months,activeSet,onChange,labelFn){const wrap=document.getElementById(containerId);if(!wrap)return;wrap.innerHTML="";wrap.className="month-select";const trigger=document.createElement("button");trigger.type="button";trigger.className="month-select-trigger";const labelSpan=document.createElement("span");labelSpan.className="ms-label";trigger.appendChild(labelSpan);const chevron=document.createElement("i");chevron.className="bi bi-chevron-down ms-chevron";trigger.appendChild(chevron);wrap.appendChild(trigger);const panel=document.createElement("div");panel.className="month-select-panel";wrap.appendChild(panel);function updateLabel(){if(0===activeSet.size){labelSpan.textContent="Semua Bulan"}else{const m=[...activeSet][0];labelSpan.textContent=labelFn(m)}panel.querySelectorAll(".month-select-option").forEach(opt=>{const isAll="__ALL__"===opt.dataset.month;opt.classList.toggle("active",isAll?0===activeSet.size:activeSet.has(opt.dataset.month))})}const allOpt=document.createElement("div");allOpt.className="month-select-option";allOpt.textContent="Semua Bulan";allOpt.dataset.month="__ALL__";allOpt.addEventListener("click",()=>{activeSet.clear();updateLabel();wrap.classList.remove("open");onChange()});panel.appendChild(allOpt);months.forEach((m,idx)=>{const opt=document.createElement("div");opt.className="month-select-option";let lbl=labelFn(m);idx===months.length-1&&(lbl+=" (terbaru)");opt.textContent=lbl;opt.dataset.month=m;opt.addEventListener("click",()=>{activeSet.clear();activeSet.add(m);updateLabel();wrap.classList.remove("open");onChange()});panel.appendChild(opt)});trigger.addEventListener("click",e=>{e.stopPropagation();document.querySelectorAll(".month-select.open").forEach(el=>{el!==wrap&&el.classList.remove("open")});wrap.classList.toggle("open")});updateLabel();wrap.refreshLabel=updateLabel}function refreshMonthDropdown(containerId){const wrap=document.getElementById(containerId);wrap&&wrap.refreshLabel&&wrap.refreshLabel()}document.addEventListener("click",t=>{document.querySelectorAll(".month-select.open").forEach(e=>{e.contains(t.target)||e.classList.remove("open")})});function lapRowKey(r){
+  <script src="./Analisa Tagihan_files/bootstrap.bundle.min.js.download"></script>
+  <script>function showResultControls(t){document.getElementById("resultSection").style.display=t?"block":"none",document.getElementById("analisaSubTabs").style.display=t?"flex":"none",document.getElementById("filterBarWrap").style.display=t?"flex":"none"}const BULAN={"01":"Januari","02":"Februari","03":"Maret","04":"April","05":"Mei","06":"Juni","07":"Juli","08":"Agustus","09":"September",10:"Oktober",11:"November",12:"Desember"};function sheetToMonthKey(t){const e=String(t).match(/(\d{1,2})-(\d{1,2})/);if(e)return e[2].padStart(2,"0");const a=String(t).match(/(\d{1,2})/);return a?a[1].padStart(2,"0"):t}function monthLabel(t){return BULAN[t]||t}function parseAnyDate(t){let e=null;if(t instanceof Date)e=t;else if("number"==typeof t)e=new Date(Math.round(86400*(t-25569)*1e3));else if(t){const a=String(t).trim(),n=a.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(n)e=new Date(+n[1],+n[2]-1,+n[3]);else{const l=a.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);l&&(e=new Date(+l[3]<100?+l[3]+2e3:+l[3],+l[2]-1,+l[1]))}}return!e||isNaN(e.getTime())?null:e}function sortByDateDesc(t,e){return t.slice().sort((t,a)=>{const n=parseAnyDate(t[e]),l=parseAnyDate(a[e]);return n&&l?l-n:n?-1:l?1:0})}function sortByDateAsc(t,e){return t.slice().sort((t,a)=>{const n=parseAnyDate(t[e]),l=parseAnyDate(a[e]);return n&&l?n-l:n?-1:l?1:0})}function dateToMonthKey(t){const e=parseAnyDate(t);return e?e.getFullYear()+"-"+String(e.getMonth()+1).padStart(2,"0"):null}function monthLabelFull(t){const[e,a]=String(t).split("-");return(BULAN[a]||a)+" "+e}const htmlEl=document.documentElement;function applyTheme(t){htmlEl.setAttribute("data-theme",t),localStorage.setItem("dth-theme",t),document.getElementById("themeIcon").className="dark"===t?"bi bi-sun-fill":"bi bi-moon-stars-fill"}applyTheme(localStorage.getItem("dth-theme")||"dark"),document.getElementById("themeToggle").addEventListener("click",()=>{applyTheme("dark"===htmlEl.getAttribute("data-theme")?"light":"dark")});const fmtRp=t=>null==t||isNaN(t)?"-":"Rp "+Number(t).toLocaleString("id-ID"),toFloat=t=>{if(null==t||""===t)return 0;const e=parseFloat(String(t).replace(/[^0-9.-]/g,""));return isNaN(e)?0:e},isFaktur=t=>null!=t&&String(t).trim().startsWith("011"),cleanStr=t=>null==t||""===t||"NaN"===String(t)||"nan"===String(t)?"":String(t).trim(),fakturSeri=t=>{const s=String(t||"").trim();return isFaktur(s)&&s.length>=12?s.substring(8,12):null},fmtDate=t=>{if(null==t||""===t)return"-";let e=null;if(t instanceof Date)e=t;else if("number"==typeof t)e=new Date(Math.round(86400*(t-25569)*1e3));else{const a=String(t).trim();if(!a)return"-";let n=a.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(n)e=new Date(+n[1],+n[2]-1,+n[3]);else if(n=a.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/)){let l=+n[1],r=+n[2],s=+n[3];s=s<100?s+2e3:s;let o,d;r>12&&l<=12?(o=l,d=r):(d=l,o=r),e=new Date(s,o-1,d)}}if(!e||isNaN(e.getTime()))return String(t);const a=String(e.getDate()).padStart(2,"0"),n=String(e.getMonth()+1).padStart(2,"0"),l=String(e.getFullYear()).slice(-2);return`${a}/${n}/${l}`};const TOAST_ICONS={danger:"bi-x-circle-fill",warning:"bi-exclamation-triangle-fill",success:"bi-check-circle-fill",info:"bi-info-circle-fill"};function showToast(t,e="danger",a=5e3){const n=document.getElementById("toastContainer");if(!n)return void alert(t);const l=document.createElement("div");l.className=`app-toast t-${e}`,l.innerHTML=`<i class="bi ${TOAST_ICONS[e]||TOAST_ICONS.info} toast-ico"></i><div class="toast-body"></div><button type="button" class="toast-close" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>`,l.querySelector(".toast-body").textContent=t,n.appendChild(l),requestAnimationFrame(()=>l.classList.add("show"));const r=()=>{l.classList.remove("show"),l.classList.add("hide"),setTimeout(()=>l.remove(),260)};let s=null;a>0&&(s=setTimeout(r,a)),l.querySelector(".toast-close").addEventListener("click",()=>{s&&clearTimeout(s),r()})}document.querySelectorAll(".main-nav .nav-btn").forEach(t=>{t.addEventListener("click",()=>{document.querySelectorAll(".main-nav .nav-btn").forEach(t=>t.classList.remove("active")),t.classList.add("active"),document.querySelectorAll(".tab-panel").forEach(t=>t.classList.add("d-none"));document.getElementById({dth:"panelDth",laporan:"panelLaporan",penjualan:"panelPenjualan",analisa:"panelAnalisa"}[t.dataset.tab]).classList.remove("d-none")})}),document.querySelectorAll("#analisaSubTabs .st").forEach(t=>{t.addEventListener("click",()=>{document.querySelectorAll("#analisaSubTabs .st").forEach(t=>t.classList.remove("active")),t.classList.add("active"),["ringkasan","lunas","titip","belum","tanpa","semua"].forEach(e=>{document.getElementById("sub-"+e).classList.toggle("d-none",e!==t.dataset.sub)}),renderSubTab(t.dataset.sub)})}),document.querySelectorAll("#pjlSubTabs .st").forEach(t=>{t.addEventListener("click",()=>{document.querySelectorAll("#pjlSubTabs .st").forEach(t=>t.classList.remove("active")),t.classList.add("active"),["ringkasan","raw","sales","produk","bulan","qtystok"].forEach(e=>{const el=document.getElementById("pjl-"+e);if(el)el.classList.toggle("d-none",e!==t.dataset.sub)});const sub=t.dataset.sub;if(sub==="qtystok")renderQtyStokTables();else if(sub==="ringkasan"){(typeof renderPjlRingkasan==="function")?renderPjlRingkasan():showToast("Ringkasan Penjualan belum tersedia.","warning")}else if(sub==="sales")renderPjlSalesCompact();else if(sub==="produk"||sub==="bulan"||sub==="raw")renderPjlTable()})});document.getElementById("btnExportPjlProduk")?.addEventListener("click",exportPjlProdukExcel);document.getElementById("btnExportPjlSales")?.addEventListener("click",()=>{if(typeof exportPjlSalesExcel==="function"){exportPjlSalesExcel()}else{showToast("Fitur export Laporan Penjualan per Sales belum tersedia.","warning")}});document.getElementById("rkRupaSearch")?.addEventListener("input",()=>{const d=window._rkRupaAll;if(!d)return;const q=(document.getElementById("rkRupaSearch").value||"").trim().toLowerCase();const rows=q?d.rows.filter(r=>r.produk.toLowerCase().includes(q)):d.rows;renderRkTable("tblRkRupa",rows,d.sales,false);});function computeMonthsFromStokOrPjl(){const t=new Set;return allPjl.forEach(e=>{e.bulan_key&&t.add(e.bulan_key)}),allStok.forEach(e=>{e.bulan_key&&t.add(e.bulan_key)}),[...t].sort()}function inQtyStokDate(t){if(!qtyStokDate)return!0;const e=parseAnyDate(t);if(!e)return!1;const a=new Date(qtyStokDate+"T00:00:00");return e.getFullYear()===a.getFullYear()&&e.getMonth()===a.getMonth()&&e.getDate()===a.getDate()}function renderQtyStokTables(){const t=computeMonthsFromStokOrPjl();document.getElementById("filterBarQtyStok").style.display=t.length?"flex":"none",buildMonthDropdown("monthPillsQtyStok",t,activeMonthsQtyStok,renderQtyStokTables,monthLabelFull);let e=allPjl.filter(t=>0===activeMonthsQtyStok.size||activeMonthsQtyStok.has(t.bulan_key));e=e.filter(t=>inQtyStokDate(t.tanggal));let a=allStok.filter(t=>0===activeMonthsQtyStok.size||activeMonthsQtyStok.has(t.bulan_key));a=a.filter(t=>inQtyStokDate(t.tanggal));const pm={},ss=new Set;e.forEach(t=>{const p=t.produk||"(kosong)",s=t.sales||"(tanpa sales)";ss.add(s),pm[p]||(pm[p]={produk:p,by:{},total:0,satuan:t.satuan||""}),pm[p].by[s]=(pm[p].by[s]||0)+(t.jumlah||0),pm[p].total+=t.jumlah||0,pm[p].satuan||(pm[p].satuan=t.satuan||"")});const sc=[...ss].sort((a,b)=>a.localeCompare(b,"id")),pr=Object.values(pm).sort((a,b)=>b.total-a.total),qh=document.querySelector("#tblQtyPenjualan thead");qh&&(qh.innerHTML="<tr><th>Produk</th>"+sc.map(s=>`<th>${s}</th>`).join("")+"<th>Total</th></tr>");const gh=pr.map(p=>{const cells=sc.map(s=>`<td>${p.by[s]?p.by[s].toLocaleString("id-ID"):"-"}</td>`).join(""),nm=p.satuan?`${p.produk} <span style="color:var(--muted);font-size:.68rem">(${p.satuan})</span>`:p.produk;return `<tr><td>${nm}</td>${cells}<td style="font-weight:700">${p.total.toLocaleString("id-ID")}</td></tr>`}).join("");document.querySelector("#tblQtyPenjualan tbody").innerHTML=gh||`<tr><td colspan="${sc.length+2}" style="text-align:center;color:var(--muted)">Tidak ada data</td></tr>`;const pm2={},ss2=new Set;a.forEach(t=>{const p=t.produk||"(kosong)",s=t.sales||"(tanpa sales)";ss2.add(s),pm2[p]||(pm2[p]={produk:p,by:{},total:0,satuan:t.satuan||""}),pm2[p].by[s]=(pm2[p].by[s]||0)+(t.keluar||0),pm2[p].total+=t.keluar||0,pm2[p].satuan||(pm2[p].satuan=t.satuan||"")});const sc2=[...ss2].sort((a,b)=>a.localeCompare(b,"id")),pr2=Object.values(pm2).sort((a,b)=>b.total-a.total),qh2=document.querySelector("#tblQtyStok thead");qh2&&(qh2.innerHTML="<tr><th>Produk</th>"+sc2.map(s=>`<th>${s}</th>`).join("")+"<th>Total</th></tr>");const gh2=pr2.map(p=>{const cells=sc2.map(s=>`<td>${p.by[s]?p.by[s].toLocaleString("id-ID"):"-"}</td>`).join(""),nm=p.satuan?`${p.produk} <span style="color:var(--muted);font-size:.68rem">(${p.satuan})</span>`:p.produk;return `<tr><td>${nm}</td>${cells}<td style="font-weight:700">${p.total.toLocaleString("id-ID")}</td></tr>`}).join("");document.querySelector("#tblQtyStok tbody").innerHTML=gh2||`<tr><td colspan="${sc2.length+2}" style="text-align:center;color:var(--muted)">Tidak ada data</td></tr>`}function buildMonthDropdown(containerId,months,activeSet,onChange,labelFn){const wrap=document.getElementById(containerId);if(!wrap)return;wrap.innerHTML="";wrap.className="month-select";const trigger=document.createElement("button");trigger.type="button";trigger.className="month-select-trigger";const labelSpan=document.createElement("span");labelSpan.className="ms-label";trigger.appendChild(labelSpan);const chevron=document.createElement("i");chevron.className="bi bi-chevron-down ms-chevron";trigger.appendChild(chevron);wrap.appendChild(trigger);const panel=document.createElement("div");panel.className="month-select-panel";wrap.appendChild(panel);function updateLabel(){if(0===activeSet.size){labelSpan.textContent="Semua Bulan"}else{const m=[...activeSet][0];labelSpan.textContent=labelFn(m)}panel.querySelectorAll(".month-select-option").forEach(opt=>{const isAll="__ALL__"===opt.dataset.month;opt.classList.toggle("active",isAll?0===activeSet.size:activeSet.has(opt.dataset.month))})}const allOpt=document.createElement("div");allOpt.className="month-select-option";allOpt.textContent="Semua Bulan";allOpt.dataset.month="__ALL__";allOpt.addEventListener("click",()=>{activeSet.clear();updateLabel();wrap.classList.remove("open");onChange()});panel.appendChild(allOpt);months.forEach((m,idx)=>{const opt=document.createElement("div");opt.className="month-select-option";let lbl=labelFn(m);idx===months.length-1&&(lbl+=" (terbaru)");opt.textContent=lbl;opt.dataset.month=m;opt.addEventListener("click",()=>{activeSet.clear();activeSet.add(m);updateLabel();wrap.classList.remove("open");onChange()});panel.appendChild(opt)});trigger.addEventListener("click",e=>{e.stopPropagation();document.querySelectorAll(".month-select.open").forEach(el=>{el!==wrap&&el.classList.remove("open")});wrap.classList.toggle("open")});updateLabel();wrap.refreshLabel=updateLabel}function refreshMonthDropdown(containerId){const wrap=document.getElementById(containerId);wrap&&wrap.refreshLabel&&wrap.refreshLabel()}document.addEventListener("click",t=>{document.querySelectorAll(".month-select.open").forEach(e=>{e.contains(t.target)||e.classList.remove("open")})});function lapRowKey(r){
   // Satu faktur dapat muncul lagi di hari berikutnya karena pembayaran bertahap.
   // Jadi NO FAKTUR saja TIDAK boleh menjadi kunci. Kunci sumbernya adalah SHEET/HARI + NO FAKTUR + SECTION.
   return [r.sheet_laporan||"",r.no_faktur||"",r.section||""].map(v=>String(v).trim().toUpperCase()).join("|");
