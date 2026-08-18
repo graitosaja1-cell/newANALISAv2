@@ -2626,13 +2626,16 @@ function openFakturModal(noFaktur,candidateNo){
   const merged=(resultData&&resultData.mergedFull||[]).find(r=>String(r.no_faktur||"").trim()===cleanNo)||null;
   const dthRows=allDth.filter(r=>String(r.no_faktur||"").trim()===cleanNo);
   const candidateRows=cleanCandidate?allDth.filter(r=>String(r.no_faktur||"").trim()===cleanCandidate):[];
-  const lapRows=allLap.filter(r=>String(r.no_faktur||"").trim()===cleanNo);
+  const lapRows=sortByDateAsc(allLap.filter(r=>String(r.no_faktur||"").trim()===cleanNo),"payment_date");
   const pjlRows=allPjl.filter(r=>String(r.no_faktur||"").trim()===cleanNo);
   const firstPjl=pjlRows[0]||{};
   const tempo=calcTempo13Info(firstPjl.tanggal);
   const totalPjl=pjlRows.reduce((sum,r)=>sum+(Number(r.total)||0),0);
-  const totalDth=dthRows.reduce((sum,r)=>sum+(Number(r.tagihan_dth)||0),0);
-  const totalCandidate=candidateRows.reduce((sum,r)=>sum+(Number(r.tagihan_dth)||0),0);
+  // Faktur DTH yang sama bisa muncul berulang di beberapa sheet/periode selama piutang
+  // belum lunas. Ambil nilai TERTINGGI (bukan dijumlah) agar konsisten dengan
+  // buildDthAggregates() yang dipakai di tabel ringkasan/list.
+  const totalDth=dthRows.reduce((max,r)=>Math.max(max,Number(r.tagihan_dth)||0),0);
+  const totalCandidate=candidateRows.reduce((max,r)=>Math.max(max,Number(r.tagihan_dth)||0),0);
   const totalLap=lapRows.reduce((sum,r)=>sum+(Number(r.total_bayar)||0),0);
   const pembayaranSet=[...new Set(pjlRows.map(r=>r.pembayaran).filter(Boolean))];
   document.getElementById("fdModalTitle").textContent=`Cek Faktur Penjualan · ${cleanNo}`;
