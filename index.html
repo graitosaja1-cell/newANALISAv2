@@ -2444,20 +2444,26 @@ const a=[{key:"LUNAS",label:"Lunas",cls:"lunas",icon:"bi-check-circle"},{key:"TI
   return rows+`<tr class="table-total"><td><strong>TOTAL</strong></td><td><strong>${totalCount}</strong></td><td class="rp"><strong>${fmtRp(totalDth)}</strong></td><td class="rp"><strong>${fmtRp(totalBayar)}</strong></td><td class="rp"><strong>${fmtRp(totalSisa)}</strong></td></tr>`;
 })(),(function(){const t=(e.BAYAR_TANPA_TAGIHAN_DTH||[]).filter(x=>!isCashDroppingRow(x)),a=document.getElementById("anomaliAlert");if(!a)return;if(t.length){const e=t.reduce((t,e)=>t+(e.total_bayar||0),0);a.classList.remove("d-none"),a.innerHTML=`<i class="bi bi-exclamation-triangle-fill me-1" style="color:var(--danger)"></i><strong>${t.length} anomali terdeteksi:</strong> ada uang masuk (total ${fmtRp(e)}) di Data Uang Masuk yang no. fakturnya <u>tidak ditemukan</u> di Data Tagihan (DTH). Cek tab <strong>BAYAR TANPA DTH</strong> untuk detail per faktur.`}else a.classList.add("d-none")})(),analisaGroups=e,analisaFilteredAll=t,analisaRenderedTabs.clear(),renderActiveSubTab()}
 function getPrevMonthRange(){
-  // Bulan sebelumnya relatif terhadap tanggal hari ini — otomatis bergeser setiap bulan berjalan.
+  // Rentang terbuka: mulai Juni 2026 (titik awal pelacakan) sampai SEBELUM bulan berjalan.
+  // Tidak lagi dibatasi cuma "1 bulan ke belakang" — jadi begitu bulan berganti (Juni->Juli->
+  // Agustus->dst), semua faktur titip dari bulan-bulan lama tetap ikut kecek, tidak ada yang
+  // "lolos" hanya karena sudah lewat lebih dari sebulan.
+  const TRACK_START=new Date(2026,5,1); // 1 Juni 2026
   const now=new Date();
-  const start=new Date(now.getFullYear(),now.getMonth()-1,1);
-  const end=new Date(now.getFullYear(),now.getMonth(),1);
+  const start=TRACK_START;
+  const end=new Date(now.getFullYear(),now.getMonth(),1); // awal bulan berjalan (exclusive)
   return {start,end};
 }
 function getTitipBulanSebelumnyaRows(){
-  // Sumber data: baris pembayaran TITIP di tab Data Uang Masuk pada bulan sebelumnya
-  // (persis sama dengan filter Bulan + Status "Titip" di tab Data Uang Masuk), lalu dicek
-  // ulang statusnya SAMPAI SEKARANG (termasuk pembayaran yang masuk belakangan, misal bulan
-  // berjalan). Kalau sampai sekarang masih belum lunas (status masih TITIP), faktur itu tetap
-  // ditampilkan di sini. Kalau sudah lunas sejak saat itu, otomatis hilang dari daftar ini.
+  // Sumber data: baris pembayaran TITIP di tab Data Uang Masuk sejak Juni 2026 sampai sebelum
+  // bulan berjalan (persis sama dengan filter Bulan + Status "Titip" di tab Data Uang Masuk,
+  // untuk semua bulan Juni s/d bulan lalu), lalu dicek ulang statusnya SAMPAI SEKARANG (termasuk
+  // pembayaran yang masuk belakangan, misal bulan berjalan). Kalau sampai sekarang masih belum
+  // lunas (status masih TITIP), faktur itu tetap ditampilkan di sini — berapa pun lama sudah
+  // berlalu sejak titip pertama kali. Kalau sudah lunas sejak saat itu, otomatis hilang dari
+  // daftar ini.
   const {start:PREV_START,end:PREV_END}=getPrevMonthRange();
-  const prevTitipMap=new Map(); // no_faktur -> tanggal titip paling awal di bulan sebelumnya
+  const prevTitipMap=new Map(); // no_faktur -> tanggal titip paling awal sejak Juni 2026
   (allLap||[]).forEach(r=>{
     if(isCashDroppingRow(r))return;
     const d=parseAnyDate(r.payment_date);
@@ -2483,13 +2489,25 @@ function getTitipBulanSebelumnyaRows(){
   });
   return rows.sort((a,b)=>(b.sisa-a.sisa)||((b.tanggal?.getTime()||0)-(a.tanggal?.getTime()||0)));
 }
+function getPrevRangeLabel(){
+  // Buat label rentang bulan, misal "Juni 2026" kalau cuma 1 bulan, atau
+  // "Juni - Juli 2026" / "Juni 2026 - Agustus 2026" kalau sudah beberapa bulan berjalan.
+  const {start:PREV_START,end:PREV_END}=getPrevMonthRange();
+  const lastMonth=new Date(PREV_END.getFullYear(),PREV_END.getMonth()-1,1);
+  const startKey=PREV_START.getFullYear()+'-'+String(PREV_START.getMonth()+1).padStart(2,'0');
+  const endKey=lastMonth.getFullYear()+'-'+String(lastMonth.getMonth()+1).padStart(2,'0');
+  if(startKey===endKey)return monthLabelFull(startKey);
+  const sameYear=PREV_START.getFullYear()===lastMonth.getFullYear();
+  const startLbl=sameYear?BULAN[String(PREV_START.getMonth()+1).padStart(2,'0')]:monthLabelFull(startKey);
+  const endLbl=monthLabelFull(endKey);
+  return `${startLbl} - ${endLbl}`;
+}
 function renderTitipBulanSebelumnya(){
   const rows=getTitipBulanSebelumnyaRows();
   const badge=document.getElementById('badgeTitipBulanSebelumnya');if(badge)badge.textContent=rows.length;
-  const {start:PREV_START}=getPrevMonthRange();
-  const label=monthLabelFull(PREV_START.getFullYear()+'-'+String(PREV_START.getMonth()+1).padStart(2,'0'));
+  const label=getPrevRangeLabel();
   const titleEl=document.getElementById('titipBulanSebelumnyaTitle'); if(titleEl)titleEl.textContent=`Titip Bulan ${label} · Belum Bayar Sampai Sekarang`;
-  const descEl=document.getElementById('titipBulanSebelumnyaDesc'); if(descEl)descEl.textContent=`Faktur dengan pembayaran TITIP di Data Uang Masuk pada ${label}, yang sampai sekarang (termasuk pembayaran bulan berjalan) masih belum lunas.`;
+  const descEl=document.getElementById('titipBulanSebelumnyaDesc'); if(descEl)descEl.textContent=`Faktur dengan pembayaran TITIP di Data Uang Masuk sejak ${label}, yang sampai sekarang (termasuk pembayaran bulan berjalan) masih belum lunas.`;
   const pillEl=document.getElementById('titipBulanSebelumnyaPill'); if(pillEl)pillEl.textContent=label;
   renderTable('tblTitipBulanSebelumnya',rows,r=>{
     const tgl=r.tanggal?fmtDate(r.tanggal):'-';
@@ -2507,8 +2525,7 @@ function exportTitipBulanSebelumnyaExcel(){
   const vt=vTables['tblTitipBulanSebelumnya'];
   const rows=vt?vt.filtered:getTitipBulanSebelumnyaRows();
   if(!rows||!rows.length){showToast('Tidak ada data Titip Bulan Sebelumnya untuk disimpan.','warning');return;}
-  const {start:PREV_START}=getPrevMonthRange();
-  const label=monthLabelFull(PREV_START.getFullYear()+'-'+String(PREV_START.getMonth()+1).padStart(2,'0'));
+  const label=getPrevRangeLabel();
   const data=rows.map(r=>({
     'No Faktur':r.no_faktur,
     'Tanggal Titip':r.tanggal?fmtDate(r.tanggal):'-',
