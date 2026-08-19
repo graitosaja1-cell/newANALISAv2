@@ -1207,19 +1207,41 @@ body.startup-scanner-active {
 
         
         <div id="pjl-ringkasan" class="">
-          <div class="table-toolbar" style="align-items:center">
-            <div>
-              <h5 style="margin-bottom:.12rem;font-style:italic">RINGKASAN PENJUALAN PER SALES</h5>
-              <div id="pjlRingkasanMonthLabel" style="font-size:.72rem;color:var(--muted)">-</div>
+          <div class="rk-wrap">
+            <div id="pjlRingkasanMonthLabel" class="stat-line" style="margin-bottom:.1rem">-</div>
+            <div class="rk-cards" id="rkTopCards"></div>
+            <div class="rk-grid2">
+              <div class="rk-panel">
+                <div class="rk-panel-head">
+                  <h5 class="rk-panel-title">PENJUALAN FITRI</h5>
+                  <button type="button" class="btn-ghost" id="btnRkFitriAndalan"><i class="bi bi-star-fill me-1"></i>PRODUK ANDALAN</button>
+                </div>
+                <div class="rk-table-wrap">
+                  <table class="rk-table" id="tblRkFitri">
+                    <thead></thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="rk-panel">
+                <div class="rk-panel-head">
+                  <h5 class="rk-panel-title">RUPA RUPA</h5>
+                  <button type="button" class="btn-ghost" id="btnRkRupaSemua"><i class="bi bi-grid-3x3-gap me-1"></i>SEMUA PRODUK</button>
+                </div>
+                <div style="display:flex;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap">
+                  <input type="search" class="rk-search" id="rkRupaSearch" placeholder="Cari produk..." style="flex:1 1 160px">
+                  <select class="search-box" id="rkRupaProdukSelect" style="max-width:220px;flex:0 0 auto">
+                    <option value="">— Pilih Produk —</option>
+                  </select>
+                </div>
+                <div class="rk-table-wrap" id="rkRupaTableWrap">
+                  <table class="rk-table" id="tblRkRupa">
+                    <thead></thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="table-container" style="max-height:calc(100vh - 300px);overflow:auto">
-            <table class="table table-sm table-striped table-hover" id="tblPjlRingkasan">
-              <thead><tr>
-                <th>Sales</th><th class="text-end">Total Qty</th><th class="text-end">Total Penjualan</th><th class="text-end">Total HPP</th><th class="text-end">Profit</th><th class="text-end">Margin %</th><th class="text-end">Jml Faktur</th>
-              </tr></thead>
-              <tbody></tbody>
-            </table>
           </div>
         </div>
         <div id="pjl-qtystok" class="d-none">
@@ -3219,31 +3241,118 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
 
 
 <script>
-/* ===== RINGKASAN PENJUALAN PER SALES ===== */
+/* ===== RINGKASAN PENJUALAN (kartu per sales + tabel Penjualan Fitri & Rupa Rupa) ===== */
 (function(){
-  function render(){
-    const table=document.getElementById("tblPjlRingkasan"); if(!table)return;
-    const rows=filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl);
+  const isFitriProduk=p=>/FITRI/i.test(p||"");
+
+  function groupByProduk(rows,filterFn){
     const map=new Map();
-    rows.forEach(r=>{
-      const sales=(r.sales||"UNKNOWN").trim()||"UNKNOWN";
-      if(!map.has(sales))map.set(sales,{sales,qty:0,sell:0,hpp:0,invoices:new Set()});
-      const g=map.get(sales),q=Number(r.jumlah)||0,sell=Number(r.total)||0,hpp=(Number(r.harga_beli)||0)*q;
-      g.qty+=q;g.sell+=sell;g.hpp+=hpp;
-      if(r.no_faktur!=null&&String(r.no_faktur).trim())g.invoices.add(String(r.no_faktur).trim());
+    rows.filter(filterFn).forEach(r=>{
+      const produk=cleanStr(r.produk)||"(kosong)";
+      const sales=cleanStr(r.sales)||"-";
+      const qty=Number(r.jumlah)||0;
+      if(!map.has(produk))map.set(produk,{produk,by:{},total:0});
+      const g=map.get(produk);
+      g.by[sales]=(g.by[sales]||0)+qty;
+      g.total+=qty;
     });
-    const data=[...map.values()].map(g=>({...g,profit:g.sell-g.hpp,margin:g.sell?(g.sell-g.hpp)/g.sell:0,faktur:g.invoices.size})).sort((a,b)=>b.sell-a.sell||a.sales.localeCompare(b.sales,"id"));
-    const body=table.querySelector("tbody");
-    const money=v=>fmtRp(v), qty=v=>Number(v||0).toLocaleString("id-ID",{maximumFractionDigits:2});
-    body.innerHTML=data.map(r=>`<tr><td>${r.sales}</td><td class="text-end">${qty(r.qty)}</td><td class="rp text-end">${money(r.sell)}</td><td class="rp text-end">${money(r.hpp)}</td><td class="rp text-end">${money(r.profit)}</td><td class="text-end">${(r.margin*100).toLocaleString("id-ID",{minimumFractionDigits:2,maximumFractionDigits:2})}%</td><td class="text-end">${r.faktur.toLocaleString("id-ID")}</td></tr>`).join("");
-    if(data.length){
-      const t=data.reduce((a,r)=>({qty:a.qty+r.qty,sell:a.sell+r.sell,hpp:a.hpp+r.hpp,faktur:a.faktur+r.faktur}),{qty:0,sell:0,hpp:0,faktur:0});
-      const profit=t.sell-t.hpp,margin=t.sell?profit/t.sell:0;
-      body.insertAdjacentHTML("beforeend",`<tr style="font-weight:800"><td>TOTAL SEMUA</td><td class="text-end">${qty(t.qty)}</td><td class="rp text-end">${money(t.sell)}</td><td class="rp text-end">${money(t.hpp)}</td><td class="rp text-end">${money(profit)}</td><td class="text-end">${(margin*100).toLocaleString("id-ID",{minimumFractionDigits:2,maximumFractionDigits:2})}%</td><td class="text-end">${t.faktur.toLocaleString("id-ID")}</td></tr>`);
-    } else body.innerHTML='<tr><td colspan="7" class="text-center" style="color:var(--muted)">Tidak ada data penjualan</td></tr>';
-    const label=document.getElementById("pjlRingkasanMonthLabel"); if(label)label.textContent=activeMonthsPjl.size?[...activeMonthsPjl].map(monthLabelFull).join(", "):"Semua Bulan";
+    return [...map.values()].sort((a,b)=>b.total-a.total);
+  }
+
+  function renderRkTable(tableId,groupRows,salesCols,q){
+    const table=document.getElementById(tableId); if(!table)return;
+    const thead=table.querySelector("thead"),tbody=table.querySelector("tbody");
+    thead.innerHTML=`<tr><th>Produk</th>${salesCols.map(s=>`<th class="text-end">${s}</th>`).join("")}<th class="text-end">Total</th></tr>`;
+    let rows=groupRows;
+    if(q)rows=rows.filter(g=>g.produk.toLowerCase().includes(q));
+    const fmt=v=>v?Number(v).toLocaleString("id-ID"):"-";
+    if(!rows.length){
+      tbody.innerHTML=`<tr><td colspan="${salesCols.length+2}" class="rk-muted text-center">Tidak ada data</td></tr>`;
+      return;
+    }
+    let html=rows.map(g=>`<tr><td>${g.produk}</td>${salesCols.map(s=>`<td class="text-end">${fmt(g.by[s])}</td>`).join("")}<td class="text-end" style="font-weight:700">${fmt(g.total)}</td></tr>`).join("");
+    const totBy={};salesCols.forEach(s=>totBy[s]=rows.reduce((a,g)=>a+(g.by[s]||0),0));
+    const grand=rows.reduce((a,g)=>a+g.total,0);
+    html+=`<tr class="rk-total-row"><td>TOTAL</td>${salesCols.map(s=>`<td class="text-end">${fmt(totBy[s])}</td>`).join("")}<td class="text-end">${fmt(grand)}</td></tr>`;
+    tbody.innerHTML=html;
+  }
+  window.renderRkTable=renderRkTable;
+
+  function fillRupaSelect(rows){
+    const sel=document.getElementById("rkRupaProdukSelect"); if(!sel)return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">— Pilih Produk —</option>'+rows.map(g=>`<option value="${g.produk.replace(/"/g,"&quot;")}">${g.produk}</option>`).join("");
+    if(cur && rows.some(g=>g.produk===cur))sel.value=cur;
+  }
+
+  function render(){
+    const label=document.getElementById("pjlRingkasanMonthLabel");
+    if(label)label.textContent="Periode: "+(activeMonthsPjl.size?[...activeMonthsPjl].map(monthLabelFull).join(", "):"Semua Bulan");
+
+    const rows=filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl);
+    const cardsWrap=document.getElementById("rkTopCards");
+
+    if(!rows.length){
+      if(cardsWrap)cardsWrap.innerHTML='<div class="rk-muted">Belum ada data penjualan.</div>';
+      renderRkTable("tblRkFitri",[],[]);
+      renderRkTable("tblRkRupa",[],[]);
+      window._rkRupaAll={rows:[],sales:[]};
+      fillRupaSelect([]);
+      return;
+    }
+
+    const salesTotals=new Map();
+    rows.forEach(r=>{const s=cleanStr(r.sales)||"-";salesTotals.set(s,(salesTotals.get(s)||0)+(Number(r.jumlah)||0))});
+    const salesCols=[...salesTotals.keys()].sort((a,b)=>salesTotals.get(b)-salesTotals.get(a));
+
+    const fitriRows=groupByProduk(rows,r=>isFitriProduk(r.produk));
+    const rupaRows=groupByProduk(rows,r=>!isFitriProduk(r.produk));
+
+    renderRkTable("tblRkFitri",fitriRows,salesCols);
+    window._rkRupaAll={rows:rupaRows,sales:salesCols};
+    const q=(document.getElementById("rkRupaSearch")?.value||"").trim().toLowerCase();
+    const selVal=document.getElementById("rkRupaProdukSelect")?.value||"";
+    const rupaFiltered=selVal?rupaRows.filter(g=>g.produk===selVal):rupaRows;
+    renderRkTable("tblRkRupa",rupaFiltered,salesCols,q);
+    fillRupaSelect(rupaRows);
+
+    // Kartu ringkasan atas: peringkat sales berdasarkan Penjualan Fitri
+    const fitriBySales={};
+    salesCols.forEach(s=>fitriBySales[s]=0);
+    fitriRows.forEach(g=>salesCols.forEach(s=>{fitriBySales[s]=(fitriBySales[s]||0)+(g.by[s]||0)}));
+    const grandFitri=fitriRows.reduce((a,g)=>a+g.total,0);
+    const ranked=salesCols.filter(s=>s!=="-"&&s.toUpperCase()!=="GC").sort((a,b)=>fitriBySales[b]-fitriBySales[a]);
+    const top=ranked.slice(0,3);
+
+    if(cardsWrap){
+      let html=top.map((s,i)=>`
+        <div class="rk-card${i===0?" rk-total":""}">
+          <div class="rk-lbl" style="font-size:.82rem;color:${i===0?"var(--primary)":"var(--text-strong)"}">${s}</div>
+          ${i===0?`<div class="rk-val-row"><span class="rk-val" style="font-size:1.05rem">${fitriBySales[s].toLocaleString("id-ID")}</span></div><div class="rk-unit">Penjualan Fitri</div>`:""}
+        </div>`).join("");
+      html+=`<div class="rk-card rk-total"><div class="rk-lbl" style="font-size:.82rem;color:var(--primary)">TOTAL</div><div class="rk-val-row"><span class="rk-val" style="font-size:1.05rem">${grandFitri.toLocaleString("id-ID")}</span></div><div class="rk-unit">Penjualan Fitri</div></div>`;
+      cardsWrap.innerHTML=html;
+    }
+
+    window._rkFitriTop=fitriRows.length?fitriRows[0]:null;
   }
   window.renderPjlRingkasan=render;
+
+  document.getElementById("rkRupaSearch")?.addEventListener("input",render);
+  document.getElementById("rkRupaProdukSelect")?.addEventListener("change",render);
+  document.getElementById("btnRkRupaSemua")?.addEventListener("click",()=>{
+    const s=document.getElementById("rkRupaSearch"); if(s)s.value="";
+    const sel=document.getElementById("rkRupaProdukSelect"); if(sel)sel.value="";
+    render();
+  });
+  document.getElementById("btnRkFitriAndalan")?.addEventListener("click",()=>{
+    const top=window._rkFitriTop;
+    if(!top){showToast("Belum ada data Penjualan Fitri.","warning");return}
+    showToast(`Produk andalan: ${top.produk} — total ${top.total.toLocaleString("id-ID")}`,"success",4500);
+    const table=document.getElementById("tblRkFitri");
+    const firstRow=table?.querySelector("tbody tr");
+    if(firstRow){firstRow.style.background="var(--row-hover)";setTimeout(()=>{firstRow.style.background=""},1600)}
+  });
 })();
 </script>
 
