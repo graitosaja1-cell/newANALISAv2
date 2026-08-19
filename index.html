@@ -2446,19 +2446,39 @@ function applyManualStatusOverrides(rows){
 function isCashDroppingRow(r){return /cash\s*drop+ing/i.test(String(r&&r.section||""));}
 function setDefaultMonthFilter(t){activeMonths=new Set(t.length?[t[t.length-1]]:[])}function buildMonthPills(t){buildMonthDropdown("monthPills",t,activeMonths,applyFilterAndRender,monthLabel)}function updatePillUI(){refreshMonthDropdown("monthPills")}function getFiltered(){if(!resultData)return[];if(!resultData.mergedFull)return[];return 0===activeMonths.size?resultData.mergedFull:resultData.mergedFull.filter(t=>{for(const e of t._months)if(activeMonths.has(e))return!0;return!1})}function applyFilterAndRender(){renderAll(getFiltered())}let analisaGroups=null,analisaFilteredAll=[],analisaRenderedTabs=new Set();
 function renderAll(t){const e={LUNAS:[],TITIP:[],BELUM_BAYAR:[],BAYAR_TANPA_TAGIHAN_DTH:[],CASH_DROPPING:[]};t.forEach(t=>{if(isCashDroppingRow(t))e.CASH_DROPPING.push(t);else if(e[t.status])e[t.status].push(t)}),document.getElementById("badgeLunas").textContent=e.LUNAS.length,document.getElementById("badgeTitip").textContent=e.TITIP.length,document.getElementById("badgeBelum").textContent=e.BELUM_BAYAR.length,document.getElementById("badgeTanpa").textContent=e.BAYAR_TANPA_TAGIHAN_DTH.length;const tj=getTitipBulanSebelumnyaRows();document.getElementById("badgeTitipBulanSebelumnya").textContent=tj.length;const lapAktif=filterRowsByMonth(allLap,"sheet_laporan",activeMonths);
+// REKONSILIASI: semua nilai uang pada card memakai sumber yang sama, yaitu
+// baris pembayaran pada bulan/filter aktif. Nilai tagihan tetap ditampilkan
+// sebagai informasi sekunder agar tidak lagi dibandingkan dengan uang masuk.
 const totalDiterima=lapAktif.reduce((sum,row)=>sum+(Number(row.total_bayar)||0),0);
-const a=[{key:"LUNAS",label:"Lunas",cls:"lunas",icon:"bi-check-circle"},{key:"TITIP",label:"Titip",cls:"titip",icon:"bi-hourglass-split"},{key:"BELUM_BAYAR",label:"Belum Bayar",cls:"belum",icon:"bi-exclamation-triangle"},{key:"BAYAR_TANPA_TAGIHAN_DTH",label:"Bayar Tanpa DTH",cls:"tanpa",icon:"bi-question-circle"}];document.getElementById("summaryCards").innerHTML=`<div class="s-card diterima">
+const lapStatusMap=getMergedLapStatusMap();
+const bayarByStatus={LUNAS:0,TITIP:0,BELUM_BAYAR:0,BAYAR_TANPA_TAGIHAN_DTH:0,CASH_DROPPING:0};
+lapAktif.forEach(row=>{
+  const nominal=Number(row.total_bayar)||0;
+  if(isCashDroppingRow(row)){bayarByStatus.CASH_DROPPING+=nominal;return;}
+  const no=String(row.no_faktur||"").trim();
+  const merged=lapStatusMap&&lapStatusMap.get(no);
+  const st=merged&&Object.prototype.hasOwnProperty.call(bayarByStatus,merged.status)?merged.status:getLapRawStatus(row);
+  if(Object.prototype.hasOwnProperty.call(bayarByStatus,st))bayarByStatus[st]+=nominal;
+});
+const totalTerurai=Object.values(bayarByStatus).reduce((sum,v)=>sum+v,0);
+const selisihRekonsiliasi=totalDiterima-totalTerurai;
+const a=[{key:"LUNAS",label:"Lunas",cls:"lunas",icon:"bi-check-circle"},{key:"TITIP",label:"Titip",cls:"titip",icon:"bi-hourglass-split"},{key:"BELUM_BAYAR",label:"Belum Bayar",cls:"belum",icon:"bi-exclamation-triangle"},{key:"BAYAR_TANPA_TAGIHAN_DTH",label:"Bayar Tanpa DTH",cls:"tanpa",icon:"bi-question-circle"}];
+const rekonsiliasiLabel=Math.abs(selisihRekonsiliasi)<0.5?"✓ Rekonsiliasi 0":`⚠ Selisih ${fmtRp(selisihRekonsiliasi)}`;
+const cashDropNote=bayarByStatus.CASH_DROPPING?` · Cash Dropping ${fmtRp(bayarByStatus.CASH_DROPPING)}`:"";
+document.getElementById("summaryCards").innerHTML=`<div class="s-card diterima">
           <div class="ico"><i class="bi bi-cash-stack"></i></div>
-          <div><div class="lbl">Total Uang Diterima</div><div class="num">${fmtRp(totalDiterima)}</div><div class="amt">berdasarkan pembayaran</div></div>
-        </div>`+a.map(t=>{const a=e[t.key]||[],n=a.reduce((t,e)=>t+(e.tagihan_dth||e.tagihan_laporan||0),0),bgCount="belum"===t.key?a.filter(isBgTitipRow).length:0,bgBadge=bgCount>0?`<div class="bg-warn-badge">🟡 ADA TITIP BG (${bgCount})</div>`:"";return`<div class="s-card ${t.cls}">
+          <div><div class="lbl">Total Uang Diterima</div><div class="num">${fmtRp(totalDiterima)}</div><div class="amt">pembayaran bulan aktif${cashDropNote}</div><div class="amt" style="margin-top:.15rem;font-weight:700">${rekonsiliasiLabel}</div></div>
+        </div>`+a.map(t=>{const rows=e[t.key]||[],tagihan=rows.reduce((sum,row)=>sum+(row.tagihan_dth||row.tagihan_laporan||0),0),bgCount="BELUM_BAYAR"===t.key?rows.filter(isBgTitipRow).length:0,bgBadge=bgCount>0?`<div class="bg-warn-badge">🟡 ADA TITIP BG (${bgCount})</div>`:"";return`<div class="s-card ${t.cls}">
           <div class="ico"><i class="bi ${t.icon}"></i></div>
           <div>
             <div class="lbl">${t.label}</div>
-            <div class="num">${a.length}</div>
-            <div class="amt">${fmtRp(n)}</div>
+            <div class="num">${rows.length}</div>
+            <div class="amt">${fmtRp(bayarByStatus[t.key])}</div>
+            <div class="amt" style="font-size:.58rem;opacity:.72">bayar bulan aktif · tagihan ${fmtRp(tagihan)}</div>
             ${bgBadge}
           </div>
-        </div>`}).join(""),document.querySelector("#tblRingkasan tbody").innerHTML=(()=>{
+        </div>`}).join(""),
+document.querySelector("#tblRingkasan tbody").innerHTML=(()=>{
   const rows=a.map(t=>{const a=e[t.key]||[],n=a.reduce((t,e)=>t+(e.tagihan_dth||0),0),l=a.reduce((t,e)=>t+(e.total_bayar||0),0),r=a.reduce((t,e)=>t+(e.sisa||0),0);return`<tr>
           <td><strong>${t.label}</strong></td><td>${a.length}</td>
           <td class="rp">${fmtRp(n)}</td><td class="rp">${fmtRp(l)}</td>
