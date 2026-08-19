@@ -1399,6 +1399,9 @@ body.startup-scanner-active {
         <div class="raw-total" style="margin-left:0">Total Produk: <strong id="totalProdukCnt">0</strong></div>
         <div class="raw-total" id="produkMonthBadge" style="margin-left:.35rem">Bulan: <strong id="produkMonthLabel">—</strong></div>
         <input type="search" class="search-box" id="searchProduk" placeholder="Cari nama produk..." data-table="tblProduk" style="margin-left:auto;">
+        <button type="button" class="btn-ghost menu-export-btn" id="btnExportProdukTop">
+          <i class="bi bi-file-earmark-excel me-1"></i> Simpan Excel
+        </button>
         <div class="mini-dropdown compact" id="ddProduk">
           <button type="button" class="mini-trigger" id="triggerProduk">
             <span class="mt-left">
@@ -1423,8 +1426,8 @@ body.startup-scanner-active {
       </div>
       <div class="table-toolbar" style="align-items:center;margin-top:.15rem">
         <div>
-          <h5 style="margin-bottom:.12rem;font-style:italic">DATA PRODUK &amp; HARGA BELI</h5>
-          <div style="font-size:.72rem;color:var(--muted)">Dipantau otomatis dari transaksi penjualan · harga = rentang terendah–tertinggi di bulan terakhir</div>
+          <h5 style="margin-bottom:.12rem;font-style:italic">DATA PRODUK &amp; HARGA</h5>
+          <div style="font-size:.72rem;color:var(--muted)">Dipantau otomatis dari transaksi penjualan bulan terakhir · harga beli ditampilkan sebagai rentang bila bervariasi, harga jual dipecah per kolom terendah / tertinggi / rata-rata</div>
         </div>
       </div>
       <div class="table-container" id="wrapProduk" style="max-height:66vh">
@@ -1438,7 +1441,9 @@ body.startup-scanner-active {
               <th style="width:56px">No</th>
               <th>Nama Produk</th>
               <th class="text-end">Harga Beli</th>
-              <th class="text-end">Harga Jual</th>
+              <th class="text-end">Harga Jual<br><span style="font-weight:400;font-size:.62rem;color:var(--muted)">(Terendah)</span></th>
+              <th class="text-end">Harga Jual<br><span style="font-weight:400;font-size:.62rem;color:var(--muted)">(Tertinggi)</span></th>
+              <th class="text-end">Harga Jual Normal<br><span style="font-weight:400;font-size:.62rem;color:var(--muted)">(Rata-rata)</span></th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -3697,6 +3702,7 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
       harga_beli_max:g.beliMax,
       harga_jual_min:g.jualMin,
       harga_jual_max:g.jualMax,
+      harga_jual_avg:(g.jualMin!=null&&g.jualMax!=null)?(g.jualMin+g.jualMax)/2:(g.jualMin!=null?g.jualMin:g.jualMax),
       harga_beli:g.beliMin!=null&&g.beliMin===g.beliMax?g.beliMin:null,
       harga_jual:g.jualMin!=null&&g.jualMin===g.jualMax?g.jualMin:null
     })).sort((a,b)=>(a.nama||"").localeCompare(b.nama||"","id"));
@@ -3888,8 +3894,10 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
       <td>${i+1}</td>
       <td>${r.nama||"—"}</td>
       <td class="rp text-end">${fmtRange(r.harga_beli_min,r.harga_beli_max)}</td>
-      <td class="rp text-end">${fmtRange(r.harga_jual_min,r.harga_jual_max)}</td>
-    </tr>`).join("")||`<tr><td colspan="4" class="text-center" style="color:var(--muted)">Tidak ada data yang cocok</td></tr>`;
+      <td class="rp text-end">${fmtNumId(r.harga_jual_min)}</td>
+      <td class="rp text-end">${fmtNumId(r.harga_jual_max)}</td>
+      <td class="rp text-end" style="font-weight:700">${fmtNumId(r.harga_jual_avg)}</td>
+    </tr>`).join("")||`<tr><td colspan="6" class="text-center" style="color:var(--muted)">Tidak ada data yang cocok</td></tr>`;
   }
   window.renderProdukTable=renderProdukTable;
   window.rebuildProdukFromPjl=rebuildProdukFromPjl;
@@ -3904,12 +3912,12 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
         ["DATA PRODUK & HARGA (dari Data Penjualan)"],
         [label?`Periode harga: ${label} — berdasarkan tanggal transaksi` : "Tidak ada periode valid"],
         [],
-        ["No","Nama Produk","Harga Beli","Harga Jual"]
+        ["No","Nama Produk","Harga Beli","Harga Jual (Terendah)","Harga Jual (Tertinggi)","Harga Jual Normal (Rata-rata)"]
       ];
-      allProduk.forEach((r,i)=>aoa.push([i+1,r.nama||"",fmtRange(r.harga_beli_min,r.harga_beli_max),fmtRange(r.harga_jual_min,r.harga_jual_max)]));
+      allProduk.forEach((r,i)=>aoa.push([i+1,r.nama||"",fmtRange(r.harga_beli_min,r.harga_beli_max),r.harga_jual_min??"",r.harga_jual_max??"",r.harga_jual_avg??""]));
       const ws=XLSX.utils.aoa_to_sheet(aoa);
-      ws["!cols"]=[{wch:6},{wch:40},{wch:22},{wch:22}];
-      ws["!merges"]=[{s:{r:0,c:0},e:{r:0,c:3}},{s:{r:1,c:0},e:{r:1,c:3}}];
+      ws["!cols"]=[{wch:6},{wch:40},{wch:22},{wch:18},{wch:18},{wch:20}];
+      ws["!merges"]=[{s:{r:0,c:0},e:{r:0,c:5}},{s:{r:1,c:0},e:{r:1,c:5}}];
       const wb=XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb,ws,"Data Produk");
       XLSX.writeFile(wb,`DATA_PRODUK_HARGA_${new Date().toISOString().slice(0,10)}.xlsx`);
@@ -3930,6 +3938,7 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
       document.getElementById("ddProduk")?.classList.remove("open");
       exportProdukExcel();
     });
+    document.getElementById("btnExportProdukTop")?.addEventListener("click",exportProdukExcel);
     document.getElementById("searchProduk")?.addEventListener("input",()=>{
       clearTimeout(window.__produkSearchT);
       window.__produkSearchT=setTimeout(renderProdukTable,180);
