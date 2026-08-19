@@ -1210,6 +1210,18 @@ body.startup-scanner-active {
           <div class="rk-wrap">
             <div id="pjlRingkasanMonthLabel" class="stat-line" style="margin-bottom:.1rem">-</div>
             <div class="rk-cards" id="rkTopCards"></div>
+            <div class="rk-panel" style="margin-bottom:.75rem">
+              <div class="rk-panel-head">
+                <h5 class="rk-panel-title">PENJUALAN FITRI — HARI TERAKHIR</h5>
+                <span class="stat-line" id="rkFitriLastDayLabel">-</span>
+              </div>
+              <div class="rk-table-wrap">
+                <table class="rk-table" id="tblRkFitriLastDay">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
             <div class="rk-grid2">
               <div class="rk-panel">
                 <div class="rk-panel-head">
@@ -3320,9 +3332,11 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
     if(!rows.length){
       if(cardsWrap)cardsWrap.innerHTML='<div class="rk-muted">Belum ada data penjualan.</div>';
       renderRkTable("tblRkFitri",[],[]);
+      renderRkTable("tblRkFitriLastDay",[],[]);
       renderRkTable("tblRkRupa",[],[]);
       window._rkRupaAll={rows:[],sales:[]};
       fillRupaSelect([]);
+      const lbl=document.getElementById("rkFitriLastDayLabel"); if(lbl)lbl.textContent="-";
       return;
     }
 
@@ -3334,6 +3348,29 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
     const rupaRows=groupByProduk(rows,r=>!isFitriProduk(r.produk));
 
     renderRkTable("tblRkFitri",fitriRows,salesCols);
+
+    // Penjualan Fitri hari terakhir (tanggal transaksi terbaru dalam periode terpilih)
+    const fitriRawRows=rows.filter(r=>isFitriProduk(r.produk));
+    let lastDate=null;
+    fitriRawRows.forEach(r=>{
+      const d=parseAnyDate(r.tanggal);
+      if(d && (!lastDate || d.getTime()>lastDate.getTime()))lastDate=d;
+    });
+    const lastDayLabel=document.getElementById("rkFitriLastDayLabel");
+    if(lastDate){
+      const lastRows=fitriRawRows.filter(r=>{
+        const d=parseAnyDate(r.tanggal);
+        return d && d.getFullYear()===lastDate.getFullYear() && d.getMonth()===lastDate.getMonth() && d.getDate()===lastDate.getDate();
+      });
+      const lastDayGroups=groupByProduk(lastRows,()=>true);
+      renderRkTable("tblRkFitriLastDay",lastDayGroups,salesCols);
+      const grandLast=lastDayGroups.reduce((a,g)=>a+g.total,0);
+      if(lastDayLabel)lastDayLabel.textContent=`Tanggal: ${fmtDate(lastDate)} · Total: ${grandLast.toLocaleString("id-ID")}`;
+    }else{
+      renderRkTable("tblRkFitriLastDay",[],salesCols);
+      if(lastDayLabel)lastDayLabel.textContent="-";
+    }
+
     window._rkRupaAll={rows:rupaRows,sales:salesCols};
     const q=(document.getElementById("rkRupaSearch")?.value||"").trim().toLowerCase();
     const selVal=document.getElementById("rkRupaProdukSelect")?.value||"";
