@@ -3321,14 +3321,14 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
     salesCols.forEach(s=>fitriBySales[s]=0);
     fitriRows.forEach(g=>salesCols.forEach(s=>{fitriBySales[s]=(fitriBySales[s]||0)+(g.by[s]||0)}));
     const grandFitri=fitriRows.reduce((a,g)=>a+g.total,0);
-    const ranked=salesCols.filter(s=>s!=="-"&&s.toUpperCase()!=="GC").sort((a,b)=>fitriBySales[b]-fitriBySales[a]);
-    const top=ranked.slice(0,3);
+    const ranked=salesCols.filter(s=>s!=="-").sort((a,b)=>fitriBySales[b]-fitriBySales[a]);
 
     if(cardsWrap){
-      let html=top.map((s,i)=>`
+      let html=ranked.map((s,i)=>`
         <div class="rk-card${i===0?" rk-total":""}">
           <div class="rk-lbl" style="font-size:.82rem;color:${i===0?"var(--primary)":"var(--text-strong)"}">${s}</div>
-          ${i===0?`<div class="rk-val-row"><span class="rk-val" style="font-size:1.05rem">${fitriBySales[s].toLocaleString("id-ID")}</span></div><div class="rk-unit">Penjualan Fitri</div>`:""}
+          <div class="rk-val-row"><span class="rk-val" style="font-size:1.05rem">${(fitriBySales[s]||0).toLocaleString("id-ID")}</span></div>
+          <div class="rk-unit">Penjualan Fitri</div>
         </div>`).join("");
       html+=`<div class="rk-card rk-total"><div class="rk-lbl" style="font-size:.82rem;color:var(--primary)">TOTAL</div><div class="rk-val-row"><span class="rk-val" style="font-size:1.05rem">${grandFitri.toLocaleString("id-ID")}</span></div><div class="rk-unit">Penjualan Fitri</div></div>`;
       cardsWrap.innerHTML=html;
