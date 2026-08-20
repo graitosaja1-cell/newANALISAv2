@@ -1473,6 +1473,34 @@ body.startup-scanner-active {
           <div class="s-card pjlProfit"><div class="ico"><i class="bi bi-graph-up-arrow"></i></div><div><div class="lbl">Total Profit Bulan</div><div class="num" id="pjlRawTotalProfit">Rp 0</div></div></div>
           <div class="s-card pjlMargin"><div class="ico"><i class="bi bi-percent"></i></div><div><div class="lbl">Margin Bulan</div><div class="num" id="pjlRawMargin">0,00%</div></div></div>
         </div>
+
+        <!-- FILTER BAR UNTUK SALES DAN PEMBAYARAN -->
+        <div class="raw-filter-bar" id="filterBarPjlRaw" style="margin-bottom:.6rem">
+          <label><i class="bi bi-funnel me-1"></i>Filter:</label>
+          
+          <select class="search-box" id="filterSalesRaw" style="min-width:140px;flex:0 0 auto">
+            <option value="">— Semua Sales —</option>
+          </select>
+
+          <select class="search-box" id="filterPembayaranRaw" style="min-width:140px;flex:0 0 auto">
+            <option value="">— Semua Pembayaran —</option>
+            <option value="Tunai">Tunai</option>
+            <option value="Transfer">Transfer</option>
+            <option value="Cek">Cek</option>
+            <option value="Giro">Giro</option>
+            <option value="Kartu Kredit">Kartu Kredit</option>
+            <option value="Tempo">Tempo</option>
+          </select>
+
+          <button type="button" class="btn-ghost" id="btnResetPjlRawFilter" style="margin-left:.4rem">
+            <i class="bi bi-x-circle me-1"></i>Reset
+          </button>
+
+          <div class="raw-total" style="margin-left:auto">
+            Data: <strong id="pjlRawFilteredCount">0</strong> dari <strong id="pjlRawTotalCount">0</strong>
+          </div>
+        </div>
+
         <div class="table-toolbar" style="align-items:center">
           <div><h5 style="margin:0">DATA TRANSAKSI PENJUALAN</h5><div id="pjlRawMonthLabel" style="font-size:.72rem;color:var(--muted)">-</div></div>
           <div class="tt-controls" style="display:flex;align-items:center;gap:.4rem">
@@ -1928,7 +1956,8 @@ function getPjlMonthKey(r){
 }
 function computeMonthsFromRowsKey(t,e){const a=new Set;return t.forEach(r=>{const k=e==="bulan_key"?getPjlMonthKey(r):r[e];k&&a.add(k)}),[...a].sort()}
 function filterRowsByMonthKey(t,e,a){return 0===a.size?t:t.filter(r=>{const k=e==="bulan_key"?getPjlMonthKey(r):r[e];return k&&a.has(k)})}
-function renderPjlTable(){const t=sortByDateDesc(filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl),"tanggal");bindVirtualTable("tblPjlRaw",t,t=>`\n        <td>${fmtDate(t.tanggal)}</td><td>${t.no_faktur}</td><td>${t.produk}</td>\n        <td>${t.jumlah}</td><td>${t.satuan}</td>\n        <td class="rp">${fmtRp(t.harga_jual)}</td><td class="rp">${fmtRp(t.disc)}</td>\n        <td class="rp">${fmtRp(t.total)}</td><td>${t.sales}</td><td>${t.customer}</td>\n        <td>${t.alamat}</td><td>${t.pembayaran}</td>\n        <td class="rp">${fmtRp(t.harga_beli)}</td><td class="rp">${fmtRp(t.margin)}</td>`);const e=t.reduce((t,e)=>t+(e.total||0),0);document.getElementById("totalPjl").textContent=fmtRp(e),renderPjlSummary(t),(typeof renderPjlRawSummary==="function")&&renderPjlRawSummary(t),(typeof renderPjlRekap==="function")&&renderPjlRekap(t),renderPjlProduk(),(typeof renderPjlBulan==="function")&&renderPjlBulan(),(typeof renderPjlRingkasan==="function")&&renderPjlRingkasan();if(typeof renderPjlRawCards==="function")renderPjlRawCards(t)}
+let filterPjlRawSales="";let filterPjlRawPembayaran="";function updatePjlRawFilterUI(){const monthData=filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl);const salesSet=new Set(monthData.filter(r=>r.sales).map(r=>r.sales).sort());const pembayaranSet=new Set(monthData.filter(r=>r.pembayaran).map(r=>r.pembayaran).sort());const salesSelect=document.getElementById("filterSalesRaw");if(salesSelect){const currentVal=salesSelect.value;salesSelect.innerHTML='<option value="">— Semua Sales —</option>';[...salesSet].forEach(s=>{const opt=document.createElement("option");opt.value=s;opt.textContent=s;salesSelect.appendChild(opt)});salesSelect.value=currentVal||""}const pembayaranSelect=document.getElementById("filterPembayaranRaw");if(pembayaranSelect){const currentVal=pembayaranSelect.value;[...pembayaranSet].forEach(p=>{const opts=pembayaranSelect.querySelectorAll(`option[value="${p}"]`);if(opts.length===0){const opt=document.createElement("option");opt.value=p;opt.textContent=p;pembayaranSelect.appendChild(opt)}})}}
+function renderPjlTable(){const monthData=filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl);updatePjlRawFilterUI();let t=sortByDateDesc(monthData,"tanggal");if(filterPjlRawSales){t=t.filter(r=>r.sales===filterPjlRawSales)}if(filterPjlRawPembayaran){t=t.filter(r=>r.pembayaran===filterPjlRawPembayaran)}bindVirtualTable("tblPjlRaw",t,t=>`\n        <td>${fmtDate(t.tanggal)}</td><td>${t.no_faktur}</td><td>${t.produk}</td>\n        <td>${t.jumlah}</td><td>${t.satuan}</td>\n        <td class="rp">${fmtRp(t.harga_jual)}</td><td class="rp">${fmtRp(t.disc)}</td>\n        <td class="rp">${fmtRp(t.total)}</td><td>${t.sales}</td><td>${t.customer}</td>\n        <td>${t.alamat}</td><td>${t.pembayaran}</td>\n        <td class="rp">${fmtRp(t.harga_beli)}</td><td class="rp">${fmtRp(t.margin)}</td>`);document.getElementById("pjlRawFilteredCount").textContent=t.length;document.getElementById("pjlRawTotalCount").textContent=monthData.length;const e=t.reduce((t,e)=>t+(e.total||0),0);document.getElementById("totalPjl").textContent=fmtRp(e),renderPjlSummary(t),(typeof renderPjlRawSummary==="function")&&renderPjlRawSummary(t),(typeof renderPjlRekap==="function")&&renderPjlRekap(t),renderPjlProduk(),(typeof renderPjlBulan==="function")&&renderPjlBulan(),(typeof renderPjlRingkasan==="function")&&renderPjlRingkasan();if(typeof renderPjlRawCards==="function")renderPjlRawCards(t)}
 function renderPjlSummary(t){const e=t.reduce((t,e)=>t+(e.total||0),0),n=t.reduce((t,e)=>t+(e.margin||0),0),r=[{cls:"pjlOmzet",icon:"bi-cash-coin",label:"Total Penjualan",val:fmtRp(e)},{cls:"pjlMargin",icon:"bi-graph-up",label:"Total Margin",val:fmtRp(n)}];document.getElementById("summaryCardsPjl").innerHTML=r.map(t=>`\n        <div class="s-card ${t.cls}">\n          <div class="ico"><i class="bi ${t.icon}"></i></div>\n          <div>\n            <div class="lbl">${t.label}</div>\n            <div class="num">${t.val}</div>\n          </div>\n        </div>`).join("")}function fmtPjlReportNum(v,dec){
   const n=Number(v)||0;
   if(dec==null) dec = Math.abs(n%1)>1e-9 ? 2 : 0;
