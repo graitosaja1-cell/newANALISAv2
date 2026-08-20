@@ -299,6 +299,83 @@
   color:var(--primary);
 }
 
+
+/* ===== NEURI CARDS — mode kartu Data Penjualan ===== */
+.pjl-view-toggle{display:flex;gap:.25rem;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:.18rem;margin-left:.5rem}
+.pjl-view-toggle .pvt-btn{display:flex;align-items:center;gap:.35rem;background:0 0;border:none;color:var(--muted);font-size:.74rem;font-weight:600;padding:.3rem .65rem;border-radius:7px;cursor:pointer;transition:.15s;white-space:nowrap}
+.pjl-view-toggle .pvt-btn:hover{color:var(--text)}
+.pjl-view-toggle .pvt-btn.active{background:var(--surface);color:var(--primary);box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 12px var(--primary-glow)}
+.neu-cards-wrap{max-height:58vh;overflow:auto;padding:.15rem .1rem .6rem;border-radius:10px}
+.neu-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.75rem}
+.neu-card{
+  position:relative;overflow:hidden;
+  background:rgba(26,34,52,.62);
+  backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:16px;
+  padding:.9rem 1rem 1rem;
+  box-shadow:0 8px 28px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.06);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+  cursor:default;
+}
+.neu-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(59,130,246,.35);
+  box-shadow:0 14px 36px rgba(0,0,0,.38),0 0 28px rgba(59,130,246,.12),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.neu-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:16px 0 0 16px;
+  background:linear-gradient(180deg,#3b82f6,#a78bfa);
+  opacity:.9;
+}
+.neu-card.pay-cash::before{background:linear-gradient(180deg,#10b981,#06b6d4)}
+.neu-card.pay-tempo::before{background:linear-gradient(180deg,#f59e0b,#ef4444)}
+[data-theme=light] .neu-card{
+  background:rgba(255,255,255,.72);
+  border-color:rgba(0,0,0,.08);
+  box-shadow:0 6px 20px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.8);
+}
+[data-theme=light] .neu-card:hover{
+  border-color:rgba(37,99,235,.3);
+  box-shadow:0 12px 28px rgba(0,0,0,.12),0 0 20px rgba(37,99,235,.1);
+}
+.neu-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.55rem}
+.neu-card-faktur{font-size:.88rem;font-weight:800;color:var(--text-strong);letter-spacing:-.01em;line-height:1.2}
+.neu-card-faktur a{color:var(--primary);text-decoration:none}
+.neu-card-faktur a:hover{text-decoration:underline}
+.neu-card-date{font-size:.68rem;color:var(--muted);margin-top:.15rem}
+.neu-card-badge{
+  flex:0 0 auto;font-size:.62rem;font-weight:700;padding:.22rem .55rem;border-radius:999px;
+  text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;
+}
+.neu-card-badge.cash{background:rgba(16,185,129,.18);color:#6ee7b7;border:1px solid rgba(16,185,129,.25)}
+.neu-card-badge.tempo{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.25)}
+.neu-card-badge.other{background:rgba(99,102,241,.16);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)}
+[data-theme=light] .neu-card-badge.cash{background:rgba(5,150,105,.12);color:#047857}
+[data-theme=light] .neu-card-badge.tempo{background:rgba(217,119,6,.12);color:#b45309}
+.neu-card-meta{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .55rem;margin-bottom:.6rem}
+.neu-card-field{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.28rem .5rem;min-width:0}
+.neu-card-field .nf-lbl{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:.02rem}
+.neu-card-field .nf-val{font-size:.74rem;font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.neu-card-items{border-top:1px solid var(--border);padding-top:.45rem;margin-top:.15rem}
+.neu-card-items-title{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.3rem;display:flex;align-items:center;justify-content:space-between}
+.neu-card-item{display:flex;align-items:center;justify-content:space-between;gap:.4rem;padding:.22rem 0;border-bottom:1px dashed rgba(255,255,255,.06);font-size:.72rem}
+.neu-card-item:last-child{border-bottom:none}
+.neu-card-item .ni-name{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.neu-card-item .ni-qty{flex:0 0 auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.neu-card-item .ni-total{flex:0 0 auto;font-weight:700;color:var(--text-strong);font-variant-numeric:tabular-nums;min-width:4.5rem;text-align:right}
+.neu-card-foot{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:.55rem;padding-top:.5rem;border-top:1px solid var(--border)}
+.neu-card-foot .nf-total-lbl{font-size:.65rem;color:var(--muted);text-transform:uppercase;font-weight:600}
+.neu-card-foot .nf-total-val{font-size:1.05rem;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums;text-shadow:0 0 18px var(--primary-glow)}
+.neu-card-foot .nf-margin{font-size:.68rem;color:var(--success);font-weight:600}
+.neu-cards-empty{text-align:center;padding:2.5rem 1rem;color:var(--muted)}
+.neu-cards-empty i{font-size:2rem;opacity:.4;display:block;margin-bottom:.5rem}
+@media (max-width:560px){
+  .neu-cards-grid{grid-template-columns:1fr}
+  .neu-card-meta{grid-template-columns:1fr}
+}
+
 /* Modal close button */
 .btn-close{
   border-radius:8px;
@@ -1398,6 +1475,12 @@ body.startup-scanner-active {
         </div>
         <div class="table-toolbar" style="align-items:center">
           <div><h5 style="margin:0">DATA TRANSAKSI PENJUALAN</h5><div id="pjlRawMonthLabel" style="font-size:.72rem;color:var(--muted)">-</div></div>
+          <div class="tt-controls" style="display:flex;align-items:center;gap:.4rem">
+            <div class="pjl-view-toggle" id="pjlRawViewToggle" title="Tampilan tabel atau kartu">
+              <button type="button" class="pvt-btn active" data-view="table"><i class="bi bi-table"></i> Tabel</button>
+              <button type="button" class="pvt-btn" data-view="cards"><i class="bi bi-grid-3x3-gap-fill"></i> Kartu</button>
+            </div>
+          </div>
         </div>
         <div class="table-container" id="wrapPjl">
           <div class="empty-state d-none" id="emptyPjl">
@@ -1412,6 +1495,13 @@ body.startup-scanner-active {
             </tr></thead>
             <tbody></tbody>
           </table>
+        </div>
+        <div class="neu-cards-wrap d-none" id="wrapPjlCards">
+          <div class="neu-cards-empty d-none" id="emptyPjlCards">
+            <i class="bi bi-grid-3x3-gap"></i>
+            <p>Tidak ada data transaksi untuk ditampilkan sebagai kartu.</p>
+          </div>
+          <div class="neu-cards-grid" id="pjlRawCards"></div>
         </div>
       </div>
     </div>
@@ -1826,7 +1916,8 @@ function getPjlMonthKey(r){
 }
 function computeMonthsFromRowsKey(t,e){const a=new Set;return t.forEach(r=>{const k=e==="bulan_key"?getPjlMonthKey(r):r[e];k&&a.add(k)}),[...a].sort()}
 function filterRowsByMonthKey(t,e,a){return 0===a.size?t:t.filter(r=>{const k=e==="bulan_key"?getPjlMonthKey(r):r[e];return k&&a.has(k)})}
-function renderPjlTable(){const t=sortByDateDesc(filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl),"tanggal");bindVirtualTable("tblPjlRaw",t,t=>`\n        <td>${fmtDate(t.tanggal)}</td><td>${t.no_faktur}</td><td>${t.produk}</td>\n        <td>${t.jumlah}</td><td>${t.satuan}</td>\n        <td class="rp">${fmtRp(t.harga_jual)}</td><td class="rp">${fmtRp(t.disc)}</td>\n        <td class="rp">${fmtRp(t.total)}</td><td>${t.sales}</td><td>${t.customer}</td>\n        <td>${t.alamat}</td><td>${t.pembayaran}</td>\n        <td class="rp">${fmtRp(t.harga_beli)}</td><td class="rp">${fmtRp(t.margin)}</td>`);const e=t.reduce((t,e)=>t+(e.total||0),0);document.getElementById("totalPjl").textContent=fmtRp(e),renderPjlSummary(t),(typeof renderPjlRawSummary==="function")&&renderPjlRawSummary(t),(typeof renderPjlRekap==="function")&&renderPjlRekap(t),renderPjlProduk(),(typeof renderPjlBulan==="function")&&renderPjlBulan(),(typeof renderPjlRingkasan==="function")&&renderPjlRingkasan()}function renderPjlSummary(t){const e=t.reduce((t,e)=>t+(e.total||0),0),n=t.reduce((t,e)=>t+(e.margin||0),0),r=[{cls:"pjlOmzet",icon:"bi-cash-coin",label:"Total Penjualan",val:fmtRp(e)},{cls:"pjlMargin",icon:"bi-graph-up",label:"Total Margin",val:fmtRp(n)}];document.getElementById("summaryCardsPjl").innerHTML=r.map(t=>`\n        <div class="s-card ${t.cls}">\n          <div class="ico"><i class="bi ${t.icon}"></i></div>\n          <div>\n            <div class="lbl">${t.label}</div>\n            <div class="num">${t.val}</div>\n          </div>\n        </div>`).join("")}function fmtPjlReportNum(v,dec){
+function renderPjlTable(){const t=sortByDateDesc(filterRowsByMonthKey(allPjl,"bulan_key",activeMonthsPjl),"tanggal");bindVirtualTable("tblPjlRaw",t,t=>`\n        <td>${fmtDate(t.tanggal)}</td><td>${t.no_faktur}</td><td>${t.produk}</td>\n        <td>${t.jumlah}</td><td>${t.satuan}</td>\n        <td class="rp">${fmtRp(t.harga_jual)}</td><td class="rp">${fmtRp(t.disc)}</td>\n        <td class="rp">${fmtRp(t.total)}</td><td>${t.sales}</td><td>${t.customer}</td>\n        <td>${t.alamat}</td><td>${t.pembayaran}</td>\n        <td class="rp">${fmtRp(t.harga_beli)}</td><td class="rp">${fmtRp(t.margin)}</td>`);const e=t.reduce((t,e)=>t+(e.total||0),0);document.getElementById("totalPjl").textContent=fmtRp(e),renderPjlSummary(t),(typeof renderPjlRawSummary==="function")&&renderPjlRawSummary(t),(typeof renderPjlRekap==="function")&&renderPjlRekap(t),renderPjlProduk(),(typeof renderPjlBulan==="function")&&renderPjlBulan(),(typeof renderPjlRingkasan==="function")&&renderPjlRingkasan();if(typeof renderPjlRawCards==="function")renderPjlRawCards(t)}
+function renderPjlSummary(t){const e=t.reduce((t,e)=>t+(e.total||0),0),n=t.reduce((t,e)=>t+(e.margin||0),0),r=[{cls:"pjlOmzet",icon:"bi-cash-coin",label:"Total Penjualan",val:fmtRp(e)},{cls:"pjlMargin",icon:"bi-graph-up",label:"Total Margin",val:fmtRp(n)}];document.getElementById("summaryCardsPjl").innerHTML=r.map(t=>`\n        <div class="s-card ${t.cls}">\n          <div class="ico"><i class="bi ${t.icon}"></i></div>\n          <div>\n            <div class="lbl">${t.label}</div>\n            <div class="num">${t.val}</div>\n          </div>\n        </div>`).join("")}function fmtPjlReportNum(v,dec){
   const n=Number(v)||0;
   if(dec==null) dec = Math.abs(n%1)>1e-9 ? 2 : 0;
   return n.toLocaleString("id-ID",{minimumFractionDigits:dec,maximumFractionDigits:dec});
@@ -3332,6 +3423,170 @@ function isBgTitipRow(t){const k=(((t.ket_dth||"")+" "+(t.ket_laporan||""))+"").
 })();
 </script>
 
+
+
+<script>
+/* ===== MODE KARTU DATA TRANSAKSI PENJUALAN (Neuri Cards) ===== */
+(function(){
+  let pjlRawView = localStorage.getItem('pjl-raw-view') || 'table';
+  window._pjlRawCardData = [];
+
+  function payClass(pembayaran){
+    const u = String(pembayaran||'').toUpperCase();
+    if(/CASH|TUNAI|CBD|COD/.test(u)) return 'cash';
+    if(/TEMPO|KREDIT|CREDIT|PIUTANG/.test(u)) return 'tempo';
+    return 'other';
+  }
+  function payCardClass(pembayaran){
+    const c = payClass(pembayaran);
+    return c === 'cash' ? 'pay-cash' : c === 'tempo' ? 'pay-tempo' : '';
+  }
+
+  function groupByFaktur(rows){
+    const map = new Map();
+    (rows||[]).forEach(r=>{
+      const nf = String(r.no_faktur||'').trim() || '(tanpa faktur)';
+      if(!map.has(nf)){
+        map.set(nf,{
+          no_faktur: nf,
+          tanggal: r.tanggal,
+          customer: r.customer||'',
+          alamat: r.alamat||'',
+          sales: r.sales||'',
+          pembayaran: r.pembayaran||'',
+          items: [],
+          total: 0,
+          margin: 0
+        });
+      }
+      const g = map.get(nf);
+      g.items.push(r);
+      g.total += Number(r.total)||0;
+      g.margin += Number(r.margin)||0;
+      if(!g.tanggal && r.tanggal) g.tanggal = r.tanggal;
+      if(!g.customer && r.customer) g.customer = r.customer;
+      if(!g.alamat && r.alamat) g.alamat = r.alamat;
+      if(!g.sales && r.sales) g.sales = r.sales;
+      if(!g.pembayaran && r.pembayaran) g.pembayaran = r.pembayaran;
+    });
+    return [...map.values()].sort((a,b)=>{
+      const da = parseAnyDate(a.tanggal), db = parseAnyDate(b.tanggal);
+      if(da && db) return db - da;
+      if(da) return -1;
+      if(db) return 1;
+      return (b.total||0) - (a.total||0);
+    });
+  }
+
+  function cardHtml(g){
+    const pc = payClass(g.pembayaran);
+    const badgeLabel = g.pembayaran || '—';
+    const itemsHtml = g.items.slice(0,6).map(it=>{
+      const qty = Number(it.jumlah)||0;
+      const sat = it.satuan ? ' '+it.satuan : '';
+      return `<div class="neu-card-item">
+        <span class="ni-name" title="${String(it.produk||'').replace(/"/g,'&quot;')}">${it.produk||'—'}</span>
+        <span class="ni-qty">${qty.toLocaleString('id-ID')}${sat}</span>
+        <span class="ni-total">${fmtRp(it.total)}</span>
+      </div>`;
+    }).join('');
+    const more = g.items.length > 6
+      ? `<div class="neu-card-item" style="color:var(--muted);font-style:italic">+${g.items.length-6} produk lainnya</div>`
+      : '';
+    const fakturEsc = String(g.no_faktur).replace(/'/g,"\\'");
+    return `<div class="neu-card ${payCardClass(g.pembayaran)}">
+      <div class="neu-card-head">
+        <div>
+          <div class="neu-card-faktur"><a href="javascript:void(0)" onclick="typeof openFakturModal==='function'&&openFakturModal('${fakturEsc}')">${g.no_faktur}</a></div>
+          <div class="neu-card-date"><i class="bi bi-calendar3 me-1"></i>${fmtDate(g.tanggal)}</div>
+        </div>
+        <span class="neu-card-badge ${pc}">${badgeLabel}</span>
+      </div>
+      <div class="neu-card-meta">
+        <div class="neu-card-field"><div class="nf-lbl">Customer</div><div class="nf-val" title="${String(g.customer).replace(/"/g,'&quot;')}">${g.customer||'—'}</div></div>
+        <div class="neu-card-field"><div class="nf-lbl">Sales</div><div class="nf-val">${g.sales||'—'}</div></div>
+        <div class="neu-card-field" style="grid-column:1/-1"><div class="nf-lbl">Alamat</div><div class="nf-val" title="${String(g.alamat).replace(/"/g,'&quot;')}">${g.alamat||'—'}</div></div>
+      </div>
+      <div class="neu-card-items">
+        <div class="neu-card-items-title"><span><i class="bi bi-box-seam me-1"></i>Produk</span><span>${g.items.length} item</span></div>
+        ${itemsHtml}${more}
+      </div>
+      <div class="neu-card-foot">
+        <div>
+          <div class="nf-total-lbl">Total Faktur</div>
+          <div class="nf-total-val">${fmtRp(g.total)}</div>
+        </div>
+        <div class="nf-margin" title="Margin">Margin ${fmtRp(g.margin)}</div>
+      </div>
+    </div>`;
+  }
+
+  function applySearchFilter(groups){
+    const q = (document.getElementById('searchPjlHeader')?.value||'').trim().toLowerCase();
+    if(!q) return groups;
+    return groups.filter(g=>{
+      const blob = [g.no_faktur,g.customer,g.alamat,g.sales,g.pembayaran,...g.items.map(i=>i.produk)].join(' ').toLowerCase();
+      return blob.includes(q);
+    });
+  }
+
+  function renderPjlRawCards(rows){
+    window._pjlRawCardData = rows || [];
+    const wrap = document.getElementById('pjlRawCards');
+    const empty = document.getElementById('emptyPjlCards');
+    if(!wrap) return;
+    let groups = groupByFaktur(rows);
+    groups = applySearchFilter(groups);
+    if(!groups.length){
+      wrap.innerHTML = '';
+      if(empty) empty.classList.remove('d-none');
+      return;
+    }
+    if(empty) empty.classList.add('d-none');
+    wrap.innerHTML = groups.map(cardHtml).join('');
+  }
+  window.renderPjlRawCards = renderPjlRawCards;
+
+  function setPjlRawView(view){
+    pjlRawView = view === 'cards' ? 'cards' : 'table';
+    try{ localStorage.setItem('pjl-raw-view', pjlRawView); }catch(e){}
+    const wrapTable = document.getElementById('wrapPjl');
+    const wrapCards = document.getElementById('wrapPjlCards');
+    if(wrapTable) wrapTable.classList.toggle('d-none', pjlRawView === 'cards');
+    if(wrapCards) wrapCards.classList.toggle('d-none', pjlRawView !== 'cards');
+    document.querySelectorAll('#pjlRawViewToggle .pvt-btn').forEach(btn=>{
+      btn.classList.toggle('active', btn.dataset.view === pjlRawView);
+    });
+    if(pjlRawView === 'cards' && typeof renderPjlRawCards === 'function'){
+      const rows = window._pjlRawCardData && window._pjlRawCardData.length
+        ? window._pjlRawCardData
+        : (typeof filterRowsByMonthKey === 'function' ? sortByDateDesc(filterRowsByMonthKey(allPjl,'bulan_key',activeMonthsPjl),'tanggal') : []);
+      renderPjlRawCards(rows);
+    }
+  }
+  window.setPjlRawView = setPjlRawView;
+
+  function install(){
+    document.querySelectorAll('#pjlRawViewToggle .pvt-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> setPjlRawView(btn.dataset.view));
+    });
+    // restore preference when opening raw tab
+    document.querySelectorAll('#pjlSubTabs .st').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        if(btn.dataset.sub === 'raw') setTimeout(()=> setPjlRawView(pjlRawView), 0);
+      });
+    });
+    // search also refreshes cards
+    document.getElementById('searchPjlHeader')?.addEventListener('input', ()=>{
+      if(pjlRawView === 'cards') renderPjlRawCards(window._pjlRawCardData);
+    });
+    // apply initial view state (hidden until raw tab shown)
+    setPjlRawView(pjlRawView);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install);
+  else install();
+})();
+</script>
 
 <script>
 /* ===== RINGKASAN PENJUALAN (kartu per sales + tabel Penjualan Fitri & Rupa Rupa) ===== */
