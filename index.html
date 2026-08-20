@@ -1680,6 +1680,9 @@ body.startup-scanner-active {
             <div class="tt-controls">
               <div id="filterSlot-lunas"></div>
               <input type="search" class="search-box" placeholder="Cari..." data-table="tblLunas">
+              <button class="btn-ghost" id="btnExportLunas" title="Simpan tabel yang tampil sebagai Excel">
+                <i class="bi bi-file-earmark-excel me-1"></i>Save Excel
+              </button>
             </div>
           </div>
           <div class="table-container">
@@ -1699,6 +1702,9 @@ body.startup-scanner-active {
             <div class="tt-controls">
               <div id="filterSlot-titip"></div>
               <input type="search" class="search-box" placeholder="Cari..." data-table="tblTitip">
+              <button class="btn-ghost" id="btnExportTitip" title="Simpan tabel yang tampil sebagai Excel">
+                <i class="bi bi-file-earmark-excel me-1"></i>Save Excel
+              </button>
             </div>
           </div>
           <div class="table-container">
@@ -1748,6 +1754,9 @@ body.startup-scanner-active {
               </div>
               <div id="filterSlot-belum"></div>
               <input type="search" class="search-box" placeholder="Cari..." data-table="tblBelum">
+              <button class="btn-ghost" id="btnExportBelum" title="Simpan tabel yang tampil sebagai Excel (siap laporan)">
+                <i class="bi bi-file-earmark-excel me-1"></i>Save Excel
+              </button>
             </div>
           </div>
           <div class="table-container">
@@ -1765,6 +1774,9 @@ body.startup-scanner-active {
             <div class="tt-controls">
               <div id="filterSlot-tanpa"></div>
               <input type="search" class="search-box" placeholder="Cari..." data-table="tblTanpa">
+              <button class="btn-ghost" id="btnExportTanpa" title="Simpan tabel yang tampil sebagai Excel">
+                <i class="bi bi-file-earmark-excel me-1"></i>Save Excel
+              </button>
             </div>
           </div>
           <div class="table-container">
@@ -2749,7 +2761,177 @@ function exportTitipBulanSebelumnyaExcel(){
   const safeLabel=label.replace(/\s+/g,'_');
   XLSX.writeFile(wb,`TITIP_BULAN_SEBELUMNYA_${safeLabel}_${tgl}.xlsx`);
 }
+
 document.getElementById('btnExportTitipBulanSebelumnya')?.addEventListener('click',exportTitipBulanSebelumnyaExcel);
+
+/* ===== SAVE EXCEL TAB AKTIF (Lunas / Titip / Belum Bayar / Tanpa DTH) — rapi untuk laporan owner ===== */
+function analisaActiveMonthLabel(){
+  if(!activeMonths || !activeMonths.size) return "Semua Bulan";
+  return [...activeMonths].map(m => (typeof monthLabelFull==="function" ? monthLabelFull(m) : m)).join(", ");
+}
+function analisaKetLabel(){
+  if(belumKetFilter==="MINYAK") return "Minyak";
+  if(belumKetFilter==="RUPA") return "Rupa2";
+  return "Semua";
+}
+function exportSheetFromRows(title, sheetName, headers, rowsAoA, moneyCols, filenameBase){
+  if(!rowsAoA.length){ showToast("Tidak ada data untuk disimpan.","warning"); return; }
+  const periode = analisaActiveMonthLabel();
+  const tgl = (new Date).toISOString().slice(0,10);
+  const aoa = [
+    [title],
+    ["Periode: " + periode],
+    ["Diekspor: " + new Date().toLocaleString("id-ID")],
+    [],
+    headers
+  ];
+  rowsAoA.forEach(r => aoa.push(r));
+  // total row if money
+  if(moneyCols && moneyCols.length){
+    const totals = headers.map((h,i)=>{
+      if(i===0) return "TOTAL";
+      if(moneyCols.includes(i)){
+        let s=0; rowsAoA.forEach(r=>{ const v=Number(r[i]); if(isFinite(v)) s+=v; });
+        return s;
+      }
+      return "";
+    });
+    aoa.push([]);
+    aoa.push(totals);
+  }
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  const lastCol = headers.length - 1;
+  ws["!merges"] = [
+    {s:{r:0,c:0},e:{r:0,c:lastCol}},
+    {s:{r:1,c:0},e:{r:1,c:lastCol}},
+    {s:{r:2,c:0},e:{r:2,c:lastCol}}
+  ];
+  // column widths
+  ws["!cols"] = headers.map((h,i)=>{
+    if(moneyCols && moneyCols.includes(i)) return {wch:16};
+    if(i===0) return {wch:18};
+    if(String(h).toLowerCase().includes("alamat")||String(h).toLowerCase().includes("outlet")||String(h).toLowerCase().includes("toko")) return {wch:28};
+    return {wch:14};
+  });
+  ws["!freeze"] = {xSplit:0, ySplit:5};
+  // money format
+  if(moneyCols){
+    for(let r=5; r<aoa.length; r++){
+      moneyCols.forEach(c=>{
+        const cell = ws[XLSX.utils.encode_cell({r,c})];
+        if(cell && typeof cell.v === "number") cell.z = "#,##0";
+      });
+    }
+  }
+  // bold title
+  if(ws["A1"]) ws["A1"].s = {font:{bold:true,size:14}};
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, sheetName.slice(0,31));
+  const safePeriode = periode.replace(/[^a-zA-Z0-9]+/g,"_").replace(/^_|_$/g,"");
+  XLSX.writeFile(wb, `${filenameBase}_${safePeriode}_${tgl}.xlsx`);
+  showToast(`Excel "${title}" berhasil disimpan · ${rowsAoA.length} baris.`,"success");
+}
+
+function getVisibleRows(tableId, fallbackRows){
+  const vt = (typeof vTables!=="undefined") ? vTables[tableId] : null;
+  if(vt && Array.isArray(vt.filtered)) return vt.filtered;
+  return Array.isArray(fallbackRows) ? fallbackRows : [];
+}
+
+function exportBelumExcel(){
+  // Hormati filter Ket (Minyak/Rupa2) + pencarian yang sedang aktif di tabel
+  const base = (analisaGroups && analisaGroups.BELUM_BAYAR) ? filterBelumByKet(analisaGroups.BELUM_BAYAR) : [];
+  const rows = getVisibleRows("tblBelum", base);
+  if(!rows.length){ showToast("Tidak ada Faktur Belum Bayar yang tampil untuk disimpan.","warning"); return; }
+  const ketLbl = analisaKetLabel();
+  const title = "FAKTUR BELUM BAYAR" + (ketLbl!=="Semua" ? " · " + ketLbl.toUpperCase() : "");
+  const headers = ["No Faktur","Tanggal Nota","Nama Outlet","Alamat","Salesman","Tagihan DTH","Ket DTH","Sheet DTH"];
+  const data = rows.map(r=>[
+    r.no_faktur||"",
+    r.tgl_nota ? fmtDate(r.tgl_nota) : "",
+    r.nama_outlet||"",
+    (typeof isUsableText==="function" && isUsableText(r.alamat)) ? r.alamat : (r.alamat||"-"),
+    r.salesman_dth||"",
+    Number(r.tagihan_dth)||0,
+    r.ket_dth||"",
+    r.sheet_dth||""
+  ]);
+  exportSheetFromRows(title, "BELUM_BAYAR", headers, data, [5], "FAKTUR_BELUM_BAYAR" + (ketLbl!=="Semua"?"_"+ketLbl.toUpperCase():""));
+}
+
+function exportLunasExcel(){
+  const base = (analisaGroups && analisaGroups.LUNAS) ? analisaGroups.LUNAS : [];
+  const rows = getVisibleRows("tblLunas", base);
+  if(!rows.length){ showToast("Tidak ada data Lunas yang tampil.","warning"); return; }
+  const headers = ["No Faktur","Nama Outlet","Salesman","Tagihan DTH","Total Bayar","Minyak Cash","Minyak TF","Rupa Cash","Rupa TF","Sheet DTH","Sheet Laporan"];
+  const data = rows.map(r=>[
+    r.no_faktur||"",
+    r.nama_outlet||"",
+    r.salesman_dth||"",
+    Number(r.tagihan_dth)||0,
+    Number(r.total_bayar)||0,
+    Number(r.minyak_cash)||0,
+    Number(r.minyak_transfer)||0,
+    Number(r.rupa_cash)||0,
+    Number(r.rupa_transfer)||0,
+    r.sheet_dth||"",
+    r.sheet_laporan||""
+  ]);
+  exportSheetFromRows("FAKTUR LUNAS", "LUNAS", headers, data, [3,4,5,6,7,8], "FAKTUR_LUNAS");
+}
+
+function exportTitipExcel(){
+  const base = (analisaGroups && analisaGroups.TITIP) ? analisaGroups.TITIP : [];
+  const rows = getVisibleRows("tblTitip", base);
+  if(!rows.length){ showToast("Tidak ada data Titip yang tampil.","warning"); return; }
+  const headers = ["No Faktur","Nama Outlet","Salesman","Tagihan DTH","Total Bayar","Sisa","Minyak Cash","Minyak TF","Rupa Cash","Rupa TF","Ket","Sheet DTH","Sheet Laporan"];
+  const data = rows.map(r=>[
+    r.no_faktur||"",
+    r.nama_outlet||"",
+    r.salesman_dth||"",
+    Number(r.tagihan_dth)||0,
+    Number(r.total_bayar)||0,
+    Number(r.sisa)||0,
+    Number(r.minyak_cash)||0,
+    Number(r.minyak_transfer)||0,
+    Number(r.rupa_cash)||0,
+    Number(r.rupa_transfer)||0,
+    r.ket_laporan||"",
+    r.sheet_dth||"",
+    r.sheet_laporan||""
+  ]);
+  exportSheetFromRows("FAKTUR TITIP", "TITIP", headers, data, [3,4,5,6,7,8,9], "FAKTUR_TITIP");
+}
+
+function exportTanpaExcel(){
+  const base = (analisaGroups && analisaGroups.BAYAR_TANPA_TAGIHAN_DTH)
+    ? analisaGroups.BAYAR_TANPA_TAGIHAN_DTH.filter(t => typeof isCashDroppingRow==="function" ? !isCashDroppingRow(t) : true)
+    : [];
+  const rows = getVisibleRows("tblTanpa", base);
+  if(!rows.length){ showToast("Tidak ada data Bayar Tanpa DTH yang tampil.","warning"); return; }
+  const headers = ["No Faktur","Nama Toko","Sales","Tagihan Laporan","Total Bayar","Minyak Cash","Minyak TF","Rupa Cash","Rupa TF","Ket","Sheet Laporan","Section"];
+  const data = rows.map(r=>[
+    r.no_faktur||"",
+    r.nama_toko||"",
+    r.sales_laporan||"",
+    Number(r.tagihan_laporan)||0,
+    Number(r.total_bayar)||0,
+    Number(r.minyak_cash)||0,
+    Number(r.minyak_transfer)||0,
+    Number(r.rupa_cash)||0,
+    Number(r.rupa_transfer)||0,
+    r.ket_laporan||"",
+    r.sheet_laporan||"",
+    r.section||""
+  ]);
+  exportSheetFromRows("BAYAR TANPA TAGIHAN DTH", "BAYAR_TANPA_DTH", headers, data, [3,4,5,6,7,8], "BAYAR_TANPA_DTH");
+}
+
+document.getElementById("btnExportBelum")?.addEventListener("click", exportBelumExcel);
+document.getElementById("btnExportLunas")?.addEventListener("click", exportLunasExcel);
+document.getElementById("btnExportTitip")?.addEventListener("click", exportTitipExcel);
+document.getElementById("btnExportTanpa")?.addEventListener("click", exportTanpaExcel);
+
 function renderSubTab(sub){
   if(!analisaGroups||analisaRenderedTabs.has(sub))return;
   const e=analisaGroups,t=analisaFilteredAll;
